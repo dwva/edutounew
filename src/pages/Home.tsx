@@ -5,7 +5,17 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 const Home = () => {
-  // Testimonials data for the moving cards
+  // Sponsors data
+  const sponsors = [
+    { name: "TechCorp" },
+    { name: "CloudNine" },
+    { name: "AI Nexus" },
+    { name: "DigitalWay" },
+    { name: "WebScale" },
+    { name: "DataFlow" }
+  ];
+
+  // Testimonials data
   const testimonials = [
     {
       quote: "This course transformed my approach to AI development. The hands-on projects were exactly what I needed to boost my confidence.",
@@ -26,11 +36,6 @@ const Home = () => {
       quote: "The industry mentors provided invaluable insights that you can't find in textbooks. Worth every penny!",
       name: "Emily Wilson",
       title: "Product Manager"
-    },
-    {
-      quote: "I was skeptical about AI-powered education, but after completing the accelerator, I'm a complete believer. Game-changing!",
-      name: "James Park",
-      title: "Fullstack Developer"
     }
   ];
 
@@ -40,41 +45,63 @@ const Home = () => {
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+          
+          @keyframes scroll {
+            from {
+              transform: translateX(0);
+            }
+            to {
+              transform: translateX(calc(-50% - 1rem));
+            }
+          }
+          
+          .animate-scroll {
+            animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+          }
+
+          .hover\\:\\[animation-play-state\\:paused\\]:hover {
+            animation-play-state: paused;
+          }
         `}
       </style>
-
+      
       {/* Hero Section */}
-      <section className="min-h-screen bg-black text-white relative flex items-center justify-center">
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-orange-100 text-orange-800 px-6 py-2 rounded-full text-sm font-medium shadow-md z-20">
-          New courses launching May 2023
+      <section className="min-h-screen bg-white relative flex items-center justify-center px-6">
+        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-orange-100 text-orange-800 px-6 py-2 rounded-full text-sm font-medium shadow-md z-20">
+          New courses launching this month
         </div>
-        <div className="relative z-10 text-center max-w-5xl px-6">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Revolutionizing <span className="text-orange-500">Education</span> Through AI
+        <div className="relative z-10 text-center max-w-5xl mt-16">
+          <h1 className="text-5xl md:text-7xl font-bold mb-10 leading-tight text-black pt-8" style={{ fontFamily: "'Poppins', sans-serif", lineHeight: '1.2' }}>
+            Revolutionizing <br className="hidden md:block" />
+            <span className="text-orange-500">Education</span> Through AI
           </h1>
-
-          <div className="my-16 flex flex-col items-center">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
+          <div className="my-12 flex flex-col items-center">
+            <StyledEnrollButton
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "4px 4px 0 1px rgba(0,0,0)"
+              }}
               whileTap={{ scale: 0.95 }}
-              className="mb-10"
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="mb-8"
             >
-              <Link
-                to="/enroll"
-                className="border-2 border-white bg-white text-black font-bold text-lg px-8 py-3 rounded-full transition-all duration-300 inline-flex items-center hover:bg-black hover:text-white"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-              >
+              <Link to="/enroll" className="flex items-center">
                 Enroll Today
-                <ArrowRight className="ml-2 h-6 w-6" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
-            </motion.div>
-
-            <p className="text-white text-lg max-w-3xl mx-auto mb-10" style={{ fontFamily: "'Poppins', sans-serif", fontSize: "1.05rem" }}>
+            </StyledEnrollButton>
+            <p className="text-black text-lg max-w-3xl mx-auto mb-10 leading-relaxed" style={{ 
+              fontFamily: "'Poppins', sans-serif", 
+              fontSize: "1.05rem",
+              lineHeight: '1.6'
+            }}>
               Education is not the filling of a pail, but the lighting of a fire. Discover how we ignite minds through artificial intelligence.
             </p>
           </div>
-
-          <blockquote className="mt-20 text-white font-semibold text-lg italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <blockquote className="text-black font-semibold text-lg italic mt-12" style={{ 
+            fontFamily: "'Poppins', sans-serif",
+            lineHeight: '1.6'
+          }}>
             "The future belongs to those who prepare for it today."
           </blockquote>
         </div>
@@ -94,7 +121,6 @@ const Home = () => {
             </div>
             <div className="lg:w-1/2"></div>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
               {
@@ -136,8 +162,6 @@ const Home = () => {
               </StyledCard>
             ))}
           </div>
-
-          {/* Enhanced Learn More Button */}
           <div className="flex justify-center mt-16">
             <StyledLearnMoreButton
               whileHover={{ 
@@ -151,6 +175,26 @@ const Home = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </StyledLearnMoreButton>
           </div>
+        </div>
+      </section>
+
+      {/* Sponsors Section */}
+      <section className="py-12 bg-orange-50">
+        <div className="max-w-7xl mx-auto px-8 text-center mb-8">
+          <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Our <span className="text-orange-500">Sponsors</span>
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Trusted by leading companies in the industry
+          </p>
+        </div>
+        
+        <div className="h-[10rem] rounded-md flex flex-col items-center justify-center relative overflow-hidden">
+          <InfiniteMovingSponsors
+            items={sponsors}
+            direction="right"
+            speed="normal"
+          />
         </div>
       </section>
 
@@ -195,57 +239,96 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section with Infinite Moving Cards */}
+      {/* Testimonials Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-8 text-center mb-12">
           <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            What Our <span className="text-orange-500">Students</span> Say
+            See What Others Are <span className="text-orange-500">Achieving</span> Through Learning
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Hear from learners who transformed their careers with our AI-powered education.
           </p>
         </div>
         
-        <div className="h-[30rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
-          <InfiniteMovingCards
-            items={testimonials}
-            direction="right"
-            speed="slow"
-          />
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ 
+                  scale: 1.03,
+                  backgroundColor: "#fed7aa"
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="bg-orange-100 border-2 border-black p-6 flex flex-col h-full">
+                  <p className="text-gray-800 mb-4 italic">"{testimonial.quote}"</p>
+                  <div className="mt-auto pt-4 border-t border-orange-300">
+                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                    <p className="text-sm text-gray-700">{testimonial.title}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Sign Language CTA Section */}
       <section className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-8 text-center">
-          <div className="flex justify-center mb-8">
-            <div className="bg-orange-500 text-white rounded-full w-20 h-20 flex items-center justify-center text-3xl font-bold">
-              E
+        <div className="flex flex-col items-center justify-center p-4">
+          <div className="flex flex-wrap justify-center gap-3 mb-6 max-w-3xl">
+            <div className="bg-orange-300 text-black text-3xl font-bold px-8 py-4 rounded-full shadow-md">
+              Learn sign
+            </div>
+            <div className="bg-orange-100 text-black text-3xl font-bold px-8 py-4 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000]">
+              language
+            </div>
+            <div className="bg-orange-200 text-black text-3xl font-bold px-8 py-4 rounded-3xl shadow-md">
+              and
+            </div>
+            <div className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-black shadow-md">
+              <div className="text-3xl">🙂</div>
+            </div>
+            <div className="bg-orange-100 text-black text-3xl font-bold px-8 py-4 rounded-full shadow-md">
+              get
+            </div>
+            <div className="bg-orange-200 text-black text-3xl font-bold px-10 py-4 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000]">
+              closer to
+            </div>
+            <div className="bg-orange-300 text-black text-3xl font-bold px-8 py-4 rounded-xl shadow-md">
+              others
             </div>
           </div>
 
-          <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Start Your Transformation
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-md mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Join thousands of learners who have accelerated their careers.
-          </p>
-          <div className="flex justify-center">
-            <Link
-              to="/enroll"
-              className="bg-orange-500 text-white font-semibold px-8 py-3 rounded-full hover:bg-orange-600 transition-all duration-300 border-2 border-orange-300"
-            >
-              Enroll Now
-            </Link>
+          <div className="text-4xl mb-4">↓</div>
+
+          <div className="text-center text-gray-700 max-w-md mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            We make it fun and easy to learn the sign language. Don't hesitate
+            and subscribe now! And we will take care of the rest!
           </div>
+
+          <StyledLearnMoreButton
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "4px 4px 0 1px rgba(0,0,0)"
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <Link to="/enroll" className="flex items-center">
+              Get Started Learning
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </StyledLearnMoreButton>
         </div>
       </section>
     </div>
   );
 };
 
-// Infinite Moving Cards Component
-const InfiniteMovingCards = ({
+// Infinite Moving Sponsors Component
+const InfiniteMovingSponsors = ({
   items,
   direction = "left",
   speed = "fast",
@@ -253,9 +336,7 @@ const InfiniteMovingCards = ({
   className,
 }: {
   items: {
-    quote: string;
     name: string;
-    title: string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -324,27 +405,14 @@ const InfiniteMovingCards = ({
         } ${pauseOnHover && "hover:[animation-play-state:paused]"}`}
       >
         {items.map((item, idx) => (
-          <StyledTestimonialCard
-            key={item.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
-            viewport={{ once: true }}
+          <li
+            className="w-[150px] max-w-full relative rounded-lg flex-shrink-0"
+            key={idx}
           >
-            <div className="card columns">
-              <div className="button-container">
-                <button className="btn red-flag">TESTIMONIAL</button>
-                <p className="offer">⭐</p>
-              </div>
-              <p className="secondary-heading">
-                {item.quote}
-              </p>
-              <div className="testimonial-footer">
-                <span className="testimonial-name">{item.name}</span>
-                <span className="testimonial-title">{item.title}</span>
-              </div>
+            <div className="bg-white h-full border border-gray-200 rounded-lg shadow-sm p-4 flex items-center justify-center">
+              <h3 className="text-lg font-medium text-center">{item.name}</h3>
             </div>
-          </StyledTestimonialCard>
+          </li>
         ))}
       </ul>
     </div>
@@ -425,97 +493,6 @@ const StyledCard = styled(motion.div)`
   }
 `;
 
-const StyledTestimonialCard = styled(motion.li)`
-  width: 350px;
-  max-width: 100%;
-  position: relative;
-  flex-shrink: 0;
-  
-  .columns {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    border-radius: 20px;
-    padding: 35px;
-    border: 2px solid black;
-    transition: all 0.4s;
-    background: white;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .columns:hover {
-    box-shadow: 4px 4px 0 1px rgba(0,0,0);
-    transform: translateY(-5px);
-  }
-
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
-    margin-bottom: 20px;
-  }
-
-  .offer {
-    font-size: 24px;
-    font-weight: 900;
-    border-bottom: 2px solid black;
-    cursor: pointer;
-    transition: all 0.4s;
-    margin: 0;
-  }
-
-  .btn {
-    padding: 7px 15px;
-    border: 1px solid black;
-    background-color: orange;
-    border-radius: 10px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.4s;
-  }
-
-  .columns:hover .btn {
-    box-shadow: 2px 2px 0 1px rgba(0,0,0);
-  }
-
-  .columns:hover .offer {
-    color: green;
-    border-color: green;
-  }
-
-  .secondary-heading {
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    flex-grow: 1;
-  }
-
-  .testimonial-footer {
-    display: flex;
-    flex-direction: column;
-    margin-top: auto;
-  }
-
-  .testimonial-name {
-    font-size: 16px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-  }
-
-  .testimonial-title {
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'Poppins', sans-serif;
-    color: #666;
-  }
-`;
-
 const StyledLearnMoreButton = styled(motion.button)`
   padding: 12px 24px;
   border: 2px solid black;
@@ -530,6 +507,47 @@ const StyledLearnMoreButton = styled(motion.button)`
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  &:hover {
+    background-color: #ff8c00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 1px rgba(0,0,0);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
+const StyledEnrollButton = styled(motion.button)`
+  padding: 12px 24px;
+  border: 2px solid black;
+  background-color: orange;
+  border-radius: 12px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
   
   &:hover {
     background-color: #ff8c00;
