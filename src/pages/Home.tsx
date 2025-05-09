@@ -1,10 +1,36 @@
+"use client";
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-
+import { InfiniteMovingCards } from "aceternity-ui";
 const Home = () => {
+  // Testimonials data for moving cards
+  const testimonials = [
+    {
+      quote: "This AI accelerator completely transformed my approach to development. The personalized feedback was invaluable.",
+      name: "Sarah Johnson",
+      title: "Frontend Developer"
+    },
+    {
+      quote: "I went from beginner to building my own AI applications in just one week. The curriculum is incredibly effective.",
+      name: "Michael Chen",
+      title: "Data Science Student"
+    },
+    {
+      quote: "The industry mentors provided insights you can't find in any textbook. Worth every penny!",
+      name: "David Rodriguez",
+      title: "Software Engineer"
+    },
+    {
+      quote: "The perfect blend of theory and hands-on practice. I landed a job within a month of completing the course.",
+      name: "Emily Wilson",
+      title: "AI Researcher"
+    },
+  ];
+
   return (
     <div className="bg-white text-gray-900">
       {/* Font import */}
@@ -162,6 +188,22 @@ const Home = () => {
             >
               Join the Workshop
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section with Moving Cards */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-12 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            What Our <span className="text-orange-500">Students</span> Say
+          </h2>
+          <div className="h-[20rem] rounded-md flex flex-col antialiased bg-gray-50 items-center justify-center relative overflow-hidden">
+            <InfiniteMovingCards
+              items={testimonials}
+              direction="right"
+              speed="slow"
+            />
           </div>
         </div>
       </section>
