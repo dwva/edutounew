@@ -1,34 +1,37 @@
-"use client";
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { InfiniteMovingCards } from "aceternity-ui";
+
 const Home = () => {
-  // Testimonials data for moving cards
+  // Testimonials data for the moving cards
   const testimonials = [
     {
-      quote: "This AI accelerator completely transformed my approach to development. The personalized feedback was invaluable.",
+      quote: "This course transformed my approach to AI development. The hands-on projects were exactly what I needed to boost my confidence.",
       name: "Sarah Johnson",
       title: "Frontend Developer"
     },
     {
-      quote: "I went from beginner to building my own AI applications in just one week. The curriculum is incredibly effective.",
+      quote: "The AI pair programming sessions were revolutionary. I learned more in one week than I did in months of self-study.",
       name: "Michael Chen",
-      title: "Data Science Student"
+      title: "Computer Science Student"
     },
     {
-      quote: "The industry mentors provided insights you can't find in any textbook. Worth every penny!",
+      quote: "EDUTOU's personalized learning approach helped me overcome my learning plateaus. The AI recommendations were spot on!",
       name: "David Rodriguez",
-      title: "Software Engineer"
+      title: "UX Designer"
     },
     {
-      quote: "The perfect blend of theory and hands-on practice. I landed a job within a month of completing the course.",
+      quote: "The industry mentors provided invaluable insights that you can't find in textbooks. Worth every penny!",
       name: "Emily Wilson",
-      title: "AI Researcher"
+      title: "Product Manager"
     },
+    {
+      quote: "I was skeptical about AI-powered education, but after completing the accelerator, I'm a complete believer. Game-changing!",
+      name: "James Park",
+      title: "Fullstack Developer"
+    }
   ];
 
   return (
@@ -192,19 +195,23 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section with Moving Cards */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-12 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      {/* Testimonials Section with Infinite Moving Cards */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-8 text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
             What Our <span className="text-orange-500">Students</span> Say
           </h2>
-          <div className="h-[20rem] rounded-md flex flex-col antialiased bg-gray-50 items-center justify-center relative overflow-hidden">
-            <InfiniteMovingCards
-              items={testimonials}
-              direction="right"
-              speed="slow"
-            />
-          </div>
+          <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Hear from learners who transformed their careers with our AI-powered education.
+          </p>
+        </div>
+        
+        <div className="h-[30rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+          <InfiniteMovingCards
+            items={testimonials}
+            direction="right"
+            speed="slow"
+          />
         </div>
       </section>
 
@@ -233,6 +240,113 @@ const Home = () => {
           </div>
         </div>
       </section>
+    </div>
+  );
+};
+
+// Infinite Moving Cards Component
+const InfiniteMovingCards = ({
+  items,
+  direction = "left",
+  speed = "fast",
+  pauseOnHover = true,
+  className,
+}: {
+  items: {
+    quote: string;
+    name: string;
+    title: string;
+  }[];
+  direction?: "left" | "right";
+  speed?: "fast" | "normal" | "slow";
+  pauseOnHover?: boolean;
+  className?: string;
+}) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const scrollerRef = React.useRef<HTMLUListElement>(null);
+
+  React.useEffect(() => {
+    addAnimation();
+  }, []);
+
+  const [start, setStart] = React.useState(false);
+  function addAnimation() {
+    if (containerRef.current && scrollerRef.current) {
+      const scrollerContent = Array.from(scrollerRef.current.children);
+
+      scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true);
+        if (scrollerRef.current) {
+          scrollerRef.current.appendChild(duplicatedItem);
+        }
+      });
+
+      getDirection();
+      getSpeed();
+      setStart(true);
+    }
+  }
+  const getDirection = () => {
+    if (containerRef.current) {
+      if (direction === "left") {
+        containerRef.current.style.setProperty(
+          "--animation-direction",
+          "forwards"
+        );
+      } else {
+        containerRef.current.style.setProperty(
+          "--animation-direction",
+          "reverse"
+        );
+      }
+    }
+  };
+  const getSpeed = () => {
+    if (containerRef.current) {
+      if (speed === "fast") {
+        containerRef.current.style.setProperty("--animation-duration", "20s");
+      } else if (speed === "normal") {
+        containerRef.current.style.setProperty("--animation-duration", "40s");
+      } else {
+        containerRef.current.style.setProperty("--animation-duration", "80s");
+      }
+    }
+  };
+  return (
+    <div
+      ref={containerRef}
+      className={`scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)] ${className}`}
+    >
+      <ul
+        ref={scrollerRef}
+        className={`flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap ${
+          start && "animate-scroll"
+        } ${pauseOnHover && "hover:[animation-play-state:paused]"}`}
+      >
+        {items.map((item, idx) => (
+          <StyledTestimonialCard
+            key={item.name}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            viewport={{ once: true }}
+          >
+            <div className="card columns">
+              <div className="button-container">
+                <button className="btn red-flag">TESTIMONIAL</button>
+                <p className="offer">⭐</p>
+              </div>
+              <p className="secondary-heading">
+                {item.quote}
+              </p>
+              <div className="testimonial-footer">
+                <span className="testimonial-name">{item.name}</span>
+                <span className="testimonial-title">{item.title}</span>
+              </div>
+            </div>
+          </StyledTestimonialCard>
+        ))}
+      </ul>
     </div>
   );
 };
@@ -308,6 +422,97 @@ const StyledCard = styled(motion.div)`
     font-weight: 500;
     line-height: 1.5;
     font-family: 'Poppins', sans-serif;
+  }
+`;
+
+const StyledTestimonialCard = styled(motion.li)`
+  width: 350px;
+  max-width: 100%;
+  position: relative;
+  flex-shrink: 0;
+  
+  .columns {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 20px;
+    padding: 35px;
+    border: 2px solid black;
+    transition: all 0.4s;
+    background: white;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .columns:hover {
+    box-shadow: 4px 4px 0 1px rgba(0,0,0);
+    transform: translateY(-5px);
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+
+  .offer {
+    font-size: 24px;
+    font-weight: 900;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+    transition: all 0.4s;
+    margin: 0;
+  }
+
+  .btn {
+    padding: 7px 15px;
+    border: 1px solid black;
+    background-color: orange;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+
+  .columns:hover .btn {
+    box-shadow: 2px 2px 0 1px rgba(0,0,0);
+  }
+
+  .columns:hover .offer {
+    color: green;
+    border-color: green;
+  }
+
+  .secondary-heading {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+  }
+
+  .testimonial-name {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+  }
+
+  .testimonial-title {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: #666;
   }
 `;
 
