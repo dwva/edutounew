@@ -1,0 +1,19 @@
+/* buttonStyle.css */
+
+.custom-enroll-button.awesome-button {
+    background-color: #fca311 !important; /* light orange */
+    border: 2px solid white !important;
+    color: white !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-enroll-button.awesome-button:hover {
+    background-color: #ffb733 !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+  }
+  
