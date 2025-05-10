@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -15,8 +15,8 @@ const Home = () => {
     { name: "DataFlow" }
   ];
 
-  // Testimonials data
-  const testimonials = [
+  // All available testimonials
+  const allTestimonials = [
     {
       quote: "This course transformed my approach to AI development. The hands-on projects were exactly what I needed to boost my confidence.",
       name: "Sarah Johnson",
@@ -36,8 +36,65 @@ const Home = () => {
       quote: "The industry mentors provided invaluable insights that you can't find in textbooks. Worth every penny!",
       name: "Emily Wilson",
       title: "Product Manager"
+    },
+    {
+      quote: "The community support was amazing. I never felt alone in my learning journey.",
+      name: "Alex Thompson",
+      title: "Software Engineer"
+    },
+    {
+      quote: "The curriculum was perfectly paced and the projects were challenging but achievable.",
+      name: "Jessica Lee",
+      title: "Data Scientist"
+    },
+    {
+      quote: "I landed my dream job within a month of completing the program. The career support was exceptional.",
+      name: "Ryan Park",
+      title: "Machine Learning Engineer"
     }
   ];
+
+  // State for visible testimonials
+  const [visibleTestimonials, setVisibleTestimonials] = useState(allTestimonials.slice(0, 4));
+  const testimonialContainerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const scrollTestimonials = (direction: 'left' | 'right') => {
+    if (testimonialContainerRef.current) {
+      const container = testimonialContainerRef.current;
+      const cardWidth = container.scrollWidth / visibleTestimonials.length;
+      const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
+      
+      container.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+
+      // Update current index
+      setCurrentIndex(prev => {
+        if (direction === 'right') {
+          return prev === allTestimonials.length - 1 ? 0 : prev + 1;
+        } else {
+          return prev === 0 ? allTestimonials.length - 1 : prev - 1;
+        }
+      });
+    }
+  };
+
+  const addTestimonial = (direction: 'left' | 'right') => {
+    if (direction === 'right') {
+      const nextIndex = (currentIndex + visibleTestimonials.length) % allTestimonials.length;
+      setVisibleTestimonials(prev => [...prev.slice(1), allTestimonials[nextIndex]]);
+    } else {
+      const prevIndex = (currentIndex - 1 + allTestimonials.length) % allTestimonials.length;
+      setVisibleTestimonials(prev => [allTestimonials[prevIndex], ...prev.slice(0, -1)]);
+    }
+  };
+
+  const handleArrowClick = (direction: 'left' | 'right') => {
+    scrollTestimonials(direction);
+    addTestimonial(direction);
+  };
 
   return (
     <div className="bg-white text-gray-900">
@@ -45,6 +102,7 @@ const Home = () => {
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
           
           @keyframes scroll {
             from {
@@ -59,8 +117,30 @@ const Home = () => {
             animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
           }
 
-          .hover\\:\\[animation-play-state\\:paused\\]:hover {
-            animation-play-state: paused;
+          .education-text {
+            color: white;
+            -webkit-text-stroke: 2px orange;
+            text-shadow: none;
+            position: relative;
+            display: inline-block;
+          }
+
+          .testimonial-container {
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+
+          .testimonial-container::-webkit-scrollbar {
+            display: none;
+          }
+
+          .testimonial-card {
+            scroll-snap-align: start;
+          }
+
+          .testimonial-text {
+            font-family: 'Inter', sans-serif;
           }
         `}
       </style>
@@ -73,7 +153,7 @@ const Home = () => {
         <div className="relative z-10 text-center max-w-5xl mt-16">
           <h1 className="text-5xl md:text-7xl font-bold mb-10 leading-tight text-black pt-8" style={{ fontFamily: "'Poppins', sans-serif", lineHeight: '1.2' }}>
             Revolutionizing <br className="hidden md:block" />
-            <span className="text-orange-500">Education</span> Through AI
+            <span className="education-text">Education</span> Through AI
           </h1>
           <div className="my-12 flex flex-col items-center">
             <StyledEnrollButton
@@ -104,6 +184,17 @@ const Home = () => {
           }}>
             "The future belongs to those who prepare for it today."
           </blockquote>
+        </div>
+      </section>
+
+      {/* Sponsors Section */}
+      <section className="bg-white">
+        <div className="h-[6rem] flex flex-col items-center justify-center relative overflow-hidden">
+          <InfiniteMovingSponsors
+            items={sponsors}
+            direction="right"
+            speed="normal"
+          />
         </div>
       </section>
 
@@ -178,26 +269,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Sponsors Section */}
-      <section className="py-12 bg-orange-50">
-        <div className="max-w-7xl mx-auto px-8 text-center mb-8">
-          <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Our <span className="text-orange-500">Sponsors</span>
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Trusted by leading companies in the industry
-          </p>
-        </div>
-        
-        <div className="h-[10rem] rounded-md flex flex-col items-center justify-center relative overflow-hidden">
-          <InfiniteMovingSponsors
-            items={sponsors}
-            direction="right"
-            speed="normal"
-          />
-        </div>
-      </section>
-
       {/* Featured Course Section */}
       <section className="bg-gray-50 py-24">
         <div className="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row items-center gap-16">
@@ -240,7 +311,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white relative">
         <div className="max-w-7xl mx-auto px-8 text-center mb-12">
           <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
             See What Others Are <span className="text-orange-500">Achieving</span> Through Learning
@@ -250,27 +321,79 @@ const Home = () => {
           </p>
         </div>
         
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ 
-                  scale: 1.03,
-                  backgroundColor: "#fed7aa"
-                }}
-                transition={{ duration: 0.3 }}
+        <div className="max-w-7xl mx-auto px-8 relative">
+          {/* Left Arrow */}
+          <button 
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-lg border-2 border-black hover:bg-orange-100 transition-colors"
+            onClick={() => handleArrowClick('left')}
+            aria-label="Scroll testimonials left"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          {/* Testimonials Container */}
+          <div 
+            ref={testimonialContainerRef}
+            className="testimonial-container flex overflow-x-auto space-x-6 pb-6 px-2"
+          >
+            {visibleTestimonials.map((testimonial, index) => (
+              <div
+                key={`${testimonial.name}-${index}`}
+                className="testimonial-card flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2"
               >
-                <div className="bg-orange-100 border-2 border-black p-6 flex flex-col h-full">
-                  <p className="text-gray-800 mb-4 italic">"{testimonial.quote}"</p>
-                  <div className="mt-auto pt-4 border-t border-orange-300">
-                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                    <p className="text-sm text-gray-700">{testimonial.title}</p>
+                <div className="bg-orange-50 border-2 border-black rounded-xl p-6 flex flex-col h-full shadow-lg" style={{ minHeight: '300px' }}>
+                  <p 
+                    className="testimonial-text text-gray-800 mb-4 text-lg leading-relaxed" 
+                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+                  >
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="mt-auto pt-4 border-t-2 border-orange-200">
+                    <p 
+                      className="font-bold text-gray-900 text-xl" 
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      {testimonial.name}
+                    </p>
+                    <p 
+                      className="text-sm text-gray-600" 
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      {testimonial.title}
+                    </p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
+
+          {/* Right Arrow */}
+          <button 
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-lg border-2 border-black hover:bg-orange-100 transition-colors"
+            onClick={() => handleArrowClick('right')}
+            aria-label="Scroll testimonials right"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center mt-6 space-x-2">
+          {allTestimonials.map((_, index) => (
+            <button
+              key={index}
+              className={`w-3 h-3 rounded-full ${index >= currentIndex && index < currentIndex + visibleTestimonials.length ? 'bg-orange-500' : 'bg-gray-300'} transition-colors`}
+              onClick={() => {
+                setCurrentIndex(index);
+                setVisibleTestimonials(allTestimonials.slice(index, index + 4));
+              }}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 
