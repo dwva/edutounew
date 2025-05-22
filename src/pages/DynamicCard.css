@@ -1,0 +1,159 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #fffef7;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  width: 400px;
+  padding: 30px;
+  background-color: #7de4a8;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2),
+              8px 8px 0px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3),
+              10px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  margin-bottom: 30px;
+}
+
+.cursor {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  width: 12px;
+  height: 18px;
+  border: 1px solid #000;
+  background-color: rgba(255, 255, 255, 0.5);
+  animation: blink 1s infinite;
+}
+
+.circular-text {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.card:hover .circular-text {
+  opacity: 1;
+}
+
+.circular-text span {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  font-size: 12px;
+  color: #000;
+  animation: rotate 8s linear infinite;
+  transform-origin: center;
+}
+
+.button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.card:hover .button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.circular-text span {
+  position: absolute;
+  height: 85%;
+  width: 85%;
+  transform-origin: center;
+}
+
+.circular-text span:nth-child(1) { transform: rotate(0deg); }
+.circular-text span:nth-child(2) { transform: rotate(15deg); }
+.circular-text span:nth-child(3) { transform: rotate(30deg); }
+.circular-text span:nth-child(4) { transform: rotate(45deg); }
+.circular-text span:nth-child(5) { transform: rotate(60deg); }
+.circular-text span:nth-child(6) { transform: rotate(75deg); }
+.circular-text span:nth-child(7) { transform: rotate(90deg); }
+.circular-text span:nth-child(8) { transform: rotate(105deg); }
+.circular-text span:nth-child(9) { transform: rotate(120deg); }
+.circular-text span:nth-child(10) { transform: rotate(135deg); }
+.circular-text span:nth-child(11) { transform: rotate(150deg); }
+.circular-text span:nth-child(12) { transform: rotate(165deg); }
+.circular-text span:nth-child(13) { transform: rotate(180deg); }
+.circular-text span:nth-child(14) { transform: rotate(195deg); }
+.circular-text span:nth-child(15) { transform: rotate(210deg); }
+.circular-text span:nth-child(16) { transform: rotate(225deg); }
+.circular-text span:nth-child(17) { transform: rotate(240deg); }
+.circular-text span:nth-child(18) { transform: rotate(255deg); }
+.circular-text span:nth-child(19) { transform: rotate(270deg); }
+.circular-text span:nth-child(20) { transform: rotate(285deg); }
+.circular-text span:nth-child(21) { transform: rotate(300deg); }
+.circular-text span:nth-child(22) { transform: rotate(315deg); }
+.circular-text span:nth-child(23) { transform: rotate(330deg); }
+.circular-text span:nth-child(24) { transform: rotate(345deg); }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
