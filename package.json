@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "@react-three/drei": "8.36.0",
-    "@react-three/fiber": "8.13.6",
+    "@react-three/drei": "^9.56.1",
+    "@react-three/fiber": "^8.13.6",
     "@tabler/icons-react": "^3.31.0",
     "aceternity-ui": "^0.2.2",
     "clsx": "^2.1.1",
