@@ -398,7 +398,7 @@ export function InfiniteMovingCardsDemo() {
 }
 
 // -----------------------------
-// Infinite Moving Testimonials Component (Rectangle Cards)
+// Infinite Moving Testimonials  (Rectangle Cards)
 // -----------------------------
 const InfiniteMovingTestimonials = ({
   testimonials,
