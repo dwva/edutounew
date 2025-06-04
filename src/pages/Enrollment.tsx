@@ -28,56 +28,57 @@ const Enrollment = () => {
     { icon: <CheckCircle className="h-6 w-6" />, text: "Limited slots available, book now and secure your spots" },
   ];
 
-  const handlePhonePePayment = async () => {
-    if (!formData.name || !formData.email || !formData.phone || !formData.college) {
-      setMessage("Please fill in all required fields.");
+ const handlePhonePePayment = async () => {
+  if (!formData.name || !formData.email || !formData.phone || !formData.college) {
+    setMessage("Please fill in all required fields.");
+    return;
+  }
+
+  if (!/^\d{10}$/.test(formData.phone)) {
+    setMessage("Please enter a valid 10-digit WhatsApp number.");
+    return;
+  }
+
+  try {
+    setLoading(true);
+    setMessage("");
+
+    const response = await fetch("https://edutoubackend.onrender.com/api/payment/initiate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: 100, // Amount in INR
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        college: formData.college,
+        referralCode: formData.referralCode || "", // Avoid null if not filled
+        courseName: "Full Stack Foundation Workshop",
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // Specific message if available from server
+      setMessage(data?.message || "Payment initiation failed.");
       return;
     }
 
-    if (!/^\d{10}$/.test(formData.phone)) {
-      setMessage("Please enter a valid 10-digit WhatsApp number.");
-      return;
+    if (data?.redirectUrl) {
+      window.location.href = data.redirectUrl;
+    } else {
+      setMessage("Failed to get redirect URL. Please try again.");
     }
-
-    try {
-      setLoading(true);
-      setMessage("");
-
-      const res = await fetch("https://edutoubackend.onrender.com/api/payment/initiate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: 100,  // INR amount
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          college: formData.college,
-          referralCode: formData.referralCode,
-          courseName: "Full Stack Foundation Workshop", 
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.status === 429 || data?.code === "TOO_MANY_REQUESTS") {
-        setMessage("Too many requests. Please wait a moment...");
-        return;
-      }
-
-      if (data?.redirectUrl) {
-        window.location.href = data.redirectUrl;
-      } else {
-        setMessage("Payment failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Payment error:", error);
-      setMessage("Something went wrong. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (error) {
+    console.error("Payment error:", error);
+    setMessage("Something went wrong. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
