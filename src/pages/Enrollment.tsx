@@ -15,7 +15,6 @@ const Enrollment = () => {
     email: "",
     phone: "",
     college: "",
-    course: "Full Stack Foundation",
     referralCode: "",
   });
 
@@ -44,18 +43,19 @@ const Enrollment = () => {
       setLoading(true);
       setMessage("");
 
-      const res = await fetch("http://localhost:5000/api/phonepe/pay", {
+      const res = await fetch("http://localhost:5000/api/payment/initiate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: 10000,
-          name: formData.name,  
+          amount: 100,  // INR amount
+          name: formData.name,
           email: formData.email,
           phone: formData.phone,
           college: formData.college,
           referralCode: formData.referralCode,
+          courseName: "Full Stack Foundation Workshop", 
         }),
       });
 
@@ -77,11 +77,6 @@ const Enrollment = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    window.location.href = "https://forms.gle/9qquW2zCkJadoTRD9";
   };
 
   return (
@@ -130,7 +125,7 @@ const Enrollment = () => {
         {/* Right Column */}
         <div className="bg-white rounded-lg shadow-xl p-8">
           <h2 className="text-2xl font-bold mb-6">Secure Your Seat Now</h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
             <input
               type="text"
               required
@@ -172,29 +167,18 @@ const Enrollment = () => {
             />
 
             <button
-              type="submit"
-              className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors"
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Enroll Now & Next Step"}
-            </button>
-
-            <button
               type="button"
               onClick={handlePhonePePayment}
-              className="w-full bg-green-500 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors mt-3"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg disabled:opacity-50"
               disabled={loading}
             >
-              {loading ? "Redirecting to PhonePe..." : "Pay ₹100 via PhonePe"}
+              {loading ? "Processing..." : "Pay with PhonePe"}
             </button>
-
-            {message && (
-              <p className="text-center text-sm text-red-500 mt-2">{message}</p>
-            )}
-            <p className="text-center text-sm text-gray-600">
-              By enrolling, you agree to our Terms of Service and Privacy Policy.
-            </p>
           </form>
+
+          {message && (
+            <p className="mt-4 text-red-600 font-semibold">{message}</p>
+          )}
         </div>
       </div>
     </div>
