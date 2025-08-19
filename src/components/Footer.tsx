@@ -4,6 +4,7 @@ import {
   Github,
   MessageSquareText, // Used as WhatsApp icon placeholder
 } from 'lucide-react';
+import downloadLogo from './download.png'; // ✅ Your image
 
 export default function RejouiceFooter() {
   const [isIntersecting, setIsIntersecting] = useState(false);
@@ -40,15 +41,12 @@ export default function RejouiceFooter() {
       className="relative w-full bg-white text-black py-10 overflow-hidden"
     >
       <div className="mx-auto px-6 md:px-12 lg:px-16">
-        {/* Main content layout */}
         <div className="grid grid-cols-12 gap-4 mt-4">
-          {/* Left column - Tagline and newsletter */}
           <div className="col-span-12 md:col-span-6 mb-12 md:mb-0">
             <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-6 ${fadeInUpClass(100)}`}>
               Do it once. Do it right.
             </h2>
 
-            {/* Newsletter section directly below tagline */}
             <div className={fadeInUpClass(150)}>
               <p className="text-xs mb-2">Sign up for our newsletter (No spam)</p>
               <div className="relative max-w-md mb-6">
@@ -66,22 +64,19 @@ export default function RejouiceFooter() {
               </div>
             </div>
 
-            {/* Edutou logo and label */}
+            {/* ✅ Updated with your logo */}
             <div className={`flex items-center gap-3 mb-4 ${fadeInUpClass(200)}`}>
-              <img src="download.png" alt="Edutou Logo" className="w-10 h-10" />
+              <img src={downloadLogo} alt="Edutou Logo" className="w-10 h-10" />
               <span className="text-lg font-semibold">Edutou</span>
             </div>
 
-            {/* Copyright */}
             <p className={`text-xs text-gray-600 mb-8 ${fadeInUpClass(250)}`}>
               © 2025 EDUTOU Skill Academy. All rights reserved.
             </p>
           </div>
 
-          {/* Right column - Navigation and policies */}
           <div className={`col-span-12 md:col-span-6 ${fadeInUpClass(200)}`}>
             <div className="grid grid-cols-2 gap-8">
-              {/* Navigation links */}
               <div>
                 <div className="text-right">
                   <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Home</a>
@@ -92,7 +87,6 @@ export default function RejouiceFooter() {
                 </div>
               </div>
 
-              {/* Policies */}
               <div className="text-right">
                 <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Terms of use</a>
                 <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Terms & Conditions</a>
@@ -103,7 +97,6 @@ export default function RejouiceFooter() {
           </div>
         </div>
 
-        {/* Social Icons Row */}
         <div className="flex justify-end mt-12 gap-6 pr-2">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
             <Instagram className="w-5 h-5" />
@@ -117,7 +110,6 @@ export default function RejouiceFooter() {
         </div>
       </div>
 
-      {/* Fixed "Let's talk" button */}
       <a href="#" className="fixed top-10 right-10 flex items-center space-x-1 text-black hover:opacity-80 transition-opacity z-50 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-200 text-sm">
         <span>Let's talk</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="transform rotate-45">
