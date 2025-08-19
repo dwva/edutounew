@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Layers, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import Projects from '../components/Projects';
 
 // -----------------------------
 // New Explore Our Courses Component (WebDeveloperSite)
@@ -12,13 +13,7 @@ import styled from 'styled-components';
 function WebDeveloperSite() {
   const [isHovered, setIsHovered] = useState<string | null>(null);
 
-  const fontStyle = `
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-    
-    * {
-      font-family: 'Poppins', sans-serif;
-    }
-  `;
+  const fontStyle = ``;
 
   return (
     <>
@@ -28,216 +23,6 @@ function WebDeveloperSite() {
           <div className="max-w-6xl mx-auto text-left">
             <h1 className='text-4xl font-bold text-black'>Explore Our</h1><h1 className="text-4xl font-bold text-orange-500"> courses</h1>
           </div>
-        </div>
-        
-        {/* Web Developer Section */}
-        <div className="flex items-center w-full border-b border-gray-200 py-16 px-4">
-          <div className="flex w-full max-w-6xl mx-auto">
-            <div className="flex items-center mr-8">
-              <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center">
-                <svg className="w-12 h-12 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 6L12 18L20 6" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center relative" 
-              onMouseEnter={() => setIsHovered("webdev-card")}
-              onMouseLeave={() => setIsHovered(null)}
-            >
-              <h2 className="text-2xl font-bold">Web Dev</h2>
-              <p className="text-orange-500">12 weeks, online</p>
-            </div>
-            <div className="ml-auto max-w-lg">
-              <p className="text-gray-800 mb-4">
-                Master the foundations of modern web development. Build responsive websites and dynamic applications with HTML, CSS, JavaScript, React, and Node.js. Perfect for beginners and those looking to upgrade their skills.
-              </p>
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsHovered("webdev")}
-                onMouseLeave={() => setIsHovered(null)}
-              >
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={isHovered === "webdev" ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-orange-500 text-white border border-black px-5 py-2
-                    font-bold cursor-pointer transition-all duration-300 ease-in-out
-                    hover:scale-105 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]"
-                >
-                  Let's Go
-                </motion.button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* UX/UI Design Section */}
-        <div className="flex items-center w-full border-b border-gray-200 py-16 px-4">
-          <div className="flex w-full max-w-6xl mx-auto">
-            <div className="flex items-center mr-8">
-              <div className="w-20 h-20 bg-blue-400 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">UI/UX</span>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center relative" 
-              onMouseEnter={() => setIsHovered("uxui-card")}
-              onMouseLeave={() => setIsHovered(null)}
-            >
-              <h2 className="text-2xl font-bold">UX/UI Design</h2>
-              <p className="text-orange-500">10 weeks, hybrid</p>
-            </div>
-            <div className="ml-auto max-w-lg">
-              <p className="text-gray-800 mb-4">
-                Learn to create beautiful, intuitive digital experiences. From user research and wireframing to high-fidelity prototypes and design systems. Includes real-world projects to build your professional portfolio.
-              </p>
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsHovered("uxui")}
-                onMouseLeave={() => setIsHovered(null)}
-              >
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={isHovered === "uxui" ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-orange-500 text-white border border-black px-5 py-2
-                    font-bold cursor-pointer transition-all duration-300 ease-in-out
-                    hover:scale-105 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]"
-                >
-                  Let's Go
-                </motion.button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Data Science Section */}
-        <div className="flex items-center w-full border-b border-gray-200 py-16 px-4">
-          <div className="flex w-full max-w-6xl mx-auto">
-            <div className="flex items-center mr-8">
-              <div className="w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center">
-                <svg className="w-12 h-12 text-black" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 6L12 18L20 6" stroke="black" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center relative" 
-              onMouseEnter={() => setIsHovered("data-card")}
-              onMouseLeave={() => setIsHovered(null)}
-            >
-              <h2 className="text-2xl font-bold">Data Science</h2>
-              <p className="text-orange-500">14 weeks, online</p>
-            </div>
-            <div className="ml-auto max-w-lg">
-              <p className="text-gray-800 mb-4">
-                Dive into the world of data analysis and machine learning. From statistical analysis to predictive modeling, learn Python, pandas, scikit-learn, and TensorFlow while working on real datasets to solve complex problems.
-              </p>
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsHovered("data")}
-                onMouseLeave={() => setIsHovered(null)}
-              >
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={isHovered === "data" ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-orange-500 text-white border border-black px-5 py-2
-                    font-bold cursor-pointer transition-all duration-300 ease-in-out
-                    hover:scale-105 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]"
-                >
-                  Let's Go
-                </motion.button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Mobile App Development Section */}
-        <div className="flex items-center w-full border-b border-gray-200 py-16 px-4">
-          <div className="flex w-full max-w-6xl mx-auto">
-            <div className="flex items-center mr-8">
-              <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">APP</span>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center relative" 
-              onMouseEnter={() => setIsHovered("mobile-card")}
-              onMouseLeave={() => setIsHovered(null)}
-            >
-              <h2 className="text-2xl font-bold">Mobile App Development</h2>
-              <p className="text-orange-500">16 weeks, online</p>
-            </div>
-            <div className="ml-auto max-w-lg">
-              <p className="text-gray-800 mb-4">
-                Create native and cross-platform mobile applications for iOS and Android. Master React Native, Swift, and Kotlin while learning app architecture, state management, and API integration. Graduate with a portfolio of published apps.
-              </p>
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsHovered("mobile")}
-                onMouseLeave={() => setIsHovered(null)}
-              >
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={isHovered === "mobile" ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-orange-500 text-white border border-black px-5 py-2
-                    font-bold cursor-pointer transition-all duration-300 ease-in-out
-                    hover:scale-105 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]"
-                >
-                  Let's Go
-                </motion.button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Cybersecurity Section */}
-        <div className="flex items-center w-full border-b border-gray-200 py-16 px-4">
-          <div className="flex w-full max-w-6xl mx-auto">
-            <div className="flex items-center mr-8">
-              <div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">SEC</span>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center relative" 
-              onMouseEnter={() => setIsHovered("security-card")}
-              onMouseLeave={() => setIsHovered(null)}
-            >
-              <h2 className="text-2xl font-bold">Cybersecurity</h2>
-              <p className="text-orange-500">18 weeks, hybrid</p>
-            </div>
-            <div className="ml-auto max-w-lg">
-              <p className="text-gray-800 mb-4">
-                Develop expertise in network security, ethical hacking, and threat detection. Learn security fundamentals, penetration testing, cryptography, and compliance frameworks. Get prepared for industry certifications like CompTIA Security+ and CEH.
-              </p>
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsHovered("security")}
-                onMouseLeave={() => setIsHovered(null)}
-              >
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={isHovered === "security" ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-orange-500 text-white border border-black px-5 py-2
-                    font-bold cursor-pointer transition-all duration-300 ease-in-out
-                    hover:scale-105 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]"
-                >
-                  Let's Go
-                </motion.button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Explore Courses Button */}
-        <div className="w-full py-16 flex justify-center">
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "4px 4px 0px rgba(0,0,0,0.3)" }}
-            transition={{ duration: 0.3 }}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg text-lg border border-black hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]"
-          >
-            Explore All Courses
-          </motion.button>
         </div>
       </div>
     </>
@@ -1077,8 +862,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- Updated Our Courses Section --- */}
+      {/* Explore header + Projects carousel */}
       <WebDeveloperSite />
+      <Projects />
 
       {/* Edutou About Us Section */}
       <EdutouAboutUs />

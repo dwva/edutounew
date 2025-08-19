@@ -271,31 +271,24 @@ const VerificationPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-indigo-950 to-gray-900 text-white pt-24 pb-16 px-4">
-      {/* Background decoration elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-600 rounded-full opacity-10 blur-3xl"></div>
-        <div className="absolute top-1/3 -left-20 w-60 h-60 bg-purple-600 rounded-full opacity-10 blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
-      </div>
-      
-      <div className="max-w-4xl mx-auto relative z-10">
+    <div className="min-h-screen bg-white text-black pt-24 pb-16 px-4">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">Certificate Verification</h1>
-          <p className="text-gray-300 max-w-2xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">Certificate Verification</h1>
+          <p className="text-gray-700 max-w-2xl mx-auto">
             Verify the authenticity of certificates issued by EDUTOU. Enter the certificate ID to check if it's valid and view student details.
           </p>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700/50 p-6 md:p-8 mb-10">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-10">
           <div className="grid md:grid-cols-3 gap-4 mb-6">
             <div className="md:col-span-1">
-              <label htmlFor="course" className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
                 Select Course
               </label>
               <select
                 id="course"
-                className="w-full px-4 py-2 bg-gray-700/70 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white"
+                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-brand)] focus:border-[var(--color-brand)]"
                 value={selectedCourse}
                 onChange={(e) => setSelectedCourse(e.target.value)}
               >
@@ -309,7 +302,7 @@ const VerificationPage: React.FC = () => {
             </div>
             
             <div className="md:col-span-2">
-              <label htmlFor="certificateId" className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="certificateId" className="block text-sm font-medium text-gray-700 mb-1">
                 Certificate ID
               </label>
               <div className="relative">
@@ -317,7 +310,7 @@ const VerificationPage: React.FC = () => {
                   type="text"
                   id="certificateId"
                   placeholder="Enter certificate ID (e.g., EDUFSF0101001)"
-                  className="w-full px-4 py-2 bg-gray-700/70 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white pr-12"
+                  className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-brand)] focus:border-[var(--color-brand)] pr-12"
                   value={certificateId}
                   onChange={(e) => setCertificateId(e.target.value.toUpperCase())}
                   onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
@@ -325,7 +318,7 @@ const VerificationPage: React.FC = () => {
                 <button
                   onClick={handleVerify}
                   disabled={isSearching || !certificateId}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full bg-indigo-700/50 text-indigo-300 hover:bg-indigo-600/70 disabled:opacity-50"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full bg-orange-100 text-[var(--color-brand-dark)] hover:bg-orange-200 disabled:opacity-50"
                 >
                   <Search className="h-5 w-5" />
                 </button>
@@ -336,7 +329,7 @@ const VerificationPage: React.FC = () => {
           <button
             onClick={handleVerify}
             disabled={isSearching || !certificateId}
-            className="w-full py-2.5 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 transition-colors flex items-center justify-center"
+            className="w-full py-2.5 px-4 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)] disabled:opacity-50 transition-colors flex items-center justify-center border border-black"
           >
             {isSearching ? (
               <>
@@ -350,49 +343,49 @@ const VerificationPage: React.FC = () => {
         </div>
 
         {isVerified !== null && (
-          <div className={`bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700/50 p-6 md:p-8 transition-all duration-300 ${isVerified ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'}`}>
+          <div className={`bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 transition-all duration-300 ${isVerified ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'}`}>
             {isVerified ? (
               <div className="flex flex-col items-center text-center md:flex-row md:text-left md:items-start">
-                <div className="bg-green-900/30 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
-                  <CheckCircle className="h-12 w-12 text-green-400" />
+                <div className="bg-green-100 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
+                  <CheckCircle className="h-12 w-12 text-green-600" />
                 </div>
                 <div className="w-full">
-                  <h2 className="text-2xl font-bold text-green-400 mb-2">Certificate Verified!</h2>
-                  <p className="text-gray-300 mb-4">This certificate is authentic and was issued by EDUTOU.</p>
+                  <h2 className="text-2xl font-bold text-green-700 mb-2">Certificate Verified!</h2>
+                  <p className="text-gray-700 mb-4">This certificate is authentic and was issued by EDUTOU.</p>
                   
-                  <div className="bg-gray-900/50 rounded-xl p-4 md:p-6 border border-gray-700/50">
-                    <h3 className="font-semibold text-gray-200 mb-4 text-lg">Certificate Details</h3>
+                  <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Certificate Details</h3>
                     
                     {/* Student Information */}
-                    <div className="mb-6 p-4 bg-gray-800/70 rounded-lg border border-gray-700">
-                      <h4 className="text-sm uppercase tracking-wider text-gray-400 mb-3">Student Information</h4>
+                    <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                      <h4 className="text-sm uppercase tracking-wider text-gray-500 mb-3">Student Information</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-sm text-gray-400">Student Name</p>
-                          <p className="font-medium text-lg text-white">{searchResult?.name}</p>
+                          <p className="text-sm text-gray-500">Student Name</p>
+                          <p className="font-medium text-lg text-gray-900">{searchResult?.name}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-400">Registration Number</p>
-                          <p className="font-medium text-lg text-white">{searchResult?.id}</p>
+                          <p className="text-sm text-gray-500">Registration Number</p>
+                          <p className="font-medium text-lg text-gray-900">{searchResult?.id}</p>
                         </div>
                       </div>
                     </div>
                     
                     {/* Course Information */}
-                    <div className="p-4 bg-gray-800/70 rounded-lg border border-gray-700">
-                      <h4 className="text-sm uppercase tracking-wider text-gray-400 mb-3">Course Information</h4>
+                    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                      <h4 className="text-sm uppercase tracking-wider text-gray-500 mb-3">Course Information</h4>
                       <div className="space-y-3">
                         <div>
-                          <p className="text-sm text-gray-400">Course</p>
-                          <p className="font-medium text-lg text-white">{getCourseDetails(searchResult?.id || '').fullName}</p>
+                          <p className="text-sm text-gray-500">Course</p>
+                          <p className="font-medium text-lg text-gray-900">{getCourseDetails(searchResult?.id || '').fullName}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-400">Duration</p>
-                          <p className="font-medium text-white">{getCourseDetails(searchResult?.id || '').duration}</p>
+                          <p className="text-sm text-gray-500">Duration</p>
+                          <p className="font-medium text-gray-900">{getCourseDetails(searchResult?.id || '').duration}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-400">Certificate Issue Date</p>
-                          <p className="font-medium text-white">March 23, 2023</p>
+                          <p className="text-sm text-gray-500">Certificate Issue Date</p>
+                          <p className="font-medium text-gray-900">March 23, 2023</p>
                         </div>
                       </div>
                     </div>
@@ -401,15 +394,15 @@ const VerificationPage: React.FC = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center text-center md:flex-row md:text-left md:items-start">
-                <div className="bg-red-900/30 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
-                  <XCircle className="h-12 w-12 text-red-400" />
+                <div className="bg-red-100 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
+                  <XCircle className="h-12 w-12 text-red-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-red-400 mb-2">Invalid Certificate</h2>
-                  <p className="text-gray-300 mb-4">We couldn't verify this certificate. Please check the ID and try again.</p>
-                  <div className="bg-gray-900/50 rounded-xl p-4 md:p-6 border border-gray-700/50">
-                    <p className="text-gray-300">
-                      If you believe this is an error, please contact our support team at <a href="mailto:support@edutou.in" className="text-indigo-400 hover:underline">support@edutou.in</a>
+                  <h2 className="text-2xl font-bold text-red-700 mb-2">Invalid Certificate</h2>
+                  <p className="text-gray-700 mb-4">We couldn't verify this certificate. Please check the ID and try again.</p>
+                  <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+                    <p className="text-gray-700">
+                      If you believe this is an error, please contact our support team at <a href="mailto:support@edutou.in" className="text-[var(--color-brand-dark)] hover:underline">support@edutou.in</a>
                     </p>
                   </div>
                 </div>
@@ -418,16 +411,16 @@ const VerificationPage: React.FC = () => {
           </div>
         )}
 
-        <div className="mt-12 bg-indigo-900/30 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-indigo-800/50">
+        <div className="mt-12 bg-white rounded-2xl p-6 md:p-8 border border-gray-200">
           <div className="flex items-center mb-4">
-            <Award className="h-6 w-6 text-indigo-400 mr-2" />
-            <h2 className="text-xl font-semibold text-white">About Our Certificates</h2>
+            <Award className="h-6 w-6 text-[var(--color-brand-dark)] mr-2" />
+            <h2 className="text-xl font-semibold text-black">About Our Certificates</h2>
           </div>
-          <p className="text-gray-300 mb-4">
+          <p className="text-gray-700 mb-4">
             EDUTOU certificates are issued to students who have successfully completed our courses and met all the requirements. 
             Each certificate has a unique ID that can be verified through this page.
           </p>
-          <p className="text-gray-300">
+          <p className="text-gray-700">
             Our certificates are recognized by industry partners and can help boost your career prospects. 
             For any questions regarding certification, please contact our team.
           </p>

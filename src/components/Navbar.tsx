@@ -140,16 +140,7 @@ const Navbar = () => {
         {(!isMobile || mobileMenuOpen) && (
           <ButtonsContainer $isMobile={isMobile} $menuOpen={mobileMenuOpen}>
             <NavButton
-              to="/help"
-              whileHover={{ scale: 1.05, boxShadow: "4px 4px 0 1px rgba(0,0,0)" }}
-              whileTap={{ scale: 0.95 }}
-              primary={false}
-              $isMobile={isMobile}
-            >
-              Quick Help
-            </NavButton>
-            <NavButton
-              to="/enroll"
+              to="/courses"
               whileHover={{ scale: 1.05, boxShadow: "4px 4px 0 1px rgba(0,0,0)" }}
               whileTap={{ scale: 0.95 }}
               primary={true}
@@ -193,7 +184,7 @@ const StyledNav = styled.div`
 
 const LogoContainer = styled(motion.div)<LogoContainerProps>`
   position: relative;
-  background-color: orange;
+  background-color: var(--color-brand);
   border: 2px solid white;
   padding: ${props => props.expanded ? (props.$isMobile ? '15px' : '25px') : '0 15px'};
   font-family: 'Poppins', sans-serif;
@@ -258,7 +249,7 @@ const NavLink = styled(Link)`
 const NavButton = styled(motion(Link))<NavButtonProps & { $isMobile: boolean }>`
   padding: ${props => props.$isMobile ? '10px 16px' : '12px 24px'};
   border: 2px solid ${props => props.primary ? 'white' : 'black'};
-  background-color: ${props => props.primary ? 'orange' : 'white'};
+  background-color: ${props => props.primary ? 'var(--color-brand)' : 'white'};
   color: ${props => props.primary ? 'white' : 'black'};
   border-radius: ${props => props.$isMobile ? '8px' : '12px'};
   font-weight: 600;
@@ -271,7 +262,7 @@ const NavButton = styled(motion(Link))<NavButtonProps & { $isMobile: boolean }>`
   white-space: nowrap;
   
   &:hover {
-    background-color: ${props => props.primary ? '#ff8c00' : '#f0f0f0'};
+    background-color: ${props => props.primary ? 'var(--color-brand-dark)' : '#f0f0f0'};
     transform: translateY(-2px);
     box-shadow: 4px 4px 0 1px rgba(0,0,0);
   }

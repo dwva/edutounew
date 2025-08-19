@@ -5,36 +5,36 @@ const CourseDetail = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-900 to-purple-900 text-white py-16">
+      <section className="bg-white text-black py-16 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full font-semibold text-sm mb-4">
+              <div className="inline-block px-3 py-1 bg-orange-100 text-[var(--color-brand-dark)] rounded-full font-semibold text-sm mb-4">
                 MOST POPULAR
               </div>
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 Full Stack Foundation: 7-Day AI-Powered Web Development Workshop
               </h1>
-              <p className="text-xl text-indigo-200 mb-8">
+              <p className="text-xl text-gray-700 mb-8">
                 Master the essentials of modern web development in just one week with our AI-enhanced learning approach.
               </p>
               <div className="flex flex-wrap gap-6 mb-8">
                 <div className="flex items-center">
-                  <Clock className="h-5 w-5 text-indigo-300 mr-2" />
+                  <Clock className="h-5 w-5 text-[var(--color-brand-dark)] mr-2" />
                   <span>7 Days</span>
                 </div>
                 <div className="flex items-center">
-                  <Calendar className="h-5 w-5 text-indigo-300 mr-2" />
+                  <Calendar className="h-5 w-5 text-[var(--color-brand-dark)] mr-2" />
                   <span>Cohort-1: 15th to 22nd March </span>
                 </div>
                 <div className="flex items-center">
-                  <Users className="h-5 w-5 text-indigo-300 mr-2" />
+                  <Users className="h-5 w-5 text-[var(--color-brand-dark)] mr-2" />
                   <span>Beginner to Intermediate</span>
                 </div>
               </div>
               <Link 
                 to="/enroll" 
-                className="inline-flex items-center px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-medium transition-colors"
+                className="inline-flex items-center px-6 py-3 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg font-medium transition-colors border border-black"
               >
                 Enroll Now
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -125,12 +125,12 @@ const CourseDetail = () => {
             </div>
 
             <div className="lg:col-span-1">
-              <div className="bg-gray-50 p-6 rounded-xl sticky top-8">
+              <div className="bg-white border border-gray-200 p-6 rounded-xl sticky top-8">
                 <h3 className="text-xl font-bold text-gray-900 mb-6">Course Details</h3>
                 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center">
-                    <Clock className="h-5 w-5 text-indigo-600 mr-3" />
+                    <Clock className="h-5 w-5 text-[var(--color-brand-dark)] mr-3" />
                     <div>
                       <p className="font-medium text-gray-900">Duration</p>
                       <p className="text-gray-600">7 days (1:00-1:30 hours/day)</p>
@@ -138,7 +138,7 @@ const CourseDetail = () => {
                   </div>
                   
                   <div className="flex items-center">
-                    <Calendar className="h-5 w-5 text-indigo-600 mr-3" />
+                    <Calendar className="h-5 w-5 text-[var(--color-brand-dark)] mr-3" />
                     <div>
                       <p className="font-medium text-gray-900">Start Date</p>
                       <p className="text-gray-600">March 15th to 22nd</p>
@@ -146,7 +146,7 @@ const CourseDetail = () => {
                   </div>
                   
                   <div className="flex items-center">
-                    <Users className="h-5 w-5 text-indigo-600 mr-3" />
+                    <Users className="h-5 w-5 text-[var(--color-brand-dark)] mr-3" />
                     <div>
                       <p className="font-medium text-gray-900">Skill Level</p>
                       <p className="text-gray-600">Beginner to Intermediate</p>
@@ -154,7 +154,7 @@ const CourseDetail = () => {
                   </div>
                   
                   <div className="flex items-center">
-                    <Award className="h-5 w-5 text-indigo-600 mr-3" />
+                    <Award className="h-5 w-5 text-[var(--color-brand-dark)] mr-3" />
                     <div>
                       <p className="font-medium text-gray-900">Certificate</p>
                       <p className="text-gray-600">Yes, upon completion</p>
@@ -182,7 +182,7 @@ const CourseDetail = () => {
                 
                 <Link 
                   to="/enroll" 
-                  className="block w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-center rounded-lg font-medium transition-colors"
+                  className="block w-full py-3 px-4 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white text-center rounded-lg font-medium transition-colors border border-black"
                 >
                   Enroll Now
                 </Link>
@@ -195,7 +195,7 @@ const CourseDetail = () => {
       
 
       {/* FAQ Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
           
@@ -232,22 +232,22 @@ const CourseDetail = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-indigo-900 to-purple-900 text-white">
+      <section className="py-16 bg-white text-black border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Skills?</h2>
-          <p className="text-xl text-indigo-200 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
             Join our next cohort and start your journey to becoming a full stack developer.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link 
               to="/contact" 
-              className="px-8 py-3 bg-white text-indigo-900 hover:bg-indigo-100 rounded-lg font-medium transition-colors"
+              className="px-8 py-3 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg font-medium transition-colors border border-black"
             >
               Enroll Now
             </Link>
             <Link 
               to="/courses" 
-              className="px-8 py-3 bg-transparent border border-white hover:bg-indigo-800 rounded-lg font-medium transition-colors"
+              className="px-8 py-3 bg-white border border-black hover:bg-gray-100 rounded-lg font-medium transition-colors"
             >
               Explore Other Courses
             </Link>

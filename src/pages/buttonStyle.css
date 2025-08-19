@@ -1,7 +1,7 @@
 /* buttonStyle.css */
 
 .custom-enroll-button.awesome-button {
-    background-color: #fca311 !important; /* light orange */
+    background-color: var(--color-brand) !important;
     border: 2px solid white !important;
     color: white !important;
     font-weight: 600;
@@ -12,7 +12,7 @@
   }
   
   .custom-enroll-button.awesome-button:hover {
-    background-color: #ffb733 !important;
+    background-color: var(--color-brand-dark) !important;
     transform: scale(1.05);
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
   }

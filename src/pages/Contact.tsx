@@ -37,10 +37,10 @@ const Contact = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-900 to-purple-900 text-white py-20">
+      <section className="bg-white text-black py-20 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-          <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Have questions about our courses or want to enroll? We're here to help!
           </p>
         </div>
@@ -58,7 +58,7 @@ const Contact = () => {
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start">
-                  <Mail className="h-6 w-6 text-indigo-600 mt-1 mr-4" />
+                  <Mail className="h-6 w-6 text-[var(--color-brand-dark)] mt-1 mr-4" />
                   <div>
                     <h3 className="font-bold text-gray-900">Email Us</h3>
                     <p className="text-gray-700">edutouskillacademy@gmail.com</p>
@@ -66,7 +66,7 @@ const Contact = () => {
                 </div>
                 
                 <div className="flex items-start">
-                  <Phone className="h-6 w-6 text-indigo-600 mt-1 mr-4" />
+                  <Phone className="h-6 w-6 text-[var(--color-brand-dark)] mt-1 mr-4" />
                   <div>
                     <h3 className="font-bold text-gray-900">Call Us</h3>
                     <p className="text-gray-700">+91 90804 69741</p>
@@ -77,22 +77,22 @@ const Contact = () => {
           
               </div>
               
-              <div className="bg-gray-50 p-6 rounded-xl">
+              <div className="bg-white border border-gray-200 p-6 rounded-xl">
                 <div className="flex items-center mb-4">
-                  <MessageSquare className="h-6 w-6 text-indigo-600 mr-3" />
+                  <MessageSquare className="h-6 w-6 text-[var(--color-brand-dark)] mr-3" />
                   <h3 className="text-xl font-bold text-gray-900">Live Chat Support</h3>
                 </div>
                 <p className="text-gray-700 mb-4">
                   Need immediate assistance? Our support team is available for live chat during business hours.
                 </p>
-                <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                <button className="px-4 py-2 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg font-medium transition-colors border border-black">
                   Start Chat
                 </button>
               </div>
             </div>
             
             <div>
-              <form onSubmit={handleSubmit} className="bg-gray-50 p-8 rounded-xl">
+              <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-8 rounded-xl">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
                 
                 <div className="space-y-6">
@@ -189,7 +189,7 @@ const Contact = () => {
                   
                   <button
                     type="submit"
-                    className="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
+                    className="w-full px-6 py-3 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg font-medium transition-colors flex items-center justify-center border border-black"
                   >
                     <Send className="h-5 w-5 mr-2" />
                     Send Message

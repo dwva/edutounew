@@ -85,8 +85,8 @@ const Enrollment = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Left Column */}
         <div>
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 mb-8 text-white">
-            <div className="animate-pulse inline-block bg-yellow-400 text-black font-bold px-4 py-1 rounded-full mb-4">
+          <div className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 text-black">
+            <div className="inline-block bg-orange-100 text-[var(--color-brand-dark)] font-bold px-4 py-1 rounded-full mb-4 border border-black/0">
               🎯 Limited Seats Available
             </div>
             <h1 className="text-4xl font-bold mb-4">
@@ -94,15 +94,15 @@ const Enrollment = () => {
             </h1>
 
             <div className="flex flex-wrap gap-4 mb-6">
-              <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
+              <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
                 <Clock className="h-5 w-5" />
                 <span>7 Days Intensive</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
+              <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
                 <Calendar className="h-5 w-5" />
                 <span>Live Sessions</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
+              <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
                 <Users className="h-5 w-5" />
                 <span>Limited Seats</span>
               </div>
@@ -114,7 +114,7 @@ const Enrollment = () => {
 
             <div className="space-y-4">
               {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center gap-3 bg-white/10 p-3 rounded-lg">
+                <div key={index} className="flex items-center gap-3 bg-orange-50 p-3 rounded-lg">
                   {benefit.icon}
                   <span>{benefit.text}</span>
                 </div>
@@ -131,7 +131,7 @@ const Enrollment = () => {
               type="text"
               required
               placeholder="Full Name"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
@@ -139,7 +139,7 @@ const Enrollment = () => {
               type="email"
               required
               placeholder="Email Address"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
@@ -147,7 +147,7 @@ const Enrollment = () => {
               type="tel"
               required
               placeholder="WhatsApp Number"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />
@@ -155,14 +155,14 @@ const Enrollment = () => {
               type="text"
               required
               placeholder="College / Institution"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
               value={formData.college}
               onChange={(e) => setFormData({ ...formData, college: e.target.value })}
             />
             <input
               type="text"
               placeholder="Referral Code (Optional)"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
               value={formData.referralCode}
               onChange={(e) => setFormData({ ...formData, referralCode: e.target.value })}
             />
@@ -170,7 +170,7 @@ const Enrollment = () => {
             <button
               type="button"
               onClick={handlePhonePePayment}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg disabled:opacity-50"
+              className="w-full bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white font-bold py-3 rounded-lg disabled:opacity-50 border border-black"
               disabled={loading}
             >
               {loading ? "Processing..." : "Pay with PhonePe"}

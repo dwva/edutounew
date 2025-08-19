@@ -11,7 +11,29 @@ export default {
       },
       animation: {
         shimmer: 'shimmer 2s infinite'
-      }
+      },
+      colors: {
+        brand: {
+          DEFAULT: '#fca311',
+          dark: '#ff8c00',
+        },
+      },
+      fontFamily: {
+        sans: [
+          'Poppins',
+          'Inter',
+          'ui-sans-serif',
+          'system-ui',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'Noto Sans',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+        ],
+      },
     },
   },
   plugins: [],
