@@ -140,7 +140,7 @@ const InfiniteMovingCards = ({
 };
 
 // -----------------------------
-// InfiniteMovingCardsDemo Component (Updated with white cards)
+// InfiniteMovingCardsDemo Component (Updated with white cards and three rows)
 // -----------------------------
 export function InfiniteMovingCardsDemo() {
   const testimonials = [
@@ -169,12 +169,69 @@ export function InfiniteMovingCardsDemo() {
       name: "Alex Thompson",
       title: "Software Engineer",
     },
+    {
+      quote: "The curriculum was perfectly challenging but achievable. I felt accomplished after each module.",
+      name: "Jessica Lee",
+      title: "Data Scientist",
+    },
+    {
+      quote: "The career support was exceptional. They helped me negotiate a 30% higher salary than my initial offer.",
+      name: "Ryan Park",
+      title: "Machine Learning Engineer",
+    },
+    {
+      quote: "I was able to switch careers in just 6 months. The hands-on projects made all the difference.",
+      name: "Maria Garcia",
+      title: "Full Stack Developer",
+    },
+    {
+      quote: "The instructors were always available and provided detailed feedback on my code. It felt like a personalized bootcamp.",
+      name: "James Wilson",
+      title: "Backend Developer",
+    },
+    {
+      quote: "The platform's intuitive design made learning enjoyable. I looked forward to my daily study sessions.",
+      name: "Sophia Kim",
+      title: "UI/UX Designer",
+    },
+    {
+      quote: "I appreciated how the courses were updated regularly with the latest industry trends and technologies.",
+      name: "Daniel Brown",
+      title: "DevOps Engineer",
+    },
+    {
+      quote: "The capstone project was the highlight. I built a real application that I'm proud to show to employers.",
+      name: "Olivia Martinez",
+      title: "Product Designer",
+    },
   ];
+
+  // Split testimonials into three groups for three rows
+  const row1 = testimonials.slice(0, 4);
+  const row2 = testimonials.slice(4, 8);
+  const row3 = testimonials.slice(8, 12);
 
   return (
     <div className="py-12 rounded-md flex flex-col antialiased bg-white items-center justify-center relative overflow-hidden">
+      {/* First row */}
       <InfiniteMovingCards
-        items={testimonials}
+        items={row1}
+        direction="right"
+        speed="slow"
+        className="mb-6"
+      />
+      
+      {/* Second row */}
+      <InfiniteMovingCards
+        items={row2}
+        direction="left"
+        speed="slow"
+        className="mb-6"
+      />
+      
+      {/* Third row */}
+      <InfiniteMovingCards
+        items={row3}
         direction="right"
         speed="slow"
       />
@@ -271,7 +328,7 @@ const InfiniteMovingTestimonials = ({
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-50%));
+            transform: translateX(calc(-50% - 1rem));
           }
         }
         .animate-scroll-horizontal {
@@ -685,44 +742,6 @@ const Home = () => {
     { name: 'DataFlow' },
   ];
 
-  const testimonials = [
-    {
-      quote: 'My approach to AI development.',
-      name: 'Sarah Johnson',
-      title: 'Frontend Developer',
-    },
-    {
-      quote: 'I learned more in one week than I did in months of self-study.',
-      name: 'Michael Chen',
-      title: 'Computer Science Student',
-    },
-    {
-      quote: "The AI recommendations were spot on!",
-      name: 'David Rodriguez',
-      title: 'UX Designer',
-    },
-    {
-      quote: "Worth every penny!",
-      name: 'Emily Wilson',
-      title: 'Product Manager',
-    },
-    {
-      quote: 'The community support was amazing.',
-      name: 'Alex Thompson',
-      title: 'Software Engineer',
-    },
-    {
-      quote: 'The curriculum was perfectly challenging but achievable.',
-      name: 'Jessica Lee',
-      title: 'Data Scientist',
-    },
-    {
-      quote: 'The career support was exceptional.',
-      name: 'Ryan Park',
-      title: 'Machine Learning Engineer',
-    },
-  ];
-
   return (
     <div className="bg-white text-gray-900">
       <style>
@@ -771,7 +790,7 @@ const Home = () => {
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
               className="mb-8"
             >
-              <Link to="/enroll" className="flex items-center">
+              <Link to="/currentcourse" className="flex items-center">
                 Enroll Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>

@@ -4,6 +4,9 @@ import { X, ChevronDown, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 
+// Import your logo (adjust the path as needed)
+import logo from './download.png';
+
 interface LogoContainerProps {
   expanded: boolean;
   $isMobile: boolean;
@@ -13,14 +16,12 @@ interface LogoHeaderProps {
   expanded: boolean;
 }
 
-interface NavButtonProps {
-  primary: boolean;
-}
-
 const Navbar = () => {
   const [expanded, setExpanded] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,15 +32,35 @@ const Navbar = () => {
       }
     };
 
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past 100px - hide navbar
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY || currentScrollY <= 50) {
+        // Scrolling up or at top - show navbar
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
 
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
-    { name: 'All Courses', path: '/courses' },
+    { name: 'All Courses', path: '/PROJECTS' },
     { name: 'Certification Programs', path: '/certifications' },
+    { name: 'contact', path: '/Contact' }
   ];
 
   const toggleMobileMenu = () => {
@@ -50,9 +71,15 @@ const Navbar = () => {
     }
   };
 
+  const toggleExpanded = () => {
+    if (!isMobile) {
+      setExpanded(!expanded);
+    }
+  };
+
   return (
-    <StyledNav>
-      <nav className={`fixed top-0 left-0 w-full px-4 md:px-6 z-50 flex items-start justify-between ${isMobile ? 'py-2 bg-white shadow-md' : 'py-6'}`}>
+    <StyledNav $isVisible={isVisible}>
+      <nav className={`fixed top-0 left-0 w-full px-4 md:px-4 z-50 flex items-start justify-between ${isMobile ? 'py-2 bg-white shadow-md' : 'py-3'}`}>
         {/* Mobile Menu Button - Only shows on mobile */}
         {isMobile && (
           <MobileMenuButton
@@ -60,18 +87,18 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </MobileMenuButton>
         )}
 
-        {/* Expandable Logo Container */}
+        {/* Compact Logo Container */}
         <LogoContainer
           initial={false}
           animate={{
-            width: expanded ? (isMobile ? '90vw' : 380) : (isMobile ? 120 : 160),
-            height: expanded ? 'auto' : (isMobile ? 40 : 50),
-            borderRadius: expanded ? 20 : 12,
-            marginLeft: isMobile ? 'auto' : '6rem',
+            width: expanded ? (isMobile ? '90vw' : 220) : (isMobile ? 90 : 100),
+            height: expanded ? 'auto' : (isMobile ? 35 : 40),
+            borderRadius: expanded ? 12 : 8,
+            marginLeft: isMobile ? 'auto' : '2rem',
             marginRight: isMobile && !expanded ? 'auto' : 0,
           }}
           transition={{ 
@@ -85,16 +112,17 @@ const Navbar = () => {
         >
           {/* Clickable Logo Header */}
           <LogoHeader 
-            onClick={() => !isMobile && setExpanded(!expanded)}
+            onClick={toggleExpanded}
             expanded={expanded}
           >
-            <span className={`font-bold mx-2 ${isMobile ? 'text-lg' : 'text-xl'}`}>Edutou</span>
+            {/* Logo image instead of text */}
+            <LogoImage src={logo} alt="Edutou Logo" />
             {!isMobile && (
               <motion.div
                 animate={{ rotate: expanded ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <ChevronDown size={20} />
+                <ChevronDown size={16} />
               </motion.div>
             )}
           </LogoHeader>
@@ -136,21 +164,6 @@ const Navbar = () => {
           )}
         </LogoContainer>
 
-        {/* Right Side Buttons - Hidden on mobile when menu is closed */}
-        {(!isMobile || mobileMenuOpen) && (
-          <ButtonsContainer $isMobile={isMobile} $menuOpen={mobileMenuOpen}>
-            <NavButton
-              to="/courses"
-              whileHover={{ scale: 1.05, boxShadow: "4px 4px 0 1px rgba(0,0,0)" }}
-              whileTap={{ scale: 0.95 }}
-              primary={true}
-              $isMobile={isMobile}
-            >
-              Enroll Now
-            </NavButton>
-          </ButtonsContainer>
-        )}
-
         {/* Mobile Menu Content */}
         {isMobile && mobileMenuOpen && (
           <MobileMenu
@@ -177,27 +190,30 @@ const Navbar = () => {
 };
 
 // Styled Components
-const StyledNav = styled.div`
+const StyledNav = styled.div<{ $isVisible: boolean }>`
   position: relative;
   z-index: 1000;
+  transform: translateY(${props => props.$isVisible ? '0' : '-100%'});
+  transition: transform 0.3s ease-in-out;
 `;
 
 const LogoContainer = styled(motion.div)<LogoContainerProps>`
   position: relative;
   background-color: var(--color-brand);
   border: 2px solid white;
-  padding: ${props => props.expanded ? (props.$isMobile ? '15px' : '25px') : '0 15px'};
+  padding: ${props => props.expanded ? (props.$isMobile ? '12px' : '18px') : '0 10px'};
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
   display: flex;
   flex-direction: column;
-  min-height: ${props => props.expanded ? (props.$isMobile ? 'auto' : '320px') : 'auto'};
+  min-height: ${props => props.expanded ? (props.$isMobile ? 'auto' : '250px') : 'auto'};
   z-index: 1001;
+  cursor: pointer;
 
   &:hover {
-    box-shadow: ${props => !props.$isMobile && '4px 4px 0 1px rgba(0,0,0)'};
-    transform: ${props => !props.$isMobile && 'translateY(-2px)'};
+    box-shadow: ${props => !props.$isMobile && '3px 3px 0 1px rgba(0,0,0)'};
+    transform: ${props => !props.$isMobile && 'translateY(-1px)'};
   }
 
   @media (max-width: 768px) {
@@ -209,62 +225,47 @@ const LogoContainer = styled(motion.div)<LogoContainerProps>`
 const LogoHeader = styled.div<LogoHeaderProps>`
   display: flex;
   align-items: center;
-  padding: ${props => props.expanded ? '0 0 15px 0' : '10px 0'};
+  padding: ${props => props.expanded ? '0 0 10px 0' : '6px 0'};
   width: 100%;
   color: black;
   font-weight: bold;
   cursor: pointer;
   border-bottom: ${props => props.expanded ? '2px dashed rgba(0,0,0,0.1)' : 'none'};
+  justify-content: space-between;
+`;
+
+const LogoImage = styled.img`
+  height: 24px;
+  width: auto;
+  object-fit: contain;
 `;
 
 const NavContent = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  padding-top: 10px;
+  padding-top: 8px;
   overflow: hidden;
 `;
 
 const NavItem = styled(motion.div)`
-  margin: 8px 0;
+  margin: 5px 0;
 `;
 
 const NavLink = styled(Link)`
   display: block;
-  padding: 12px 15px;
+  padding: 8px 10px;
   color: black;
   background: rgba(255,255,255,0.3);
-  border-radius: 10px;
+  border-radius: 6px;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
   transition: all 0.2s ease;
 
   &:hover {
     background: rgba(255,255,255,0.5);
-    transform: translateX(8px);
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
-  }
-`;
-
-const NavButton = styled(motion(Link))<NavButtonProps & { $isMobile: boolean }>`
-  padding: ${props => props.$isMobile ? '10px 16px' : '12px 24px'};
-  border: 2px solid ${props => props.primary ? 'white' : 'black'};
-  background-color: ${props => props.primary ? 'var(--color-brand)' : 'white'};
-  color: ${props => props.primary ? 'white' : 'black'};
-  border-radius: ${props => props.$isMobile ? '8px' : '12px'};
-  font-weight: 600;
-  font-size: ${props => props.$isMobile ? '14px' : '15px'};
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  white-space: nowrap;
-  
-  &:hover {
-    background-color: ${props => props.primary ? 'var(--color-brand-dark)' : '#f0f0f0'};
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 0 1px rgba(0,0,0);
+    transform: translateX(5px);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.1);
   }
 `;
 
@@ -272,50 +273,34 @@ const MobileMenuButton = styled(motion.button)`
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
-  margin-right: 10px;
+  padding: 6px;
+  margin-right: 8px;
   z-index: 1002;
 `;
 
 const MobileMenu = styled(motion.div)`
   position: fixed;
-  top: 60px;
+  top: 50px;
   left: 0;
   right: 0;
   background: white;
-  padding: 20px;
+  padding: 15px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   z-index: 1000;
 `;
 
 const MobileNavItem = styled.div`
-  padding: 12px 0;
+  padding: 8px 0;
   border-bottom: 1px solid #eee;
 `;
 
 const MobileNavLink = styled(Link)`
   color: black;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   display: block;
-  padding: 8px 0;
-`;
-
-const ButtonsContainer = styled.div<{ $isMobile: boolean; $menuOpen: boolean }>`
-  display: flex;
-  gap: ${props => props.$isMobile ? '8px' : '12px'};
-  margin-top: ${props => props.$isMobile ? '0' : '8px'};
-  margin-right: ${props => props.$isMobile ? '0' : '24px'};
-  flex-direction: ${props => props.$isMobile && props.$menuOpen ? 'column' : 'row'};
-  position: ${props => props.$isMobile && props.$menuOpen ? 'fixed' : 'static'};
-  top: ${props => props.$isMobile && props.$menuOpen ? '120px' : 'auto'};
-  right: ${props => props.$isMobile && props.$menuOpen ? '20px' : 'auto'};
-  z-index: ${props => props.$isMobile && props.$menuOpen ? '1001' : 'auto'};
-  background: ${props => props.$isMobile && props.$menuOpen ? 'white' : 'transparent'};
-  padding: ${props => props.$isMobile && props.$menuOpen ? '15px' : '0'};
-  border-radius: ${props => props.$isMobile && props.$menuOpen ? '12px' : '0'};
-  box-shadow: ${props => props.$isMobile && props.$menuOpen ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'};
+  padding: 5px 0;
 `;
 
 export { Navbar };

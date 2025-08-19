@@ -19,6 +19,8 @@ const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const Webinar = lazy(() => import("./pages/Webinar"));
 const VerificationPage = lazy(() => import("./pages/VerificationPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const PROJECTS = lazy(() => import("./pages/PROJECTS"));
+const Currentcourse = lazy(() => import("./pages/currentcourse"));
 
 const App: React.FC = () => {
   return (
@@ -40,6 +42,8 @@ const App: React.FC = () => {
             <Route path="/webinars" element={<Webinar />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/certifications" element={<VerificationPage />} />
+            <Route path="/PROJECTS" element={<PROJECTS />} />
+            <Route path="/currentcourse" element={<Currentcourse />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

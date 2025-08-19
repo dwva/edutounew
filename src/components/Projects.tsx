@@ -1,151 +1,236 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ProjectCard, { type Project } from './ProjectCard';
+import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight, Star, Users, Clock, Code, Zap, Cpu, Server, Database, Brain } from 'lucide-react';
 
-export default function Projects() {
-	const [isVisible, setIsVisible] = useState(false);
-	const scrollerRef = useRef<HTMLDivElement>(null);
+export type Project = {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    tech: string[];
+    status: 'current' | 'soon';
+    enroll?: string;
+    details?: string;
+};
 
-	const projects: Project[] = [
-		{
-			id: 1,
-			title: 'Full Stack Development Powered by AI',
-			description:
-				'Hands-on full stack program enhanced by AI guidance. Build and deploy apps using React, Node.js, and databases with AI-assisted workflows.',
-			image: '/placeholder.svg',
-			tech: ['React', 'Node.js', 'MongoDB', 'AI'],
-			status: 'current',
-			enroll: '/enroll',
-		},
-		{
-			id: 2,
-			title: 'Front End Development',
-			description:
-				'Modern frontend engineering with React, component-driven design, performance optimization, and accessibility best practices.',
-			image: '/placeholder.svg',
-			tech: ['React', 'Vite', 'Tailwind'],
-			status: 'current',
-			enroll: '/enroll',
-		},
-		{
-			id: 3,
-			title: 'Zero-Hero AI Tools for Development',
-			description:
-				'Learn practical AI tooling to accelerate development: code assistance, testing, documentation, and automation from zero to hero.',
-			image: '/placeholder.svg',
-			tech: ['OpenAI', 'VSCode', 'Automation'],
-			status: 'current',
-			enroll: '/enroll',
-		},
-		{
-			id: 4,
-			title: 'Pure Backend Development',
-			description:
-				'APIs, microservices, databases, and production-ready backends with robust testing and observability.',
-			image: '/placeholder.svg',
-			tech: ['Node.js', 'PostgreSQL', 'Docker'],
-			status: 'soon',
-			details: '/courses',
-		},
-		{
-			id: 5,
-			title: 'Zero-Hero Python Development',
-			description:
-				'Python fundamentals to advanced: scripting, data handling, APIs, and packaging with real projects.',
-			image: '/placeholder.svg',
-			tech: ['Python', 'FastAPI', 'Pandas'],
-			status: 'soon',
-			details: '/courses',
-		},
-		{
-			id: 6,
-			title: 'AI Essentials',
-			description:
-				'Core AI concepts, prompts, embeddings, vector stores, and deployment practices for practical AI apps.',
-			image: '/placeholder.svg',
-			tech: ['AI', 'Embeddings', 'Vector DB'],
-			status: 'current',
-			enroll: '/enroll',
-		},
-	];
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			([entry]) => entry.isIntersecting && setIsVisible(true),
-			{ threshold: 0.1 }
-		);
-		const el = document.getElementById('projects');
-		if (el) observer.observe(el);
-		return () => observer.disconnect();
-	}, []);
-
-	const scrollByAmount = (amount: number) => {
-		if (scrollerRef.current) {
-			scrollerRef.current.scrollBy({ left: amount, behavior: 'smooth' });
-		}
-	};
-
-	return (
-		<section id="projects" className="py-20 bg-white relative overflow-hidden">
-			<div className="absolute inset-0 opacity-5 pointer-events-none">
-				<div
-					className="absolute inset-0"
-					style={{
-						backgroundImage:
-							'radial-gradient(circle at 25% 25%, var(--color-brand) 0%, transparent 50%), radial-gradient(circle at 75% 75%, var(--color-brand) 0%, transparent 50%)',
-					}}
-				/>
-			</div>
-
-			<div className="max-w-6xl mx-auto px-6 relative z-10">
-				<div
-					className={`text-center mb-10 transition-all duration-1000 ${
-						isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-					}`}
-				>
-					<h2 className="text-4xl md:text-5xl font-bold text-black mb-2">
-						Explore Our <span className="text-[var(--color-brand-dark)]">Courses</span>
-					</h2>
-					<p className="text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
-						Choose a program and move through the cards with the arrows.
-					</p>
-				</div>
-
-				<div className="relative">
-					<button
-						aria-label="scroll left"
-						onClick={() => scrollByAmount(-400)}
-						className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full border border-black bg-white shadow hover:bg-gray-50"
-					>
-						<span className="text-xl">‹</span>
-					</button>
-					<div
-						ref={scrollerRef}
-						className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
-						style={{ scrollbarWidth: 'thin' }}
-					>
-						{projects.map((project, index) => (
-							<div
-								key={project.id}
-								className={`min-w-[380px] max-w-[420px] snap-start transition-all duration-1000 ${
-									isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-								}`}
-								style={{ transitionDelay: `${index * 100}ms` }}
-							>
-								<ProjectCard project={project} />
-							</div>
-						))}
-					</div>
-					<button
-						aria-label="scroll right"
-						onClick={() => scrollByAmount(400)}
-						className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full border border-black bg-white shadow hover:bg-gray-50"
-					>
-						<span className="text-xl">›</span>
-					</button>
-				</div>
-			</div>
-		</section>
-	);
+function ProjectCard({ project, hideTech = false }: { project: Project; hideTech?: boolean }) {
+    return (
+        <div className="bg-white border-2 border-black rounded-xl shadow-sm overflow-hidden flex flex-col h-full hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.2)] transition-transform hover:-translate-y-0.5">
+            <div className="aspect-video bg-gray-100 border-b-2 border-black">
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+            </div>
+            <div className="p-5 flex flex-col gap-3 flex-1">
+                <h3 className="text-lg font-bold text-gray-900">{project.title}</h3>
+                <p className="text-sm text-gray-700 leading-relaxed flex-1">{project.description}</p>
+                {!hideTech && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {project.tech.map((t) => (
+                            <span key={t} className="px-2 py-1 text-xs rounded-full bg-orange-50 text-orange-800 border border-orange-100">
+                                {t}
+                            </span>
+                        ))}
+                    </div>
+                )}
+            </div>
+            <div className="px-5 pb-5 pt-1 flex items-center gap-3">
+                {project.status === 'current' ? (
+                    <button className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white border-2 border-black transition-colors text-sm font-semibold">
+                        Enroll
+                    </button>
+                ) : (
+                    <button className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-400 text-white border-2 border-black cursor-not-allowed text-sm font-semibold">
+                        Soon
+                    </button>
+                )}
+            </div>
+        </div>
+    );
 }
 
+const CourseCarousel = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
 
+    const courses: Project[] = [
+        {
+            id: 1,
+            title: "Full Stack Development Powered by AI",
+            description: "Build modern web applications using AI-powered tools and frameworks. Master both frontend and backend development with cutting-edge AI assistance.",
+            image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop",
+            tech: ["React", "Node.js", "AI Tools", "MongoDB"],
+            status: "current"
+        },
+        {
+            id: 2,
+            title: "Front End Development",
+            description: "Master modern frontend technologies including React, Vue, and advanced CSS to create stunning, responsive user interfaces.",
+            image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=250&fit=crop",
+            tech: ["React", "Vue", "CSS3", "JavaScript"],
+            status: "current"
+        },
+        {
+            id: 3,
+            title: "Zero-Hero AI Tools for Development",
+            description: "Learn to leverage AI tools to supercharge your development workflow and build intelligent applications from scratch.",
+            image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop",
+            tech: ["OpenAI", "GitHub Copilot", "ChatGPT", "AI APIs"],
+            status: "current"
+        },
+        {
+            id: 4,
+            title: "Pure Backend Development",
+            description: "Deep dive into server-side development, APIs, databases, and cloud architecture for building robust, scalable applications.",
+            image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop",
+            tech: ["Node.js", "Express", "PostgreSQL", "AWS"],
+            status: "soon"
+        },
+        {
+            id: 5,
+            title: "Zero-Hero Python Development",
+            description: "Master Python from basics to advanced concepts including web development, data analysis, automation, and machine learning.",
+            image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=400&h=250&fit=crop",
+            tech: ["Python", "Django", "Flask", "Pandas"],
+            status: "soon"
+        },
+        {
+            id: 6,
+            title: "AI Essentials",
+            description: "Understanding core AI concepts, machine learning fundamentals, and practical AI implementation strategies for developers.",
+            image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=250&fit=crop",
+            tech: ["Machine Learning", "TensorFlow", "PyTorch", "Data Science"],
+            status: "current"
+        }
+    ];
+
+    const nextSlide = () => {
+        setCurrentSlide((prev) => (prev + 1) % (courses.length - 2));
+    };
+
+    const prevSlide = () => {
+        setCurrentSlide((prev) => (prev - 1 + (courses.length - 2)) % (courses.length - 2));
+    };
+
+    const visibleCourses = courses.slice(currentSlide, currentSlide + 3);
+
+    return (
+        <div className="bg-gray-50 min-h-screen p-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="relative">
+                    {/* Navigation Buttons */}
+                    <button
+                        onClick={prevSlide}
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-100 border-2 border-black rounded-full p-3 transition-all duration-300 shadow-lg"
+                        disabled={currentSlide === 0}
+                        title="Previous Slide"
+                        aria-label="Previous Slide"
+                    >
+                        <ChevronLeft className="w-6 h-6 text-black" />
+                    </button>
+
+                    <button
+                        onClick={nextSlide}
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white hover:bg-gray-100 border-2 border-black rounded-full p-3 transition-all duration-300 shadow-lg"
+                        disabled={currentSlide >= courses.length - 3}
+                        title="Next Slide"
+                        aria-label="Next Slide"
+                    >
+                        <ChevronRight className="w-6 h-6 text-black" />
+                    </button>
+
+                    {/* Course Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-16">
+                        {visibleCourses.map((course) => (
+                            <ProjectCard key={course.id} project={course} />
+                        ))}
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export type Workshop = {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    status: 'current' | 'soon';
+    enroll?: string;
+    details?: string;
+};
+
+function WorkshopCard({ workshop }: { workshop: Workshop }) {
+    return (
+        <div className="bg-white border-2 border-black rounded-xl shadow-sm overflow-hidden flex flex-col h-full hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.2)] transition-transform hover:-translate-y-0.5">
+            <div className="aspect-video bg-gray-100 border-b-2 border-black">
+                <img src={workshop.image} alt={workshop.title} className="w-full h-full object-cover" />
+            </div>
+            <div className="p-5 flex flex-col gap-3 flex-1">
+                <h3 className="text-lg font-bold text-gray-900">{workshop.title}</h3>
+                <p className="text-sm text-gray-700 leading-relaxed flex-1">{workshop.description}</p>
+            </div>
+            <div className="px-5 pb-5 pt-1 flex items-center gap-3">
+                <button className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white border-2 border-black transition-colors text-sm font-semibold">
+                    Register
+                </button>
+            </div>
+        </div>
+    );
+}
+
+const WorkshopCards = () => {
+    const workshops: Workshop[] = [
+        {
+            id: 1,
+            title: "Full Stack Development Powered by AI Workshop",
+            description: "Hands-on workshop covering full-stack development with AI integration. Build a complete project while learning to use AI tools effectively in your development workflow.",
+            image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=250&fit=crop",
+            status: "current"
+        },
+        {
+            id: 2,
+            title: "AI Essentials Workshop",
+            description: "Interactive workshop for understanding core AI concepts and practical implementation. Get hands-on experience with machine learning tools and AI APIs.",
+            image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=250&fit=crop",
+            status: "current"
+        },
+        {
+            id: 3,
+            title: "Zero-Hero AI Tools for Development Workshop",
+            description: "Practical workshop to master AI development tools. Learn to integrate ChatGPT, GitHub Copilot, and other AI assistants into your coding practice.",
+            image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&h=250&fit=crop",
+            status: "current"
+        },
+        {
+            id: 4,
+            title: "Front End Development Workshop",
+            description: "Intensive workshop on modern frontend development. Build responsive, interactive user interfaces using the latest frameworks and best practices.",
+            image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop",
+            status: "current"
+        }
+    ];
+
+    return (
+        <div className="bg-gray-50 p-8">
+            <div className="max-w-7xl mx-auto">
+                <h1 className="text-4xl font-bold text-gray-900 mb-12 text-center">Featured Workshops</h1>
+                
+                {/* Workshop Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {workshops.map((workshop) => (
+                        <WorkshopCard key={workshop.id} workshop={workshop} />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default function CombinedComponent() {
+    return (
+        <div>
+            <CourseCarousel />
+            <WorkshopCards />
+        </div>
+    );
+}

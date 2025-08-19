@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import {
   Instagram,
   Github,
-  MessageSquareText, // Used as WhatsApp icon placeholder
+  MessageSquareText, 
 } from 'lucide-react';
-import downloadLogo from './download.png'; // ✅ Your image
+import downloadLogo from './download.png'; 
 
 export default function RejouiceFooter() {
   const [isIntersecting, setIsIntersecting] = useState(false);
@@ -56,7 +56,11 @@ export default function RejouiceFooter() {
                   placeholder="Email"
                   className="w-full bg-transparent border-b border-gray-400 py-1 focus:outline-none focus:border-black transition-colors text-sm"
                 />
-                <button className="absolute right-0 top-1/2 transform -translate-y-1/2">
+                <button
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2"
+                  aria-label="Subscribe"
+                  title="Subscribe"
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>

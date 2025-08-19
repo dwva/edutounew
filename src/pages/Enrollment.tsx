@@ -22,9 +22,9 @@ const Enrollment = () => {
   const [message, setMessage] = useState("");
 
   const benefits = [
-    { icon: <BookOpen className="h-6 w-6" />, text: "Live Classes For all 7 days" },
+    { icon: <BookOpen className="h-6 w-6" />, text: "Live Classes For all 3 days" },
     { icon: <Trophy className="h-6 w-6" />, text: "Certificate of Completion with online verification" },
-    { icon: <Star className="h-6 w-6" />, text: "1 Year of Community Support" },
+    { icon: <Star className="h-6 w-6" />, text: "Community Support" },
     { icon: <CheckCircle className="h-6 w-6" />, text: "Limited slots available, book now and secure your spots" },
   ];
 
@@ -55,7 +55,7 @@ const Enrollment = () => {
         phone: formData.phone,
         college: formData.college,
         referralCode: formData.referralCode || "", // Avoid null if not filled
-        courseName: "Full Stack Foundation Workshop",
+        courseName: "AI Essentials & Fundamentals Workshop",
       }),
     });
 
@@ -90,17 +90,17 @@ const Enrollment = () => {
               🎯 Limited Seats Available
             </div>
             <h1 className="text-4xl font-bold mb-4">
-              Full Stack Foundation Workshop
+              Crack AI Essentials in 3 Days
             </h1>
 
             <div className="flex flex-wrap gap-4 mb-6">
               <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
                 <Clock className="h-5 w-5" />
-                <span>7 Days Intensive</span>
+                <span>3 Days Intensive</span>
               </div>
               <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
                 <Calendar className="h-5 w-5" />
-                <span>Live Sessions</span>
+                <span>Sept 1-3</span>
               </div>
               <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
                 <Users className="h-5 w-5" />

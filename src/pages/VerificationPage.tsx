@@ -319,6 +319,8 @@ const VerificationPage: React.FC = () => {
                   onClick={handleVerify}
                   disabled={isSearching || !certificateId}
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full bg-orange-100 text-[var(--color-brand-dark)] hover:bg-orange-200 disabled:opacity-50"
+                  title="Verify Certificate"
+                  aria-label="Verify Certificate"
                 >
                   <Search className="h-5 w-5" />
                 </button>
