@@ -8,8 +8,8 @@ import Loading from "./components/Loading";
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
-const Courses = lazy(() => import("./pages/Courses"));
-const CourseDetail = lazy(() => import("./pages/CourseDetail"));
+
+
 const Contact = lazy(() => import("./pages/Contact"));
 const TermsConditions = lazy(() => import("./pages/TermsConditions"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
@@ -19,8 +19,9 @@ const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const Webinar = lazy(() => import("./pages/Webinar"));
 const VerificationPage = lazy(() => import("./pages/VerificationPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const PROJECTS = lazy(() => import("./pages/PROJECTS"));
+const PROJECTS = lazy(() => import("./pages/allcourses"));
 const Currentcourse = lazy(() => import("./pages/currentcourse"));
+const Tesnomialcard = lazy(() => import("./pages/testnomialcard"));
 
 const App: React.FC = () => {
   return (
@@ -32,8 +33,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/courses/:courseId" element={<CourseDetail />} />
+            
             <Route path="/contact" element={<Contact />} />
             <Route path="/terms" element={<TermsConditions />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -44,6 +44,7 @@ const App: React.FC = () => {
             <Route path="/certifications" element={<VerificationPage />} />
             <Route path="/PROJECTS" element={<PROJECTS />} />
             <Route path="/currentcourse" element={<Currentcourse />} />
+            <Route path="/testnomialcard" element={<Tesnomialcard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

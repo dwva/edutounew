@@ -2,9 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import {
   Instagram,
   Github,
-  MessageSquareText, 
+  MessageSquareText,
+  Linkedin,
 } from 'lucide-react';
 import downloadLogo from './download.png'; 
+import { Link } from 'react-router-dom';
 
 export default function RejouiceFooter() {
   const [isIntersecting, setIsIntersecting] = useState(false);
@@ -83,43 +85,35 @@ export default function RejouiceFooter() {
             <div className="grid grid-cols-2 gap-8">
               <div>
                 <div className="text-right">
-                  <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Home</a>
-                  <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Work</a>
-                  <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">About</a>
-                  <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Services</a>
-                  <a href="#" className="block hover:text-gray-600 transition-colors text-sm">Contact</a>
+                  <Link to="/" className="block hover:text-gray-600 transition-colors text-sm mb-2">Home</Link>
+        
+                  <Link to="/about" className="block hover:text-gray-600 transition-colors text-sm mb-2">About</Link>
+                  <Link to="/PROJECTS" className="block hover:text-gray-600 transition-colors text-sm mb-2">Services</Link>
+                  <Link to="/contact" className="block hover:text-gray-600 transition-colors text-sm">Contact</Link>
                 </div>
               </div>
 
               <div className="text-right">
-                <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Terms of use</a>
-                <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Terms & Conditions</a>
-                <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Privacy Policy</a>
-                <a href="#" className="block hover:text-gray-600 transition-colors text-sm mb-2">Refund Policy</a>
+                <Link to="/terms" className="block hover:text-gray-600 transition-colors text-sm mb-2">Terms & Conditions</Link>
+                <Link to="/Privacy" className="block hover:text-gray-600 transition-colors text-sm mb-2">Privacy Policy</Link>
+                <Link to="/Refund" className="block hover:text-gray-600 transition-colors text-sm mb-2">Refund Policy</Link>
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex justify-end mt-12 gap-6 pr-2">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
+          <a href="https://www.instagram.com/edutou.in/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
             <Instagram className="w-5 h-5" />
           </a>
-          <a href="https://wa.me/your-number" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
+          <a href="https://wa.me/9080469741" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
             <MessageSquareText className="w-5 h-5" />
           </a>
-          <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
-            <Github className="w-5 h-5" />
+           <a href= "https://www.linkedin.com/company/edutou-skill-academy/ " target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
+            <Linkedin className="w-5 h-5" />
           </a>
         </div>
       </div>
-
-      <a href="#" className="fixed top-10 right-10 flex items-center space-x-1 text-black hover:opacity-80 transition-opacity z-50 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-gray-200 text-sm">
-        <span>Let's talk</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="transform rotate-45">
-          <path d="M7 17l10-10M7 7h10v10" />
-        </svg>
-      </a>
     </footer>
   );
 }

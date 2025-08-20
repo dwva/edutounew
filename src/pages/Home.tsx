@@ -5,430 +5,69 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Layers, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import Projects from '../components/Projects';
+import Projects from '../components/services';
+import TestnomialCard from './testnomialcard';
 
-// -----------------------------
-// New Explore Our Courses Component (WebDeveloperSite)
-// -----------------------------
-function WebDeveloperSite() {
-  const [isHovered, setIsHovered] = useState<string | null>(null);
 
-  const fontStyle = ``;
 
-  return (
-    <>
-      <style>{fontStyle}</style>
-      <div className="flex flex-col w-full">
-        <div className="w-full py-8 bg-white px-4 border-b border-gray-200">
-          <div className="max-w-6xl mx-auto text-left">
-            <h1 className='text-4xl font-bold text-black'>Explore Our</h1><h1 className="text-4xl font-bold text-orange-500"> courses</h1>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
 
-// -----------------------------
-// InfiniteMovingCards Component (Updated with white cards)
-// -----------------------------
-const InfiniteMovingCards = ({
-  items,
-  direction = "left",
-  speed = "fast",
-  pauseOnHover = true,
-  className,
-}: {
-  items: {
-    quote: string;
-    name: string;
-    title: string;
-  }[];
-  direction?: "left" | "right";
-  speed?: "fast" | "normal" | "slow";
-  pauseOnHover?: boolean;
-  className?: string;
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLUListElement>(null);
-  const [start, setStart] = useState(false);
-
-  useEffect(() => {
-    if (containerRef.current && scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children);
-      scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
-      });
-
-      getDirection();
-      getSpeed();
-      setStart(true);
-    }
-  }, []);
-
-  const getDirection = () => {
-    if (containerRef.current) {
-      if (direction === "left") {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "forwards"
-        );
-      } else {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "reverse"
-        );
-      }
-    }
-  };
-
-  const getSpeed = () => {
-    if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s");
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "40s");
-      } else {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
-      }
-    }
-  };
-
-  return (
-    <div
-      ref={containerRef}
-      className={`scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)] ${className}`}
-    >
-      <ul
-        ref={scrollerRef}
-        className={`flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap ${
-          start && "animate-scroll"
-        } ${pauseOnHover && "hover:[animation-play-state:paused]"}`}
-      >
-        {items.map((item, idx) => (
-          <li
-            className="w-[350px] max-w-full relative rounded-2xl border border-gray-200 flex-shrink-0 px-8 py-6 md:w-[450px] bg-white shadow-lg"
-            key={idx}
-          >
-            <blockquote>
-              <div
-                aria-hidden="true"
-                className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
-              ></div>
-              <span className="relative z-20 text-sm leading-[1.6] text-gray-800 font-normal">
-                {item.quote}
-              </span>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                <span className="flex flex-col gap-1">
-                  <span className="text-sm leading-[1.6] text-gray-600 font-semibold">
-                    {item.name}
-                  </span>
-                  <span className="text-sm leading-[1.6] text-gray-500 font-normal">
-                    {item.title}
-                  </span>
-                </span>
-              </div>
-            </blockquote>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-// -----------------------------
-// InfiniteMovingCardsDemo Component (Updated with white cards and three rows)
-// -----------------------------
-export function InfiniteMovingCardsDemo() {
-  const testimonials = [
-    {
-      quote: "I learned more in one week than I did in months of self-study. The AI-powered curriculum adapted perfectly to my learning style.",
-      name: "Michael Chen",
-      title: "Computer Science Student",
-    },
-    {
-      quote: "The project-based approach helped me build a portfolio that landed me my dream job at a tech startup.",
-      name: "Sarah Johnson",
-      title: "Frontend Developer",
-    },
-    {
-      quote: "The AI recommendations were spot on! It knew exactly which concepts I needed to focus on to improve.",
-      name: "David Rodriguez",
-      title: "UX Designer",
-    },
-    {
-      quote: "Worth every penny! The personalized learning path saved me so much time compared to traditional courses.",
-      name: "Emily Wilson",
-      title: "Product Manager",
-    },
-    {
-      quote: "The community support was amazing. I never felt alone in my learning journey.",
-      name: "Alex Thompson",
-      title: "Software Engineer",
-    },
-    {
-      quote: "The curriculum was perfectly challenging but achievable. I felt accomplished after each module.",
-      name: "Jessica Lee",
-      title: "Data Scientist",
-    },
-    {
-      quote: "The career support was exceptional. They helped me negotiate a 30% higher salary than my initial offer.",
-      name: "Ryan Park",
-      title: "Machine Learning Engineer",
-    },
-    {
-      quote: "I was able to switch careers in just 6 months. The hands-on projects made all the difference.",
-      name: "Maria Garcia",
-      title: "Full Stack Developer",
-    },
-    {
-      quote: "The instructors were always available and provided detailed feedback on my code. It felt like a personalized bootcamp.",
-      name: "James Wilson",
-      title: "Backend Developer",
-    },
-    {
-      quote: "The platform's intuitive design made learning enjoyable. I looked forward to my daily study sessions.",
-      name: "Sophia Kim",
-      title: "UI/UX Designer",
-    },
-    {
-      quote: "I appreciated how the courses were updated regularly with the latest industry trends and technologies.",
-      name: "Daniel Brown",
-      title: "DevOps Engineer",
-    },
-    {
-      quote: "The capstone project was the highlight. I built a real application that I'm proud to show to employers.",
-      name: "Olivia Martinez",
-      title: "Product Designer",
-    },
-  ];
-
-  // Split testimonials into three groups for three rows
-  const row1 = testimonials.slice(0, 4);
-  const row2 = testimonials.slice(4, 8);
-  const row3 = testimonials.slice(8, 12);
-
-  return (
-    <div className="py-12 rounded-md flex flex-col antialiased bg-white items-center justify-center relative overflow-hidden">
-      {/* First row */}
-      <InfiniteMovingCards
-        items={row1}
-        direction="right"
-        speed="slow"
-        className="mb-6"
-      />
-      
-      {/* Second row */}
-      <InfiniteMovingCards
-        items={row2}
-        direction="left"
-        speed="slow"
-        className="mb-6"
-      />
-      
-      {/* Third row */}
-      <InfiniteMovingCards
-        items={row3}
-        direction="right"
-        speed="slow"
-      />
-    </div>
-  );
-}
-
-// -----------------------------
-// Infinite Moving Testimonials  (Rectangle Cards)
-// -----------------------------
-const InfiniteMovingTestimonials = ({
-  testimonials,
-  speed = 'normal',
-  pauseOnHover = true,
-}: {
-  testimonials: Array<{
-    quote: string;
-    name: string;
-    title: string;
-  }>;
-  speed?: 'fast' | 'normal' | 'slow';
-  pauseOnHover?: boolean;
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const [start, setStart] = useState(false);
-
-  useEffect(() => {
-    if (scrollerRef.current) {
-      // Duplicate the testimonial cards for infinite scrolling
-      const children = Array.from(scrollerRef.current.children);
-      children.forEach((child) => {
-        const clone = child.cloneNode(true);
-        scrollerRef.current?.appendChild(clone);
-      });
-      setStart(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.style.setProperty(
-        '--animation-duration',
-        speed === 'fast' ? '20s' : speed === 'normal' ? '40s' : '80s'
-      );
-    }
-  }, [speed]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative overflow-hidden max-w-7xl mx-auto"
-      style={{
-        maskImage:
-          'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-        WebkitMaskImage:
-          'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-      }}
-    >
-      <div
-        ref={scrollerRef}
-        className={`flex gap-6 py-6 whitespace-nowrap ${
-          start ? 'animate-scroll-horizontal' : ''
-        } ${pauseOnHover ? 'hover:animation-play-state-paused' : ''}`}
-        style={{
-          animationTimingFunction: 'linear',
-          animationIterationCount: 'infinite',
-          animationName: 'scroll-horizontal',
-          animationDuration: 'var(--animation-duration)',
-          animationDirection: 'normal',
-          animationPlayState: 'running',
-        }}
-      >
-        {testimonials.map((t, idx) => (
-          <div
-            key={idx}
-            className="bg-white border border-gray-200 rounded-lg p-10 shadow-lg min-w-[320px] flex flex-col justify-between box-border"
-            style={{ boxSizing: 'border-box' }}
-          >
-            <p className="text-gray-800 mb-6 font-medium leading-relaxed text-left break-words">
-              {t.quote}
-            </p>
-            <div className="pt-4 border-t-2 border-orange-200 text-left">
-              <p className="font-bold text-gray-900 text-lg">{t.name}</p>
-              <p className="text-sm text-gray-600">{t.title}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <style>{`
-        @keyframes scroll-horizontal {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-50% - 1rem));
-          }
-        }
-        .animate-scroll-horizontal {
-          animation-name: scroll-horizontal;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-duration: var(--animation-duration);
-          animation-play-state: running;
-        }
-        .hover\\:animation-play-state-paused:hover {
-          animation-play-state: paused !important;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-// -----------------------------
-// Infinite Moving Sponsors Component
-// -----------------------------
+// Dummy InfiniteMovingSponsors component for demonstration
+// Replace this with your actual implementation or import if it exists elsewhere
 const InfiniteMovingSponsors = ({
   items,
-  direction = 'left',
-  speed = 'fast',
-  pauseOnHover = true,
-  className,
+  direction = "right",
+  speed = "normal",
 }: {
-  items: {
-    name: string;
-  }[];
-  direction?: 'left' | 'right';
-  speed?: 'fast' | 'normal' | 'slow';
-  pauseOnHover?: boolean;
-  className?: string;
+  items: { name: string }[];
+  direction?: "left" | "right";
+  speed?: "slow" | "normal" | "fast";
 }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const scrollerRef = React.useRef<HTMLUListElement>(null);
-
-  React.useEffect(() => {
-    addAnimation();
-  }, []);
-
-  const [start, setStart] = React.useState(false);
-  function addAnimation() {
-    if (containerRef.current && scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children);
-
-      scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
-      });
-
-      getDirection();
-      getSpeed();
-      setStart(true);
-    }
-  }
-
-  const getDirection = () => {
-    if (containerRef.current) {
-      containerRef.current.style.setProperty(
-        '--animation-direction',
-        direction === 'left' ? 'forwards' : 'reverse'
-      );
-    }
-  };
-
-  const getSpeed = () => {
-    if (containerRef.current) {
-      containerRef.current.style.setProperty(
-        '--animation-duration',
-        speed === 'fast' ? '20s' : speed === 'normal' ? '40s' : '80s'
-      );
-    }
-  };
-
   return (
-    <div
-      ref={containerRef}
-      className={`scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)] ${className}`}
-    >
-      <ul
-        ref={scrollerRef}
-        className={`flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap ${
-          start ? 'animate-scroll' : ''
-        } ${pauseOnHover ? 'hover:[animation-play-state:paused]' : ''}`}
+    <div className="w-full overflow-hidden flex items-center h-full">
+      <div
+        className={`flex gap-8 whitespace-nowrap animate-marquee${direction === "left" ? "" : "-reverse"}`}
+        style={{
+          animationDuration:
+            speed === "slow"
+              ? "60s"
+              : speed === "fast"
+              ? "20s"
+              : "40s",
+        }}
       >
-        {items.map((item, idx) => (
-          <li
-            className="w-[150px] max-w-full relative rounded-lg flex-shrink-0"
+        {items.concat(items).map((item, idx) => (
+          <span
             key={idx}
+            className="text-lg md:text-xl font-semibold text-gray-700 px-6 py-2 bg-white rounded shadow"
           >
-            <div className="bg-white h-full border border-gray-200 rounded-lg shadow-sm p-4 flex items-center justify-center">
-              <h3 className="text-lg font-medium text-center">{item.name}</h3>
-            </div>
-          </li>
+            {item.name}
+          </span>
         ))}
-      </ul>
+      </div>
+    </div>
+  );
+};
+
+// -----------------------------
+// Marquee Component for Moving Text
+// -----------------------------
+const MovingTextMarquee = () => {
+  return (
+    <div className="w-full overflow-hidden bg-orange-100 py-2">
+      <div className="animate-marquee whitespace-nowrap">
+        <span className="text-orange-600 font-medium mx-4">
+          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
+        </span>
+        <span className="text-orange-600 font-medium mx-4">
+          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
+        </span>
+        <span className="text-orange-600 font-medium mx-4">
+          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
+        </span>
+        <span className="text-orange-600 font-medium mx-4">
+          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
+        </span>
+      </div>
     </div>
   );
 };
@@ -442,10 +81,20 @@ const StyledCard = styled(motion.div)`
     height: 100%;
     position: relative;
     border-radius: 20px;
-    padding: 35px;
+    padding: 25px;
     border: 2px solid black;
     transition: all 0.4s;
     background: white;
+    
+    @media (max-width: 768px) {
+      padding: 20px;
+      border-radius: 16px;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 16px;
+      border-radius: 12px;
+    }
   }
 
   .columns:hover {
@@ -457,28 +106,47 @@ const StyledCard = styled(motion.div)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 30px;
-    margin-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 16px;
+    
+    @media (max-width: 768px) {
+      gap: 15px;
+      margin-bottom: 12px;
+    }
   }
 
   .offer {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 900;
     border-bottom: 2px solid black;
     cursor: pointer;
     transition: all 0.4s;
     margin: 0;
+    
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 16px;
+    }
   }
 
   .btn {
-    padding: 7px 15px;
+    padding: 6px 12px;
     border: 1px solid black;
     background-color: orange;
-    border-radius: 10px;
-    letter-spacing: 1px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.4s;
+    font-size: 12px;
+    
+    @media (max-width: 768px) {
+      padding: 5px 10px;
+      font-size: 11px;
+    }
   }
 
   .columns:hover .btn {
@@ -495,68 +163,56 @@ const StyledCard = styled(motion.div)`
   }
 
   .secondary-heading {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     font-family: 'Poppins', sans-serif;
+    
+    @media (max-width: 768px) {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
   }
 
   .card-description {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1.5;
     font-family: 'Poppins', sans-serif;
-  }
-`;
-
-const StyledLearnMoreButton = styled(motion.button)`
-  padding: 12px 24px;
-  border: 2px solid black;
-  background-color: orange;
-  border-radius: 12px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-
-  a {
-    color: inherit;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-  }
-
-  &:hover {
-    background-color: #ff8c00;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 0 1px rgba(0, 0, 0);
-  }
-
-  &:active {
-    transform: translateY(0);
+    
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 13px;
+    }
   }
 `;
 
 const StyledEnrollButton = styled(motion.button)`
-  padding: 12px 24px;
+  padding: 10px 20px;
   border: 2px solid black;
   background-color: orange;
-  border-radius: 12px;
+  border-radius: 10px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
 
   a {
     color: inherit;
@@ -578,7 +234,25 @@ const StyledEnrollButton = styled(motion.button)`
 `;
 
 // -----------------------------
-// EdutouAboutUs Component
+// Utility function for classNames
+// -----------------------------
+function cn(...classes: (string | undefined | null | boolean | Record<string, boolean>)[]): string {
+  return classes
+    .flatMap(cls => {
+      if (!cls) return [];
+      if (typeof cls === "string") return [cls];
+      if (typeof cls === "object") {
+        return Object.entries(cls)
+          .filter(([_, value]) => Boolean(value))
+          .map(([key]) => key);
+      }
+      return [];
+    })
+    .join(" ");
+}
+
+// -----------------------------
+// EdutouAboutUs Component (Mobile Responsive)
 // -----------------------------
 function EdutouAboutUs() {
   const [isVisible, setIsVisible] = useState(false);
@@ -599,19 +273,19 @@ function EdutouAboutUs() {
   const features = [
     {
       id: 0,
-      icon: <Zap className="w-8 h-8 text-orange-500" />,
+      icon: <Zap className="w-6 h-6 md:w-8 md:h-8 text-orange-500" />,
       title: "Adaptive Learning Paths",
       description: "Our AI analyzes your strengths and growth areas in real-time, creating a personalized learning journey tailored specifically to you."
     },
     {
       id: 1,
-      icon: <Layers className="w-8 h-8 text-orange-500" />,
+      icon: <Layers className="w-6 h-6 md:w-8 md:h-8 text-orange-500" />,
       title: "Project-Based Curriculum",
       description: "Apply what you learn immediately to solve actual problems, building a portfolio of real work as you advance through your courses."
     },
     {
       id: 2,
-      icon: <RefreshCw className="w-8 h-8 text-orange-500" />,
+      icon: <RefreshCw className="w-6 h-6 md:w-8 md:h-8 text-orange-500" />,
       title: "Continuous Evolution",
       description: "Our courses update automatically as industry standards shift, ensuring you're always learning the most current and relevant skills."
     }
@@ -620,12 +294,12 @@ function EdutouAboutUs() {
   return (
     <div className="min-h-screen bg-white text-black relative overflow-hidden">
       {/* Hero Section */}
-      <section className={`py-12 px-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <section className={`py-8 md:py-12 px-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-8">
+          <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8">
             {/* Left Content - Vertically centered */}
             <div className="lg:w-1/2 flex flex-col justify-center w-full">
-              <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-snug relative inline-block">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 leading-snug relative inline-block">
                 Education{' '}
                 <span className="text-orange-500 relative z-10">
                   Reimagined
@@ -634,14 +308,14 @@ function EdutouAboutUs() {
                 </span>
               </h1>
               
-              <p className="text-base mb-6 text-gray-700 leading-relaxed max-w-xl">
+              <p className="text-sm md:text-base mb-4 md:mb-6 text-gray-700 leading-relaxed max-w-xl">
                 EDUTOU stands at the intersection of cutting-edge artificial intelligence and modern education. 
                 We've built a learning ecosystem that adapts to you—not the other way around.
               </p>
               
-              <div className="bg-gray-50 p-4 rounded-lg shadow-sm border-l-4 border-orange-500 mb-6 max-w-xl">
-                <h3 className="font-semibold text-lg mb-1">Our Mission</h3>
-                <p className="text-gray-700 text-sm">
+              <div className="bg-gray-50 p-3 md:p-4 rounded-lg shadow-sm border-l-4 border-orange-500 mb-4 md:mb-6 max-w-xl">
+                <h3 className="font-semibold text-base md:text-lg mb-1">Our Mission</h3>
+                <p className="text-gray-700 text-xs md:text-sm">
                   To create agile, skilled professionals who can thrive in an ever-changing technological landscape. 
                   Through our AI-driven platform, we deliver personalized learning experiences that focus on practical 
                   skills and real-world applications.
@@ -667,26 +341,26 @@ function EdutouAboutUs() {
                 </svg>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-xl p-6 relative z-10 transition-all duration-500 transform hover:shadow-2xl border border-gray-100">                   
-                <h2 className="text-2xl font-bold mb-6 border-b pb-3 border-gray-100">What sets us apart</h2>
+              <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 relative z-10 transition-all duration-500 transform hover:shadow-xl md:hover:shadow-2xl border border-gray-100">                   
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 border-b pb-2 md:pb-3 border-gray-100">What sets us apart</h2>
                 
                 {features.map((feature) => (
                   <div 
                     key={feature.id} 
-                    className={`mb-6 p-4 rounded-xl cursor-pointer transition-all duration-300 transform ${
+                    className={`mb-4 md:mb-6 p-3 md:p-4 rounded-lg md:rounded-xl cursor-pointer transition-all duration-300 transform ${
                       activeFeature === feature.id 
-                        ? 'bg-gray-50 shadow-lg scale-105 opacity-100' 
-                        : 'bg-white opacity-70 hover:opacity-100 hover:shadow-md hover:scale-105'
+                        ? 'bg-gray-50 shadow-md md:shadow-lg scale-105 opacity-100' 
+                        : 'bg-white opacity-70 hover:opacity-100 hover:shadow-sm md:hover:shadow-md hover:scale-105'
                     }`}
                     onMouseEnter={() => setActiveFeature(feature.id)}
                   >
-                    <div className="flex items-start gap-4">
+                    <div className="flex items-start gap-3 md:gap-4">
                       <div className="transition-transform duration-500 transform">
                         {feature.icon}
                       </div>
                       <div>
-                        <h3 className="font-bold text-xl mb-1 group-hover:underline underline-animation">{feature.title}</h3>
-                        <p className="text-gray-700 text-sm">{feature.description}</p>
+                        <h3 className="font-bold text-base md:text-xl mb-1 group-hover:underline underline-animation">{feature.title}</h3>
+                        <p className="text-gray-700 text-xs md:text-sm">{feature.description}</p>
                       </div>
                     </div>
                   </div>
@@ -694,8 +368,8 @@ function EdutouAboutUs() {
               </div>
               
               {/* Decorative elements */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-orange-100 rounded-full opacity-70"></div>
-              <div className="absolute top-8 -right-8 w-20 h-20 bg-gray-100 rounded-full opacity-70"></div>
+              <div className="absolute -bottom-4 -right-4 w-20 h-20 md:w-32 md:h-32 bg-orange-100 rounded-full opacity-70"></div>
+              <div className="absolute top-4 -right-4 w-12 h-12 md:w-20 md:h-20 bg-gray-100 rounded-full opacity-70"></div>
             </div>
           </div>
         </div>
@@ -730,7 +404,7 @@ function EdutouAboutUs() {
 }
 
 // -----------------------------
-// Main Home Component
+// Main Home Component (Mobile Responsive)
 // -----------------------------
 const Home = () => {
   const sponsors = [
@@ -767,20 +441,36 @@ const Home = () => {
           .animate-scroll {
             animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
           }
+          
+          @keyframes marquee {
+            from {
+              transform: translateX(0);
+            }
+            to {
+              transform: translateX(calc(-100% - var(--gap)));
+            }
+          }
+          
+          .animate-marquee {
+            animation: marquee 20s linear infinite;
+          }
         `}
       </style>
 
-      {/* Hero Section */}
-      <section className="min-h-screen bg-white relative flex items-center justify-center px-6">
-        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-orange-100 text-orange-800 px-6 py-2 rounded-full text-sm font-medium shadow-md z-20">
-          New courses launching this month
-        </div>
-        <div className="relative z-10 text-center max-w-5xl mt-16">
-          <h1 className="text-5xl md:text-7xl font-bold mb-10 leading-tight text-black pt-8 font-['Poppins']">
+      {/* New courses banner - positioned below navbar */}
+      
+
+      {/* Moving text marquee */}
+      <MovingTextMarquee />
+
+      {/* Hero Section - Made Mobile Responsive */}
+      <section className="min-h-screen bg-white relative flex items-center justify-center px-4 sm:px-6 pt-8 md:pt-0">
+        <div className="relative z-10 text-center max-w-5xl mt-8 md:mt-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-10 leading-tight text-black pt-4 md:pt-8 font-['Poppins']">
             The Future of Learning <br className="hidden md:block" />
             <span className="education-text">Powered</span> by AI.
           </h1>
-          <div className="my-12 flex flex-col items-center">
+          <div className="my-8 md:my-12 flex flex-col items-center">
             <StyledEnrollButton
               whileHover={{
                 scale: 1.05,
@@ -788,18 +478,18 @@ const Home = () => {
               }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-              className="mb-8"
+              className="mb-6 md:mb-8"
             >
               <Link to="/currentcourse" className="flex items-center">
                 Enroll Today
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
               </Link>
             </StyledEnrollButton>
-            <p className="text-black text-lg max-w-3xl mx-auto mb-10 leading-relaxed font-['Poppins']">
+            <p className="text-black text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-6 md:mb-10 leading-relaxed font-['Poppins'] px-2">
               At EDUTOU, we've reimagined education for the digital age. Our AI-powered platform adapts to your learning style, focusing on the skills that matter in today's rapidly evolving job market.
             </p>
           </div>
-          <blockquote className="text-black font-semibold text-lg italic mt-12 font-['Poppins']">
+          <blockquote className="text-black font-semibold text-base md:text-lg italic mt-8 md:mt-12 font-['Poppins']">
             "The ones who learn, adapt, and innovate... change the world." 🚀
           </blockquote>
         </div>
@@ -812,21 +502,21 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why EDUTOU Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex flex-col lg:flex-row gap-12 mb-16 items-start">
+      {/* Why EDUTOU Section - Made Mobile Responsive */}
+      <section className="py-12 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="flex flex-col lg:flex-row gap-8 md:gap-12 mb-12 md:mb-16 items-start">
             <div className="lg:w-1/2">
-              <h2 className="text-5xl font-bold mb-4 leading-tight font-['Poppins']">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight font-['Poppins']">
                 Why <span className="text-orange-500">EDUTOU</span> is Different
               </h2>
-              <p className="text-xl text-gray-700 leading-relaxed mb-6 font-['Poppins']">
+              <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6 font-['Poppins']">
                 Discover the core features that make our learning platform stand out.
               </p>
             </div>
             <div className="lg:w-1/2"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {[
               {
                 title: 'AI-Powered Personalization',
@@ -865,78 +555,58 @@ const Home = () => {
               </StyledCard>
             ))}
           </div>
-          <div className="flex justify-center mt-16">
-            <StyledLearnMoreButton
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '4px 4px 0 1px rgba(0,0,0)',
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-            >
-              Learn More
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </StyledLearnMoreButton>
-          </div>
         </div>
       </section>
 
       {/* Explore header + Projects carousel */}
-      <WebDeveloperSite />
       <Projects />
 
       {/* Edutou About Us Section */}
       <EdutouAboutUs />
 
-      {/* Testimonials Section */}
-      <section className="py-16 bg-white relative">
-        <div className="max-w-7xl mx-auto px-8 text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 font-['Poppins']">
-            See What Others Are <span className="text-orange-500">Achieving</span> Through Learning
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto font-['Poppins']">
-            Hear from learners who transformed their careers with our AI-powered education.
-          </p>
-        </div>
-
-        <InfiniteMovingCardsDemo />
-      </section>
+      {/* Testimonials Section with imported component */}
+      <TestnomialCard />
 
       {/* Sign Language CTA Section */}
-      <section className="py-24 bg-white">
+      <section className="py-12 md:py-24 bg-white">
         <div className="flex flex-col items-center justify-center p-4">
-          <div className="flex flex-wrap justify-center gap-3 mb-6 max-w-3xl">
-            <div className="bg-orange-300 text-black text-3xl font-bold px-8 py-4 rounded-full shadow-md">
-              Learn sign
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-4 md:mb-6 max-w-3xl">
+            <div className="bg-orange-300 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md">
+Build
             </div>
-            <div className="bg-orange-100 text-black text-3xl font-bold px-8 py-4 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000]">
-              language
+            <div className="bg-orange-100 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg md:rounded-xl border-2 border-black shadow-[2px_2px_0px_#000] md:shadow-[4px_4px_0px_#000]">
+              projects
             </div>
-            <div className="bg-orange-200 text-black text-3xl font-bold px-8 py-4 rounded-3xl shadow-md">
+            <div className="bg-orange-200 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-2xl md:rounded-3xl shadow-md">
+              real-world
+
+            </div>
+            <div className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-black shadow-md">
+              <div className="text-xl md:text-2xl lg:text-3xl">🙂</div>
+            </div>
+            <div className="bg-orange-100 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md">
               and
+
             </div>
-            <div className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-black shadow-md">
-              <div className="text-3xl">🙂</div>
+            <div className="bg-orange-200 text-black text-xl md:text-2xl lg:text-3xl font-bold px-5 md:px-8 py-2 md:py-3 rounded-lg md:rounded-xl border-2 border-black shadow-[2px_2px_0px_#000] md:shadow-[4px_4px_0px_#000]">
+              stand out
+
+
             </div>
-            <div className="bg-orange-100 text-black text-3xl font-bold px-8 py-4 rounded-full shadow-md">
-              get
-            </div>
-            <div className="bg-orange-200 text-black text-3xl font-bold px-10 py-4 rounded-xl border-2 border-black shadow-[4px_4px_0px_#000]">
-              closer to
-            </div>
-            <div className="bg-orange-300 text-black text-3xl font-bold px-8 py-4 rounded-xl shadow-md">
-              others
+            <div className="bg-orange-300 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg md:rounded-xl shadow-md">
+              to employers 💼
+
             </div>
           </div>
 
-          <div className="text-4xl mb-4">↓</div>
+          <div className="text-3xl md:text-4xl mb-3 md:mb-4">↓</div>
 
-          <div className="text-center text-gray-700 max-w-md mb-6 font-['Poppins']">
+          <div className="text-center text-gray-700 max-w-md mb-4 md:mb-6 text-sm md:text-base font-['Poppins']">
             Join thousands of learners who have accelerated their 
             careers with EDUTOU's revolutionary approach to education
           </div>
 
-          <StyledLearnMoreButton
+          <StyledEnrollButton
             whileHover={{
               scale: 1.05,
               boxShadow: '4px 4px 0 1px rgba(0, 0, 0, 0)',
@@ -946,9 +616,9 @@ const Home = () => {
           >
             <Link to="/enroll" className="flex items-center">
               Get Started Learning
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
             </Link>
-          </StyledLearnMoreButton>
+          </StyledEnrollButton>
         </div>
       </section>
     </div>

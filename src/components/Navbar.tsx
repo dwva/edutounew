@@ -59,7 +59,7 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'All Courses', path: '/PROJECTS' },
-    { name: 'Certification Programs', path: '/certifications' },
+    { name: ' Verify Certification', path: '/certifications' },
     { name: 'contact', path: '/Contact' }
   ];
 
@@ -79,7 +79,7 @@ const Navbar = () => {
 
   return (
     <StyledNav $isVisible={isVisible}>
-      <nav className={`fixed top-0 left-0 w-full px-4 md:px-4 z-50 flex items-start justify-between ${isMobile ? 'py-2 bg-white shadow-md' : 'py-3'}`}>
+      <nav className={`fixed top-6 left-0 w-full px-4 md:px-4 z-50 flex items-start justify-between ${isMobile ? 'py-2 bg-white shadow-md' : 'py-3'}`}>
         {/* Mobile Menu Button - Only shows on mobile */}
         {isMobile && (
           <MobileMenuButton
@@ -100,6 +100,7 @@ const Navbar = () => {
             borderRadius: expanded ? 12 : 8,
             marginLeft: isMobile ? 'auto' : '2rem',
             marginRight: isMobile && !expanded ? 'auto' : 0,
+            marginTop: '0.5rem', // Added margin to push it down
           }}
           transition={{ 
             type: 'spring', 
@@ -195,6 +196,7 @@ const StyledNav = styled.div<{ $isVisible: boolean }>`
   z-index: 1000;
   transform: translateY(${props => props.$isVisible ? '0' : '-100%'});
   transition: transform 0.3s ease-in-out;
+  margin-top: 1rem; // Added margin to push the entire navbar down
 `;
 
 const LogoContainer = styled(motion.div)<LogoContainerProps>`
@@ -276,11 +278,12 @@ const MobileMenuButton = styled(motion.button)`
   padding: 6px;
   margin-right: 8px;
   z-index: 1002;
+  margin-top: 0.5rem; // Added margin to align with the logo
 `;
 
 const MobileMenu = styled(motion.div)`
   position: fixed;
-  top: 50px;
+  top: 90px; // Increased from 50px to position it lower
   left: 0;
   right: 0;
   background: white;

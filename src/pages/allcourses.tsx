@@ -51,6 +51,16 @@ function ProjectCard({ project, hideTech = false }: { project: Project; hideTech
 const CoursesGrid = () => {
   const courses: Project[] = [
     {
+      id: 6,
+      title: 'AI Essentials',
+      description:
+        'Understanding core AI concepts, machine learning fundamentals, and practical AI implementation strategies for developers.',
+      image:
+        'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=250&fit=crop',
+      tech: ['Machine Learning', 'TensorFlow', 'PyTorch', 'Data Science'],
+      status: 'current',
+    },
+    {
       id: 1,
       title: 'Full Stack Development Powered by AI',
       description:
@@ -58,7 +68,7 @@ const CoursesGrid = () => {
       image:
         'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop',
       tech: ['React', 'Node.js', 'AI Tools', 'MongoDB'],
-      status: 'current',
+      status: 'soon',
     },
     {
       id: 2,
@@ -68,7 +78,7 @@ const CoursesGrid = () => {
       image:
         'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=250&fit=crop',
       tech: ['React', 'Vue', 'CSS3', 'JavaScript'],
-      status: 'current',
+      status: 'soon',
     },
     {
       id: 3,
@@ -78,7 +88,7 @@ const CoursesGrid = () => {
       image:
         'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop',
       tech: ['OpenAI', 'GitHub Copilot', 'ChatGPT', 'AI APIs'],
-      status: 'current',
+      status: 'soon',
     },
     {
       id: 4,
@@ -100,16 +110,7 @@ const CoursesGrid = () => {
       tech: ['Python', 'Django', 'Flask', 'Pandas'],
       status: 'soon',
     },
-    {
-      id: 6,
-      title: 'AI Essentials',
-      description:
-        'Understanding core AI concepts, machine learning fundamentals, and practical AI implementation strategies for developers.',
-      image:
-        'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=250&fit=crop',
-      tech: ['Machine Learning', 'TensorFlow', 'PyTorch', 'Data Science'],
-      status: 'current',
-    },
+  
   ];
 
   return (
