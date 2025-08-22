@@ -79,7 +79,7 @@ const Navbar = () => {
 
   return (
     <StyledNav $isVisible={isVisible}>
-      <nav className={`fixed top-6 left-0 w-full px-4 md:px-4 z-50 flex items-start justify-between ${isMobile ? 'py-2 bg-white shadow-md' : 'py-3'}`}>
+      <nav className={`fixed top-10 left-0 w-full px-4 md:px-4 z-50 flex items-start justify-between ${isMobile ? 'py-2' : 'py-3'}`}>
         {/* Mobile Menu Button - Only shows on mobile */}
         {isMobile && (
           <MobileMenuButton
@@ -91,45 +91,43 @@ const Navbar = () => {
           </MobileMenuButton>
         )}
 
-        {/* Compact Logo Container */}
-        <LogoContainer
-          initial={false}
-          animate={{
-            width: expanded ? (isMobile ? '90vw' : 220) : (isMobile ? 90 : 100),
-            height: expanded ? 'auto' : (isMobile ? 35 : 40),
-            borderRadius: expanded ? 12 : 8,
-            marginLeft: isMobile ? 'auto' : '2rem',
-            marginRight: isMobile && !expanded ? 'auto' : 0,
-            marginTop: '0.5rem', // Added margin to push it down
-          }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: 300, 
-            damping: 25,
-            bounce: 0.2
-          }}
-          expanded={expanded}
-          $isMobile={isMobile}
-        >
-          {/* Clickable Logo Header */}
-          <LogoHeader 
-            onClick={toggleExpanded}
+        {/* Logo Container - Different styling for mobile */}
+        {!isMobile ? (
+          // Desktop Logo Container
+          <LogoContainer
+            initial={false}
+            animate={{
+              width: expanded ? 220 : 100,
+              height: expanded ? 'auto' : 40,
+              borderRadius: expanded ? 12 : 8,
+              marginLeft: '2rem',
+              marginTop: '0.5rem',
+            }}
+            transition={{ 
+              type: 'spring', 
+              stiffness: 300, 
+              damping: 25,
+              bounce: 0.2
+            }}
             expanded={expanded}
+            $isMobile={isMobile}
           >
-            {/* Logo image instead of text */}
-            <LogoImage src={logo} alt="Edutou Logo" />
-            {!isMobile && (
+            {/* Clickable Logo Header */}
+            <LogoHeader 
+              onClick={toggleExpanded}
+              expanded={expanded}
+            >
+              {/* Logo image instead of text */}
+              <LogoImage src={logo} alt="Edutou Logo" />
               <motion.div
                 animate={{ rotate: expanded ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <ChevronDown size={16} />
               </motion.div>
-            )}
-          </LogoHeader>
+            </LogoHeader>
 
-          {/* Expanded Content - Desktop */}
-          {!isMobile && (
+            {/* Expanded Content - Desktop */}
             <AnimatePresence>
               {expanded && (
                 <NavContent
@@ -162,8 +160,13 @@ const Navbar = () => {
                 </NavContent>
               )}
             </AnimatePresence>
-          )}
-        </LogoContainer>
+          </LogoContainer>
+        ) : (
+          // Mobile Logo - Simple logo without container
+          <MobileLogoContainer>
+            <LogoImage src={logo} alt="Edutou Logo" />
+          </MobileLogoContainer>
+        )}
 
         {/* Mobile Menu Content */}
         {isMobile && mobileMenuOpen && (
@@ -196,32 +199,36 @@ const StyledNav = styled.div<{ $isVisible: boolean }>`
   z-index: 1000;
   transform: translateY(${props => props.$isVisible ? '0' : '-100%'});
   transition: transform 0.3s ease-in-out;
-  margin-top: 1rem; // Added margin to push the entire navbar down
+  margin-top: 1rem;
 `;
 
 const LogoContainer = styled(motion.div)<LogoContainerProps>`
   position: relative;
   background-color: var(--color-brand);
   border: 2px solid white;
-  padding: ${props => props.expanded ? (props.$isMobile ? '12px' : '18px') : '0 10px'};
+  padding: ${props => props.expanded ? '18px' : '0 10px'};
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
   display: flex;
   flex-direction: column;
-  min-height: ${props => props.expanded ? (props.$isMobile ? 'auto' : '250px') : 'auto'};
+  min-height: ${props => props.expanded ? '250px' : 'auto'};
   z-index: 1001;
   cursor: pointer;
 
   &:hover {
-    box-shadow: ${props => !props.$isMobile && '3px 3px 0 1px rgba(0,0,0)'};
-    transform: ${props => !props.$isMobile && 'translateY(-1px)'};
+    box-shadow: 3px 3px 0 1px rgba(0,0,0);
+    transform: translateY(-1px);
   }
+`;
 
-  @media (max-width: 768px) {
-    margin-left: ${props => props.expanded ? 'auto' : '0'};
-    margin-right: ${props => props.expanded ? 'auto' : '0'};
-  }
+const MobileLogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
 `;
 
 const LogoHeader = styled.div<LogoHeaderProps>`
@@ -278,12 +285,12 @@ const MobileMenuButton = styled(motion.button)`
   padding: 6px;
   margin-right: 8px;
   z-index: 1002;
-  margin-top: 0.5rem; // Added margin to align with the logo
+  margin-top: 0.5rem;
 `;
 
 const MobileMenu = styled(motion.div)`
   position: fixed;
-  top: 90px; // Increased from 50px to position it lower
+  top: 100px;
   left: 0;
   right: 0;
   background: white;

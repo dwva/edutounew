@@ -8,11 +8,9 @@ import styled from 'styled-components';
 import Projects from '../components/services';
 import TestnomialCard from './testnomialcard';
 
-
-
-
-// Dummy InfiniteMovingSponsors component for demonstration
-// Replace this with your actual implementation or import if it exists elsewhere
+// -----------------------------
+// InfiniteMovingSponsors Component with Improved Animation
+// -----------------------------
 const InfiniteMovingSponsors = ({
   items,
   direction = "right",
@@ -22,51 +20,87 @@ const InfiniteMovingSponsors = ({
   direction?: "left" | "right";
   speed?: "slow" | "normal" | "fast";
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Duplicate items for seamless looping
+    if (scrollerRef.current) {
+      const scrollerContent = Array.from(scrollerRef.current.children);
+      
+      scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true);
+        if (scrollerRef.current) {
+          scrollerRef.current.appendChild(duplicatedItem);
+        }
+      });
+    }
+  }, [items]);
+
   return (
-    <div className="w-full overflow-hidden flex items-center h-full">
+    <div 
+      ref={containerRef}
+      className="w-full overflow-hidden flex items-center h-full relative"
+    >
       <div
-        className={`flex gap-8 whitespace-nowrap animate-marquee${direction === "left" ? "" : "-reverse"}`}
+        ref={scrollerRef}
+        className="flex gap-8 whitespace-nowrap w-max"
         style={{
-          animationDuration:
-            speed === "slow"
-              ? "60s"
-              : speed === "fast"
-              ? "20s"
-              : "40s",
+          animation: `scroll-${direction} ${speed === "slow" ? "60s" : speed === "fast" ? "20s" : "40s"} linear infinite`,
         }}
       >
-        {items.concat(items).map((item, idx) => (
+        {items.map((item, idx) => (
           <span
             key={idx}
-            className="text-lg md:text-xl font-semibold text-gray-700 px-6 py-2 bg-white rounded shadow"
+            className="text-lg md:text-xl font-semibold text-gray-700 px-6 py-2 bg-white rounded shadow flex-shrink-0"
           >
             {item.name}
           </span>
         ))}
       </div>
+      
+      <style>
+        {`
+          @keyframes scroll-right {
+            0% {
+              transform: translateX(0%);
+            }
+            100% {
+              transform: translateX(calc(-100% / 2));
+            }
+          }
+          
+          @keyframes scroll-left {
+            0% {
+              transform: translateX(calc(-100% / 2));
+            }
+            100% {
+              transform: translateX(0%);
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
 
 // -----------------------------
-// Marquee Component for Moving Text
+// Marquee Component for Moving Text with Improved Animation
 // -----------------------------
 const MovingTextMarquee = () => {
   return (
-    <div className="w-full overflow-hidden bg-orange-100 py-2">
-      <div className="animate-marquee whitespace-nowrap">
-        <span className="text-orange-600 font-medium mx-4">
-          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
-        </span>
-        <span className="text-orange-600 font-medium mx-4">
-          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
-        </span>
-        <span className="text-orange-600 font-medium mx-4">
-          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
-        </span>
-        <span className="text-orange-600 font-medium mx-4">
-          Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
-        </span>
+    <div className="w-full overflow-hidden bg-orange-100 py-2 relative">
+      <div 
+        className="whitespace-nowrap w-max"
+        style={{
+          animation: "scroll-right 20s linear infinite",
+        }}
+      >
+        {[...Array(8)].map((_, i) => (
+          <span key={i} className="text-orange-600 font-medium mx-4 inline-block">
+            Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
+          </span>
+        ))}
       </div>
     </div>
   );
@@ -429,36 +463,16 @@ const Home = () => {
             text-shadow: none;
           }
 
-          @keyframes scroll {
-            from {
-              transform: translateX(0);
+          @keyframes scroll-right {
+            0% {
+              transform: translateX(0%);
             }
-            to {
-              transform: translateX(calc(-50% - 1rem));
+            100% {
+              transform: translateX(calc(-100% / 2));
             }
-          }
-
-          .animate-scroll {
-            animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
-          }
-          
-          @keyframes marquee {
-            from {
-              transform: translateX(0);
-            }
-            to {
-              transform: translateX(calc(-100% - var(--gap)));
-            }
-          }
-          
-          .animate-marquee {
-            animation: marquee 20s linear infinite;
           }
         `}
       </style>
-
-      {/* New courses banner - positioned below navbar */}
-      
 
       {/* Moving text marquee */}
       <MovingTextMarquee />
