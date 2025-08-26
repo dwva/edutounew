@@ -3,13 +3,21 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Layers, RefreshCw } from 'lucide-react';
-import { motion } from 'framer-motion';
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useInView,
+} from "framer-motion";
 import styled from 'styled-components';
 import Projects from '../components/services';
 import TestnomialCard from './testnomialcard';
 
+import Waves from '../components/waves';
+
 // -----------------------------
-// InfiniteMovingSponsors Component with Improved Animation
+// InfiniteMovingSponsors Component
 // -----------------------------
 const InfiniteMovingSponsors = ({
   items,
@@ -24,7 +32,6 @@ const InfiniteMovingSponsors = ({
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Duplicate items for seamless looping
     if (scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
       
@@ -38,7 +45,7 @@ const InfiniteMovingSponsors = ({
   }, [items]);
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="w-full overflow-hidden flex items-center h-full relative"
     >
@@ -85,12 +92,12 @@ const InfiniteMovingSponsors = ({
 };
 
 // -----------------------------
-// Marquee Component for Moving Text with Improved Animation
+// Marquee Component for Moving Text
 // -----------------------------
 const MovingTextMarquee = () => {
   return (
     <div className="w-full overflow-hidden bg-orange-100 py-2 relative">
-      <div 
+      <div
         className="whitespace-nowrap w-max"
         style={{
           animation: "scroll-right 20s linear infinite",
@@ -286,7 +293,7 @@ function cn(...classes: (string | undefined | null | boolean | Record<string, bo
 }
 
 // -----------------------------
-// EdutouAboutUs Component (Mobile Responsive)
+// EdutouAboutUs Component
 // -----------------------------
 function EdutouAboutUs() {
   const [isVisible, setIsVisible] = useState(false);
@@ -369,13 +376,13 @@ function EdutouAboutUs() {
                   <circle cx="20%" cy="30%" r="10" fill="rgba(255, 165, 0, 0.1)">
                     <animate attributeName="r" values="8;12;8" dur="4s" repeatCount="indefinite" />
                   </circle>
-                  <circle cx="80%" cy="70%" r="15" fill="rgba(255, 140, 0, 0.1)">
+                  <circle cx="80%" cy="70%" r="15" fill="rg巴巴, 0, 0.1)">
                     <animate attributeName="r" values="12;18;12" dur="5s" repeatCount="indefinite" />
                   </circle>
                 </svg>
               </div>
 
-              <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 relative z-10 transition-all duration-500 transform hover:shadow-xl md:hover:shadow-2xl border border-gray-100">                   
+              <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 relative z-10 transition-all duration-500 transform hover:shadow-xl md:hover:shadow-2xl border border-gray-100">                       
                 <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 border-b pb-2 md:pb-3 border-gray-100">What sets us apart</h2>
                 
                 {features.map((feature) => (
@@ -438,7 +445,177 @@ function EdutouAboutUs() {
 }
 
 // -----------------------------
-// Main Home Component (Mobile Responsive)
+// StatsCount Component
+// -----------------------------
+interface StatItem {
+    value: number;
+    suffix?: string;
+    label: string;
+    duration?: number;
+}
+
+interface StatsCountProps {
+    stats?: StatItem[];
+    title?: string;
+    showDividers?: boolean;
+    className?: string;
+}
+
+function AnimatedCounter({
+    value,
+    suffix = "",
+    duration = 1,
+    delay = 0,
+    label,
+}: {
+    value: number;
+    suffix?: string;
+    duration?: number;
+    delay?: number;
+    label: string;
+}) {
+    const ref = useRef<HTMLDivElement>(null);
+    const isInView = useInView(ref, { margin: "-50px" });
+
+    const motionValue = useMotionValue(0);
+    const springValue = useSpring(motionValue, {
+        damping: 20,
+        stiffness: 50,
+        mass: 1,
+    });
+
+    const rounded = useTransform(springValue, (latest) =>
+        Number(latest.toFixed(value % 1 === 0 ? 0 : 1))
+    );
+
+    const [displayValue, setDisplayValue] = useState(0);
+
+    useEffect(() => {
+        const unsubscribe = rounded.on("change", (latest) => {
+            setDisplayValue(latest);
+        });
+        return () => unsubscribe();
+    }, [rounded]);
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout;
+        if (isInView) {
+            motionValue.set(0);
+            timeout = setTimeout(() => {
+                motionValue.set(value);
+            }, delay * 300);
+        } else {
+            motionValue.set(0);
+        }
+        return () => clearTimeout(timeout);
+    }, [isInView, value, motionValue, delay]);
+
+    return (
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{
+                duration: 0.8,
+                delay: delay * 0.2,
+                type: "spring",
+                stiffness: 80,
+            }}
+            className={cn(
+                "text-center flex-1 min-w-0 flex flex-col justify-center h-full"
+            )}
+        >
+            <motion.div
+                className={cn(
+                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 whitespace-nowrap text-orange-500"
+                )}
+                initial={{ scale: 0.8 }}
+                animate={isInView ? { scale: 1 } : { scale: 0.8 }}
+                transition={{
+                    duration: 0.6,
+                    delay: delay * 0.2 + 0.3,
+                    type: "spring",
+                    stiffness: 100,
+                }}
+            >
+                {displayValue}
+                {suffix}
+            </motion.div>
+            <motion.p
+                className={cn(
+                    "text-gray-600 text-xs sm:text-sm leading-relaxed px-1 sm:px-2 hyphens-auto break-words"
+                )}
+                style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: delay * 0.2 + 0.6, duration: 0.6 }}
+            >
+                {label}
+            </motion.p>
+        </motion.div>
+    );
+}
+
+function StatsCount({
+    stats,
+    title,
+    showDividers = true,
+    className = "",
+}: StatsCountProps) {
+    const containerRef = useRef<HTMLElement>(null);
+    const isInView = useInView(containerRef, { margin: "-100px" });
+
+    return (
+        <motion.section
+            ref={containerRef}
+            className={cn(
+                "py-8 sm:py-12 lg:py-20 px-2 sm:px-4 md:px-8 w-full overflow-hidden bg-white",
+                className
+            )}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.8 }}
+        >
+            <motion.div
+                className={cn("text-center mb-8 sm:mb-12 lg:mb-16")}
+                initial={{ opacity: 0, y: -20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+            >
+                <h2 className={cn("text-base sm:text-lg md:text-xl lg:text-2xl font-bold tracking-wide px-4 font-['Poppins']")}>
+                    {title}
+                </h2>
+            </motion.div>
+
+            <div className={cn("w-full max-w-6xl mx-auto")}>
+                <div className={cn("flex flex-row items-stretch justify-between gap-2 sm:gap-4 lg:gap-8 w-full min-h-[120px] sm:min-h-[140px]")}>
+                    {stats && stats.map((stat, index) => (
+                        <div key={index} className={cn("relative flex-1 min-w-0 flex flex-col justify-center h-full")}>
+                            <AnimatedCounter
+                                value={stat.value}
+                                suffix={stat.suffix}
+                                duration={stat.duration}
+                                delay={index}
+                                label={stat.label}
+                            />
+                            {index < stats.length - 1 && showDividers && (
+                                <motion.div
+                                    className={cn( "absolute -right-1 sm:-right-2 lg:-right-4 top-1/2 transform -translate-y-1/2 h-12 sm:h-16 lg:h-20 w-px bg-gray-200" )}
+                                    initial={{ opacity: 0, scaleY: 0 }}
+                                    animate={ isInView ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0 } }
+                                    transition={{ delay: 1.5 + index * 0.2, duration: 0.6 }}
+                                />
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </motion.section>
+    );
+}
+
+// -----------------------------
+// Main Home Component
 // -----------------------------
 const Home = () => {
   const sponsors = [
@@ -448,6 +625,24 @@ const Home = () => {
     { name: 'DigitalWay' },
     { name: 'WebScale' },
     { name: 'DataFlow' },
+  ];
+
+  const edutouStats: StatItem[] = [
+    {
+      value: 10,
+      suffix: "k+",
+      label: "Students Enrolled Globally",
+    },
+    {
+      value: 95,
+      suffix: "%",
+      label: "Course Completion Rate",
+    },
+    {
+      value: 200,
+      suffix: "+",
+      label: "Industry Mentors & Experts",
+    },
   ];
 
   return (
@@ -477,49 +672,59 @@ const Home = () => {
       {/* Moving text marquee */}
       <MovingTextMarquee />
 
-      {/* Hero Section - Made Mobile Responsive */}
-      <section className="min-h-screen bg-white relative flex items-center justify-center px-4 sm:px-6 pt-8 md:pt-0">
-        <div className="relative z-10 text-center max-w-5xl mt-8 md:mt-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-10 leading-tight text-black pt-4 md:pt-8 font-['Poppins']">
-            The Future of Learning <br className="hidden md:block" />
-            <span className="education-text">Powered</span> by AI.
-          </h1>
-          <div className="my-8 md:my-12 flex flex-col items-center">
-            <StyledEnrollButton
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '4px 4px 0 1px rgba(0,0,0)',
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-              className="mb-6 md:mb-8"
-            >
-              <Link to="/currentcourse" className="flex items-center">
-                Enroll Today
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
-              </Link>
-            </StyledEnrollButton>
-            <p className="text-black text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-6 md:mb-10 leading-relaxed font-['Poppins'] px-2">
-              At EDUTOU, we've reimagined education for the digital age. Our AI-powered platform adapts to your learning style, focusing on the skills that matter in today's rapidly evolving job market.
-            </p>
+      {/* Hero Section with Waves background */}
+      <section className="min-h-screen w-full relative flex items-center justify-center px-4 sm:px-6 pt-8 md:pt-0 overflow-hidden">
+          {/* Waves Background */}
+          <div className="absolute inset-0 z-0">
+            <Waves />
           </div>
-          <blockquote className="text-black font-semibold text-base md:text-lg italic mt-8 md:mt-12 font-['Poppins']">
-            "The ones who learn, adapt, and innovate... change the world." 🚀
-          </blockquote>
-        </div>
+
+          {/* Amber Glow Overlay */}
+          <div
+              className="absolute inset-0 z-0"
+              style={{
+                  backgroundImage: `
+                      radial-gradient(125% 125% at 50% 90%, rgba(255, 255, 255, 0.7) 40%, rgba(245, 158, 11, 0.5) 100%)
+                  `,
+                  backgroundSize: "100% 100%",
+              }}
+          />
+
+          {/* Hero Content */}
+          <div className="relative z-10 text-center max-w-5xl mt-8 md:mt-16">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 md:mb-10 leading-tight text-black pt-4 md:pt-8 font-['Poppins']">
+                  The Future of Learning <br className="hidden md:block" />
+                  <span className="education-text">Powered</span> by AI.
+              </h1>
+              <div className="my-8 md:my-12 flex flex-col items-center">
+                  <StyledEnrollButton
+                      whileHover={{
+                          scale: 1.05,
+                          boxShadow: '4px 4px 0 1px rgba(0,0,0)',
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                      className="mb-6 md:mb-8"
+                  >
+                      <Link to="/currentcourse" className="flex items-center">
+                          Enroll Today
+                          <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
+                      </Link>
+                  </StyledEnrollButton>
+                  <p className="text-black text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-6 md:mb-10 leading-relaxed font-['Poppins'] px-2">
+                      At EDUTOU, we've reimagined education for the digital age. Our AI-powered platform adapts to your learning style, focusing on the skills that matter in today's rapidly evolving job market.
+                  </p>
+              </div>
+              <blockquote className="text-black font-semibold text-base md:text-lg italic mt-8 md:mt-12 font-['Poppins']">
+                  "The ones who learn, adapt, and innovate... change the world." 🚀
+              </blockquote>
+          </div>
       </section>
 
-      {/* Sponsors Section */}
-      <section className="bg-white">
-        <div className="h-[6rem] flex flex-col items-center justify-center relative overflow-hidden">
-          <InfiniteMovingSponsors items={sponsors} direction="right" speed="normal" />
-        </div>
-      </section>
-
-      {/* Why EDUTOU Section - Made Mobile Responsive */}
+      {/* Why EDUTOU Section */}
       <section className="py-12 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 md:gap-12 mb-12 md:mb-16 items-start">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="flex flex-col lg:flex-Row gap-8 md:gap-12 mb-12 md:mb-16 items-start">
             <div className="lg:w-1/2">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight font-['Poppins']">
                 Why <span className="text-orange-500">EDUTOU</span> is Different
@@ -572,11 +777,23 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Sponsors Section */}
+      <section className="bg-white">
+        <div className="h-[6rem] flex flex-col items-center justify-center relative overflow-hidden">
+          <InfiniteMovingSponsors items={sponsors} direction="right" speed="normal" />
+        </div>
+      </section>
+
+      {/* Animated Stats Section */}
+      <StatsCount stats={edutouStats} title="OUR IMPACT IN NUMBERS" />
+
       {/* Explore header + Projects carousel */}
       <Projects />
 
       {/* Edutou About Us Section */}
       <EdutouAboutUs />
+
+     
 
       {/* Testimonials Section with imported component */}
       <TestnomialCard />
@@ -586,30 +803,25 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center p-4">
           <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-4 md:mb-6 max-w-3xl">
             <div className="bg-orange-300 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md">
-Build
+              Build
             </div>
             <div className="bg-orange-100 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg md:rounded-xl border-2 border-black shadow-[2px_2px_0px_#000] md:shadow-[4px_4px_0px_#000]">
               projects
             </div>
             <div className="bg-orange-200 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-2xl md:rounded-3xl shadow-md">
               real-world
-
             </div>
             <div className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-black shadow-md">
               <div className="text-xl md:text-2xl lg:text-3xl">🙂</div>
             </div>
             <div className="bg-orange-100 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-full shadow-md">
               and
-
             </div>
             <div className="bg-orange-200 text-black text-xl md:text-2xl lg:text-3xl font-bold px-5 md:px-8 py-2 md:py-3 rounded-lg md:rounded-xl border-2 border-black shadow-[2px_2px_0px_#000] md:shadow-[4px_4px_0px_#000]">
               stand out
-
-
             </div>
             <div className="bg-orange-300 text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg md:rounded-xl shadow-md">
               to employers 💼
-
             </div>
           </div>
 

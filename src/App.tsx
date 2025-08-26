@@ -23,6 +23,8 @@ const PROJECTS = lazy(() => import("./pages/allcourses"));
 const Currentcourse = lazy(() => import("./pages/currentcourse"));
 const Tesnomialcard = lazy(() => import("./pages/testnomialcard"));
 
+
+
 const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -45,6 +47,7 @@ const App: React.FC = () => {
             <Route path="/PROJECTS" element={<PROJECTS />} />
             <Route path="/currentcourse" element={<Currentcourse />} />
             <Route path="/testnomialcard" element={<Tesnomialcard />} />
+      
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
