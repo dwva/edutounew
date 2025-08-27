@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from 'framer-motion';
-
+import { motion } from "framer-motion";
 
 const WavesHero = () => {
   return (
@@ -15,16 +14,17 @@ const WavesHero = () => {
         >
           <defs>
             <linearGradient id="grad1" x1="1" y1="0" x2="0" y2="0">
-              <stop offset="0%" stopColor="#22d3ee" stopOpacity="0" />
-              <stop offset="50%" stopColor="#22d3ee" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+              <stop offset="0%" stopColor="#FF8C00" stopOpacity="0" />
+              <stop offset="50%" stopColor="#FF8C00" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#FF8C00" stopOpacity="0" />
             </linearGradient>
             <linearGradient id="grad2" x1="1" y1="0" x2="0" y2="0">
-              <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0" />
-              <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+              <stop offset="0%" stopColor="#FF4500" stopOpacity="0" />
+              <stop offset="50%" stopColor="#FF4500" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#FF4500" stopOpacity="0" />
             </linearGradient>
           </defs>
+
           {/* Top Curves */}
           <motion.path
             initial={{ pathLength: 0, opacity: 0 }}
@@ -39,7 +39,7 @@ const WavesHero = () => {
             d="M 100 100 Q 300 0 500 100 T 900 100"
             fill="none"
             stroke="url(#grad1)"
-            strokeWidth="1"
+            strokeWidth="2.5" // made bolder
           />
           <motion.path
             initial={{ pathLength: 0, opacity: 0 }}
@@ -55,7 +55,7 @@ const WavesHero = () => {
             d="M 0 200 Q 200 100 400 200 T 800 200"
             fill="none"
             stroke="url(#grad2)"
-            strokeWidth="1"
+            strokeWidth="2.5"
           />
           {/* Bottom Curves */}
           <motion.path
@@ -72,7 +72,7 @@ const WavesHero = () => {
             d="M 100 600 Q 300 500 500 600 T 900 600"
             fill="none"
             stroke="url(#grad1)"
-            strokeWidth="1"
+            strokeWidth="2.5"
           />
         </svg>
 
@@ -89,7 +89,7 @@ const WavesHero = () => {
               initial={{ x: "100%", opacity: 0 }}
               animate={{
                 x: "-100%",
-                opacity: [0, 0.7, 0.7, 0],
+                opacity: [0, 0.9, 0.9, 0],
               }}
               transition={{
                 duration: 2.5,
@@ -101,9 +101,11 @@ const WavesHero = () => {
               className="absolute right-0"
               style={{
                 top: `${15 + i * 10}%`,
-                height: "1px",
+                height: "2px", // thicker line
                 width: "100%",
-                background: `linear-gradient(90deg, transparent, ${i % 2 === 0 ? "#22d3ee" : "#8b5cf6"}60, transparent)`,
+                background: `linear-gradient(90deg, transparent, ${
+                  i % 2 === 0 ? "#FF8C00" : "#FF4500"
+                }AA, transparent)`,
               }}
             />
           ))}
@@ -116,17 +118,15 @@ const WavesHero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
-          className="absolute -left-1/4 top-1/4 h-96 w-96 rounded-full bg-cyan-500/30 blur-3xl"
+          className="absolute -left-1/4 top-1/4 h-96 w-96 rounded-full bg-orange-600/30 blur-3xl"
         />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2, delay: 0.5 }}
-          className="absolute -right-1/4 top-1/2 h-96 w-96 rounded-full bg-violet-500/30 blur-3xl"
+          className="absolute -right-1/4 top-1/2 h-96 w-96 rounded-full bg-orange-800/30 blur-3xl"
         />
       </div>
-
-
     </section>
   );
 };
