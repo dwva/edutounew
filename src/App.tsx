@@ -22,6 +22,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PROJECTS = lazy(() => import("./pages/allcourses"));
 const Currentcourse = lazy(() => import("./pages/currentcourse"));
 const Tesnomialcard = lazy(() => import("./pages/testnomialcard"));
+const Techstack = lazy(() => import("./pages/techstack"));
 
 
 
@@ -47,6 +48,7 @@ const App: React.FC = () => {
             <Route path="/PROJECTS" element={<PROJECTS />} />
             <Route path="/currentcourse" element={<Currentcourse />} />
             <Route path="/testnomialcard" element={<Tesnomialcard />} />
+            <Route path="/techstack" element={<Techstack />} />
       
             <Route path="*" element={<NotFound />} />
           </Routes>

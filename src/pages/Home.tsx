@@ -13,83 +13,8 @@ import {
 import styled from 'styled-components';
 import Projects from '../components/services';
 import TestnomialCard from './testnomialcard';
-
+import TechStack from './techstack'; // Import the TechStack component
 import Waves from '../components/waves';
-
-// -----------------------------
-// InfiniteMovingSponsors Component
-// -----------------------------
-const InfiniteMovingSponsors = ({
-  items,
-  direction = "right",
-  speed = "normal",
-}: {
-  items: { name: string }[];
-  direction?: "left" | "right";
-  speed?: "slow" | "normal" | "fast";
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children);
-      
-      scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
-      });
-    }
-  }, [items]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="w-full overflow-hidden flex items-center h-full relative"
-    >
-      <div
-        ref={scrollerRef}
-        className="flex gap-8 whitespace-nowrap w-max"
-        style={{
-          animation: `scroll-${direction} ${speed === "slow" ? "60s" : speed === "fast" ? "20s" : "40s"} linear infinite`,
-        }}
-      >
-        {items.map((item, idx) => (
-          <span
-            key={idx}
-            className="text-lg md:text-xl font-semibold text-gray-700 px-6 py-2 bg-white rounded shadow flex-shrink-0"
-          >
-            {item.name}
-          </span>
-        ))}
-      </div>
-      
-      <style>
-        {`
-          @keyframes scroll-right {
-            0% {
-              transform: translateX(0%);
-            }
-            100% {
-              transform: translateX(calc(-100% / 2));
-            }
-          }
-          
-          @keyframes scroll-left {
-            0% {
-              transform: translateX(calc(-100% / 2));
-            }
-            100% {
-              transform: translateX(0%);
-            }
-          }
-        `}
-      </style>
-    </div>
-  );
-};
 
 // -----------------------------
 // Marquee Component for Moving Text
@@ -376,7 +301,7 @@ function EdutouAboutUs() {
                   <circle cx="20%" cy="30%" r="10" fill="rgba(255, 165, 0, 0.1)">
                     <animate attributeName="r" values="8;12;8" dur="4s" repeatCount="indefinite" />
                   </circle>
-                  <circle cx="80%" cy="70%" r="15" fill="rg巴巴, 0, 0.1)">
+                  <circle cx="80%" cy="70%" r="15" fill="rgba(255, 165, 0, 0.1)">
                     <animate attributeName="r" values="12;18;12" dur="5s" repeatCount="indefinite" />
                   </circle>
                 </svg>
@@ -618,15 +543,6 @@ function StatsCount({
 // Main Home Component
 // -----------------------------
 const Home = () => {
-  const sponsors = [
-    { name: 'TechCorp' },
-    { name: 'CloudNine' },
-    { name: 'AI Nexus' },
-    { name: 'DigitalWay' },
-    { name: 'WebScale' },
-    { name: 'DataFlow' },
-  ];
-
   const edutouStats: StatItem[] = [
     {
       value: 10,
@@ -777,12 +693,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Sponsors Section */}
-      <section className="bg-white">
-        <div className="h-[6rem] flex flex-col items-center justify-center relative overflow-hidden">
-          <InfiniteMovingSponsors items={sponsors} direction="right" speed="normal" />
-        </div>
-      </section>
+      {/* TechStack Section - Replaces Sponsors */}
+      <TechStack />
 
       {/* Animated Stats Section */}
       <StatsCount stats={edutouStats} title="OUR IMPACT IN NUMBERS" />
@@ -792,8 +704,6 @@ const Home = () => {
 
       {/* Edutou About Us Section */}
       <EdutouAboutUs />
-
-     
 
       {/* Testimonials Section with imported component */}
       <TestnomialCard />
