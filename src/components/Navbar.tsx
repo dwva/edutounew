@@ -164,7 +164,7 @@ const Navbar = () => {
         ) : (
           // Mobile Logo - Simple logo without container
           <MobileLogoContainer>
-            <LogoImage src={logo} alt="Edutou Logo" />
+           
           </MobileLogoContainer>
         )}
 

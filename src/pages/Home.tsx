@@ -52,7 +52,7 @@ const BorderBeam = ({
                     offsetPath: `rect(0 auto auto 0 round ${borderWidth + 2}px)`,
                     "--color-from": colorFrom,
                     "--color-to": colorTo,
-                }}
+                } as React.CSSProperties}
                 initial={{ offsetDistance: `${initialOffset}%` }}
                 animate={{
                     offsetDistance: reverse
@@ -348,6 +348,7 @@ function EdutouAboutUs() {
                         <div className="lg:w-1/2 w-full relative">
                             {/* BorderBeam Animation Added Here */}
                             <BorderBeam
+                                className=""
                                 size={200}
                                 duration={12}
                                 delay={0}
@@ -355,6 +356,8 @@ function EdutouAboutUs() {
                                 colorFrom="#ffaa40"
                                 colorTo="#9c40ff"
                                 reverse={true}
+                                transition={{}}
+                                style={{}}
                             />
                             {/* Background subtle particle animation */}
                             <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -633,14 +636,51 @@ const Home = () => {
                     margin: 0;
                     padding: 0;
                 }
+                
+                /* Mobile-specific spacing fixes */
+                @media (max-width: 768px) {
+                    /* Reduce hero section padding */
+                    .hero-section {
+                        padding-top: 1rem !important;
+                        padding-bottom: 1.5rem !important;
+                        min-height: 80vh !important;
+                    }
+                    
+                    /* Reduce gap between hero text and quote */
+                    .hero-content h1 {
+                        margin-bottom: 1rem !important;
+                    }
+                    
+                    .hero-content blockquote {
+                        margin-top: 1.5rem !important;
+                    }
+                    
+                    /* Reduce gap between sections */
+                    .section-spacing {
+                        padding-top: 2rem !important;
+                        padding-bottom: 2rem !important;
+                    }
+                    
+                    /* Reduce gap in Why EDUTOU section */
+                    .why-section {
+                        padding-top: 1.5rem !important;
+                        padding-bottom: 1.5rem !important;
+                    }
+                    
+                    /* Reduce gap in tech stack section */
+                    .tech-stack-section {
+                        padding-top: 1rem !important;
+                        padding-bottom: 1rem !important;
+                    }
+                }
                 `}
             </style>
 
             {/* Moving text marquee - Now at the very top */}
             <MovingTextMarquee />
 
-            {/* Hero Section with Waves background */}
-            <section className="min-h-screen w-full relative flex items-center justify-center px-4 sm:px-6 overflow-hidden" style={{ marginTop: 0 }}>
+            {/* Hero Section with Waves background - Reduced padding for mobile */}
+            <section className="hero-section min-h-screen w-full relative flex items-center justify-center px-4 sm:px-6 overflow-hidden" style={{ marginTop: 0, paddingTop: '2rem', paddingBottom: '2rem' }}>
                 {/* Waves Background */}
                 <div className="absolute inset-0 z-0">
                     <Waves />
@@ -658,12 +698,12 @@ const Home = () => {
                 />
 
                 {/* Hero Content - TEXT LAYOUT FIXED */}
-                <div className="relative z-10 text-center max-w-5xl">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-10 leading-tight text-black font-['Poppins']">
+                <div className="hero-content relative z-10 text-center max-w-5xl">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-10 leading-tight text-black font-['Poppins']">
                         The Future of Learning{" "}
                         <span className="education-text">Powered</span> by AI.
                     </h1>
-                    <div className="my-8 md:my-12 flex flex-col items-center">
+                    <div className="my-6 md:my-12 flex flex-col items-center">
                         <StyledEnrollButton
                             whileHover={{
                                 scale: 1.05,
@@ -671,27 +711,27 @@ const Home = () => {
                             }}
                             whileTap={{ scale: 0.95 }}
                             transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                            className="mb-6 md:mb-8"
+                            className="mb-4 md:mb-8"
                         >
                             <Link to="/currentcourse" className="flex items-center">
                                 Enroll Today
                                 <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                             </Link>
                         </StyledEnrollButton>
-                        <p className="text-black text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-6 md:mb-10 leading-relaxed font-['Poppins'] px-2">
+                        <p className="text-black text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-4 md:mb-10 leading-relaxed font-['Poppins'] px-2">
                             At EDUTOU, we've reimagined education for the digital age. Our AI-powered platform adapts to your learning style, focusing on the skills that matter in today's rapidly evolving job market.
                         </p>
                     </div>
-                    <blockquote className="text-black font-semibold text-base md:text-lg italic mt-8 md:mt-12 font-['Poppins']">
+                    <blockquote className="text-black font-semibold text-base md:text-lg italic mt-4 md:mt-12 font-['Poppins']">
                         "The ones who learn, adapt, and innovate... change the world." 🚀
                     </blockquote>
                 </div>
             </section>
 
-            {/* Why EDUTOU Section */}
-            <section className="py-12 md:py-24 bg-white">
+            {/* Why EDUTOU Section - Reduced padding */}
+            <section className="why-section py-8 md:py-24 bg-white">
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                    <div className="flex flex-col lg:flex-row gap-8 md:gap-12 mb-12 md:mb-16 items-start">
+                    <div className="flex flex-col lg:flex-row gap-6 md:gap-12 mb-8 md:mb-16 items-start">
                         <div className="lg:w-1/2">
                             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight font-['Poppins']">
                                 Why <span className="text-orange-500">EDUTOU</span> is Different
@@ -744,8 +784,10 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* TechStack Section */}
-            <TechStack />
+            {/* TechStack Section - Reduced padding */}
+            <section className="tech-stack-section py-8 md:py-16 bg-white">
+                <TechStack />
+            </section>
 
             {/* Animated Stats Section */}
             <StatsCount stats={edutouStats} title="OUR IMPACT IN NUMBERS" />
