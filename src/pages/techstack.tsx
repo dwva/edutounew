@@ -14,83 +14,167 @@ import {
   SiGithub,
   SiMongodb,
   SiPostgresql,
-  SiAmazon,
   SiFirebase,
   SiKubernetes,
   SiNextdotjs,
   SiVuedotjs,
   SiAngular,
   SiCplusplus,
+  SiExpress,
+  SiFlask,
+  SiDjango,
+  SiLaravel,
+  SiPhp,
+  SiRust,
+  SiSwift,
+  SiKotlin,
+  SiFlutter,
+  SiRedis,
+  SiElasticsearch,
+  SiGraphql,
+  SiApollographql,
+  SiWebpack,
+  SiVite,
+  SiEslint,
+  SiJest,
+  SiCypress,
+  SiStorybook,
+  SiFigma,
+  SiSketch,
+  SiAdobexd,
+  SiLinux,
+  SiUbuntu,
+  SiNginx,
+  SiApache,
+  SiJenkins,
+  SiGitlab,
+  SiBitbucket,
+  SiVercel,
+  SiNetlify,
+  SiHeroku,
+  SiSupabase,
+  SiPlanetscale,
+  SiPrisma,
+  SiSequelize,
+  SiMysql,
+  SiSqlite,
+  SiSass,
+  SiStyledcomponents,
+  SiChakraui,
+  SiMui,
+  SiBootstrap,
+  SiBulma,
+  SiVuetify,
+  SiQuasar,
+  SiNuxtdotjs,
+  SiGatsby,
+  SiSvelte,
+  SiSolid,
+  SiAlpinedotjs,
+  SiThreedotjs,
+  SiD3Dotjs,
+  SiFramer,
 } from "react-icons/si";
 
 const TechStackAnimation = () => {
-  // Define the tech logos as icons with brand colors
-  const techIcons = [
+  const allTechIcons = [
     { icon: <SiReact />, name: "React", color: "#61DAFB" },
+    { icon: <SiVuedotjs />, name: "Vue.js", color: "#4FC08D" },
+    { icon: <SiAngular />, name: "Angular", color: "#DD0031" },
+    { icon: <SiSvelte />, name: "Svelte", color: "#FF3E00" },
+    { icon: <SiSolid />, name: "Solid", color: "#2C4F7C" },
+    { icon: <SiAlpinedotjs />, name: "Alpine.js", color: "#8BC34A" },
     { icon: <SiJavascript />, name: "JavaScript", color: "#F7DF1E" },
     { icon: <SiTypescript />, name: "TypeScript", color: "#3178C6" },
-    { icon: <SiHtml5 />, name: "HTML", color: "#E34F26" },
-    { icon: <SiCss3 />, name: "CSS", color: "#1572B6" },
-    { icon: <SiTailwindcss />, name: "Tailwind CSS", color: "#06B6D4" },
-    { icon: <SiNodedotjs />, name: "Node.js", color: "#339933" },
     { icon: <SiPython />, name: "Python", color: "#3776AB" },
+    { icon: <SiCplusplus />, name: "C++", color: "#00599C" },
+    { icon: <SiRust />, name: "Rust", color: "#000000" },
     { icon: <SiGo />, name: "Go", color: "#00ADD8" },
-    { icon: <SiDocker />, name: "Docker", color: "#2496ED" },
-    { icon: <SiGit />, name: "Git", color: "#F05032" },
-    { icon: <SiGithub />, name: "GitHub", color: "#181717" },
+    { icon: <SiPhp />, name: "PHP", color: "#777BB4" },
+    { icon: <SiSwift />, name: "Swift", color: "#FA7343" },
+    { icon: <SiKotlin />, name: "Kotlin", color: "#0095D5" },
+    { icon: <SiHtml5 />, name: "HTML5", color: "#E34F26" },
+    { icon: <SiCss3 />, name: "CSS3", color: "#1572B6" },
+    { icon: <SiSass />, name: "Sass", color: "#CC6699" },
+    { icon: <SiTailwindcss />, name: "Tailwind CSS", color: "#06B6D4" },
+    { icon: <SiBootstrap />, name: "Bootstrap", color: "#7952B3" },
+    { icon: <SiMui />, name: "Material-UI", color: "#0081CB" },
+    { icon: <SiChakraui />, name: "Chakra UI", color: "#319795" },
+    { icon: <SiStyledcomponents />, name: "Styled Components", color: "#DB7093" },
+    { icon: <SiBulma />, name: "Bulma", color: "#00D1B2" },
+    { icon: <SiVuetify />, name: "Vuetify", color: "#1867C0" },
+    { icon: <SiQuasar />, name: "Quasar", color: "#1976D2" },
+    { icon: <SiNextdotjs />, name: "Next.js", color: "#000000" },
+    { icon: <SiNuxtdotjs />, name: "Nuxt.js", color: "#00DC82" },
+    { icon: <SiGatsby />, name: "Gatsby", color: "#663399" },
+    { icon: <SiNodedotjs />, name: "Node.js", color: "#339933" },
+    { icon: <SiExpress />, name: "Express.js", color: "#000000" },
+    { icon: <SiDjango />, name: "Django", color: "#092E20" },
+    { icon: <SiFlask />, name: "Flask", color: "#000000" },
+    { icon: <SiLaravel />, name: "Laravel", color: "#FF2D20" },
+    { icon: <SiFlutter />, name: "Flutter", color: "#02569B" },
     { icon: <SiMongodb />, name: "MongoDB", color: "#47A248" },
     { icon: <SiPostgresql />, name: "PostgreSQL", color: "#4169E1" },
-
-    { icon: <SiFirebase />, name: "Firebase", color: "#FFCA28" },
+    { icon: <SiMysql />, name: "MySQL", color: "#4479A1" },
+    { icon: <SiSqlite />, name: "SQLite", color: "#003B57" },
+    { icon: <SiRedis />, name: "Redis", color: "#DC382D" },
+    { icon: <SiElasticsearch />, name: "Elasticsearch", color: "#005571" },
+    { icon: <SiSupabase />, name: "Supabase", color: "#3ECF8E" },
+    { icon: <SiPlanetscale />, name: "PlanetScale", color: "#000000" },
+    { icon: <SiPrisma />, name: "Prisma", color: "#2D3748" },
+    { icon: <SiSequelize />, name: "Sequelize", color: "#52B0E7" },
+    { icon: <SiGraphql />, name: "GraphQL", color: "#E10098" },
+    { icon: <SiApollographql />, name: "Apollo GraphQL", color: "#311C87" },
+    { icon: <SiDocker />, name: "Docker", color: "#2496ED" },
     { icon: <SiKubernetes />, name: "Kubernetes", color: "#326CE5" },
-    { icon: <SiNextdotjs />, name: "Next.js", color: "#000000" },
-    { icon: <SiVuedotjs />, name: "Vue.js", color: "#42b883" },
-    { icon: <SiAngular />, name: "Angular", color: "#dd0031" },
-    { icon: <SiCplusplus />, name: "C++", color: "#00599C" },
+    { icon: <SiFirebase />, name: "Firebase", color: "#FFCA28" },
+    { icon: <SiVercel />, name: "Vercel", color: "#000000" },
+    { icon: <SiNetlify />, name: "Netlify", color: "#00AD9F" },
+    { icon: <SiHeroku />, name: "Heroku", color: "#430098" },
+    { icon: <SiGit />, name: "Git", color: "#F05032" },
+    { icon: <SiGithub />, name: "GitHub", color: "#181717" },
+    { icon: <SiGitlab />, name: "GitLab", color: "#FCA326" },
+    { icon: <SiBitbucket />, name: "Bitbucket", color: "#0052CC" },
+    { icon: <SiJenkins />, name: "Jenkins", color: "#D33833" },
+    { icon: <SiWebpack />, name: "Webpack", color: "#8DD6F9" },
+    { icon: <SiVite />, name: "Vite", color: "#646CFF" },
+    { icon: <SiEslint />, name: "ESLint", color: "#4B32C3" },
+    { icon: <SiJest />, name: "Jest", color: "#C21325" },
+    { icon: <SiCypress />, name: "Cypress", color: "#17202C" },
+    { icon: <SiStorybook />, name: "Storybook", color: "#FF4785" },
+    { icon: <SiFigma />, name: "Figma", color: "#F24E1E" },
+    { icon: <SiSketch />, name: "Sketch", color: "#F7B500" },
+    { icon: <SiAdobexd />, name: "Adobe XD", color: "#FF61F6" },
+    { icon: <SiThreedotjs />, name: "Three.js", color: "#000000" },
+    { icon: <SiD3Dotjs />, name: "D3.js", color: "#F9A03C" },
+    { icon: <SiFramer />, name: "Framer Motion", color: "#0055FF" },
+    { icon: <SiLinux />, name: "Linux", color: "#FCC624" },
+    { icon: <SiUbuntu />, name: "Ubuntu", color: "#E95420" },
+    { icon: <SiNginx />, name: "Nginx", color: "#009639" },
+    { icon: <SiApache />, name: "Apache", color: "#D22128" },
   ];
 
-  // Shuffle function to create variation
-  const shuffleArray = (array: typeof techIcons) => {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-    }
-    return newArray;
-  };
+  const iconsPerRow = Math.ceil(allTechIcons.length / 4);
 
-  // Rows with shuffled icons
-  const row1Icons = shuffleArray(techIcons);
-  const row2Icons = shuffleArray(techIcons);
-  const row3Icons = shuffleArray(techIcons);
-  const row4Icons = shuffleArray(techIcons);
+  const row1Icons = allTechIcons.slice(0, iconsPerRow);
+  const row2Icons = allTechIcons.slice(iconsPerRow, iconsPerRow * 2);
+  const row3Icons = allTechIcons.slice(iconsPerRow * 2, iconsPerRow * 3);
+  const row4Icons = allTechIcons.slice(iconsPerRow * 3);
 
-  // Icon component
-  const IconCard = ({ icon, color }: { icon: JSX.Element; color: string }) => (
+  const IconCard = ({ icon, color }) => (
     <div
-      className="flex-shrink-0 mx-3 sm:mx-4 md:mx-5 my-3 
-        w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 
-        flex items-center justify-center rounded-xl transition-all duration-300"
+      className="flex-shrink-0 mx-2 my-2 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center rounded-xl transition-all duration-300"
       style={{ color }}
     >
-      <div
-        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
-        transition-transform duration-300 transform hover:scale-125 hover:drop-shadow-md"
-      >
+      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl transition-transform duration-300 transform hover:scale-125 hover:drop-shadow-md">
         {icon}
       </div>
     </div>
   );
 
-  // Row component
-  const IconRow = ({
-    icons,
-    direction,
-  }: {
-    icons: typeof techIcons;
-    direction: "left" | "right";
-  }) => {
-    const duplicatedIcons = [...icons, ...icons];
+  const IconRow = ({ icons, direction, speed }) => {
+    const multipliedIcons = [...icons, ...icons]; // duplicate for seamless scroll
+
     return (
       <div
         className="relative overflow-hidden mb-1 sm:mb-2 md:mb-3"
@@ -102,12 +186,13 @@ const TechStackAnimation = () => {
         }}
       >
         <div
-          className={`flex ${
-            direction === "left" ? "animate-scroll-left" : "animate-scroll-right"
-          }`}
+          className={`flex whitespace-nowrap ${direction === "left" ? "animate-scroll-left" : "animate-scroll-right"}`}
+          style={{
+            animationDuration: speed,
+          }}
         >
-          {duplicatedIcons.map((logo, index) => (
-            <IconCard key={index} icon={logo.icon} color={logo.color} />
+          {multipliedIcons.map((logo, index) => (
+            <IconCard key={`${logo.name}-${index}`} icon={logo.icon} color={logo.color} />
           ))}
         </div>
       </div>
@@ -116,26 +201,23 @@ const TechStackAnimation = () => {
 
   return (
     <div className="flex flex-col p-2 sm:p-4 bg-transparent">
-      {/* Header */}
       <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-2 sm:mt-4 md:mt-6">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black">
           Technologies to <span className="text-orange-500">build</span> powerful
         </h1>
       </div>
 
-      {/* Icon Rows */}
       <div className="flex items-center justify-center py-2 md:py-4">
         <div className="w-full max-w-5xl lg:max-w-7xl px-2 sm:px-4">
           <div className="space-y-1 sm:space-y-2 md:space-y-3 lg:space-y-4">
-            <IconRow icons={row1Icons} direction="right" />
-            <IconRow icons={row2Icons} direction="left" />
-            <IconRow icons={row3Icons} direction="right" />
-            <IconRow icons={row4Icons} direction="left" />
+            <IconRow icons={row1Icons} direction="right" speed="30s" />
+            <IconRow icons={row2Icons} direction="left" speed="40s" />
+            <IconRow icons={row3Icons} direction="right" speed="30s" />
+            <IconRow icons={row4Icons} direction="left" speed="40s" />
           </div>
         </div>
       </div>
 
-      {/* Animations */}
       <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0); }
@@ -146,17 +228,14 @@ const TechStackAnimation = () => {
           100% { transform: translateX(0); }
         }
         .animate-scroll-left {
-          animation: scroll-left 25s linear infinite;
+          animation: scroll-left linear infinite;
         }
         .animate-scroll-right {
-          animation: scroll-right 25s linear infinite;
+          animation: scroll-right linear infinite;
         }
         @media (max-width: 640px) {
-          .animate-scroll-left {
-            animation: scroll-left 20s linear infinite;
-          }
-          .animate-scroll-right {
-            animation: scroll-right 20s linear infinite;
+          .animate-scroll-left, .animate-scroll-right {
+            animation-duration: 25s !important;
           }
         }
       `}</style>
