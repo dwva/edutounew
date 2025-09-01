@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, 
   CheckCircle, 
@@ -18,7 +18,11 @@ import {
   Gift,
   Smartphone,
   Menu,
-  X
+  X,
+  Clock,
+  ShieldCheck,
+  Award,
+  AlertCircle
 } from 'lucide-react';
 
 interface EnrollmentData {
@@ -46,6 +50,8 @@ const AdminDashboard: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<'all' | 'verified' | 'pending' | 'failed'>('all');
   const [selectedEnrollment, setSelectedEnrollment] = useState<EnrollmentData | null>(null);
   const [isMobileDetailsOpen, setIsMobileDetailsOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState<'verified' | 'pending'>('verified');
 
   useEffect(() => {
     // Check authentication
@@ -69,7 +75,7 @@ const AdminDashboard: React.FC = () => {
         paymentStatus: 'verified',
         phonepeTransactionId: 'PP1234567890',
         phonepeVerified: true,
-        certificateVerified: false,
+        certificateVerified: true,
         amount: 15000,
         paymentMethod: 'PhonePe'
       },
@@ -112,11 +118,27 @@ const AdminDashboard: React.FC = () => {
         collegeInstitution: 'Hyderabad Institute of Technology',
         course: 'Digital Marketing',
         enrollmentDate: '2024-01-12',
-        paymentStatus: 'verified',
+        paymentStatus: 'pending',
         phonepeTransactionId: 'PP5566778899',
-        phonepeVerified: true,
+        phonepeVerified: false,
         certificateVerified: false,
         amount: 8000,
+        paymentMethod: 'PhonePe'
+      },
+      {
+        id: '5',
+        fullName: 'Vikram Singh',
+        emailAddress: 'vikram.singh@gmail.com',
+        whatsappNumber: '+91 8877665544',
+        collegeInstitution: 'Pune Institute of Technology',
+        referralCode: 'REF003',
+        course: 'Mobile App Development',
+        enrollmentDate: '2024-01-11',
+        paymentStatus: 'verified',
+        phonepeTransactionId: 'PP9988776655',
+        phonepeVerified: true,
+        certificateVerified: false,
+        amount: 14000,
         paymentMethod: 'PhonePe'
       }
     ];
@@ -151,16 +173,26 @@ const AdminDashboard: React.FC = () => {
     ));
   };
 
-  const openMobileDetails = (enrollment: EnrollmentData) => {
-    setSelectedEnrollment(enrollment);
-    setIsMobileDetailsOpen(true);
+  const getNextStatus = (currentStatus: 'pending' | 'verified' | 'failed'): 'pending' | 'verified' | 'failed' => {
+    switch (currentStatus) {
+      case 'pending': return 'verified';
+      case 'verified': return 'failed';
+      case 'failed': return 'pending';
+      default: return 'pending';
+    }
   };
+
+  const getNextPhonepeStatus = (current: boolean): boolean => !current;
+  const getNextCertificateStatus = (current: boolean): boolean => !current;
+
+  const verifiedStudents = enrollments.filter(e => e.paymentStatus === 'verified');
+  const pendingStudents = enrollments.filter(e => e.paymentStatus === 'pending');
 
   const stats = {
     total: enrollments.length,
-    verified: enrollments.filter(e => e.paymentStatus === 'verified').length,
-    pending: enrollments.filter(e => e.paymentStatus === 'pending').length,
-    revenue: enrollments.filter(e => e.paymentStatus === 'verified').reduce((sum, e) => sum + e.amount, 0)
+    verified: verifiedStudents.length,
+    pending: pendingStudents.length,
+    revenue: verifiedStudents.reduce((sum, e) => sum + e.amount, 0)
   };
 
   return (
@@ -169,436 +201,453 @@ const AdminDashboard: React.FC = () => {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white shadow-lg border-b-4 border-orange-500"
+        className="bg-white shadow-lg border-b-4 border-orange-500 relative z-10"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600 mt-1">Manage student enrollments and verifications</p>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden p-2 bg-orange-100 text-orange-600 rounded-full hover:bg-orange-200 transition-colors"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+                <p className="text-gray-600 text-sm">Manage student enrollments and verifications</p>
+              </div>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center space-x-2 px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="flex items-center justify-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
-              <LogOut className="w-5 h-5" />
-              <span className="font-medium">Logout</span>
+              <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="font-medium text-sm sm:text-base">Logout</span>
             </button>
           </div>
         </div>
       </motion.header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8"
-        >
-          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-orange-500 hover:shadow-2xl transition-shadow duration-300">
-            <div className="flex items-center space-x-3">
-              <div className="bg-orange-100 p-3 rounded-full">
-                <Users className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm text-gray-500 font-medium">Total Students</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.total}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-green-500 hover:shadow-2xl transition-shadow duration-300">
-            <div className="flex items-center space-x-3">
-              <div className="bg-green-100 p-3 rounded-full">
-                <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm text-gray-500 font-medium">Verified</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.verified}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-yellow-500 hover:shadow-2xl transition-shadow duration-300">
-            <div className="flex items-center space-x-3">
-              <div className="bg-yellow-100 p-3 rounded-full">
-                <XCircle className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-600" />
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm text-gray-500 font-medium">Pending</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.pending}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-orange-500 hover:shadow-2xl transition-shadow duration-300 col-span-2 lg:col-span-1">
-            <div className="flex items-center space-x-3">
-              <div className="bg-orange-100 p-3 rounded-full">
-                <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm text-gray-500 font-medium">Total Revenue</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900">₹{stats.revenue.toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Controls */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 mb-8"
-        >
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search students..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-3 w-full sm:w-64 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
-                />
-              </div>
-              
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value as any)}
-                  className="pl-10 pr-8 py-3 w-full sm:w-auto border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 appearance-none bg-white transition-all duration-200"
-                >
-                  <option value="all">All Status</option>
-                  <option value="verified">Verified</option>
-                  <option value="pending">Pending</option>
-                  <option value="failed">Failed</option>
-                </select>
-              </div>
-            </div>
-            
-            <button className="flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
-              <Download className="w-5 h-5" />
-              <span className="font-medium">Export Data</span>
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Desktop Table */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="hidden lg:block bg-white rounded-2xl shadow-xl overflow-hidden"
-        >
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-                <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Student Details</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Course & Institution</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Payment Info</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Verification Status</th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {filteredEnrollments.map((enrollment, index) => (
-                  <tr key={enrollment.id} className={`hover:bg-orange-50 transition-colors duration-200 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                    <td className="px-6 py-4">
-                      <div className="space-y-1">
-                        <div className="text-sm font-bold text-gray-900">{enrollment.fullName}</div>
-                        <div className="flex items-center space-x-1 text-xs text-gray-600">
-                          <Mail className="w-3 h-3" />
-                          <span>{enrollment.emailAddress}</span>
-                        </div>
-                        <div className="flex items-center space-x-1 text-xs text-gray-600">
-                          <Phone className="w-3 h-3" />
-                          <span>{enrollment.whatsappNumber}</span>
-                        </div>
-                        {enrollment.referralCode && (
-                          <div className="flex items-center space-x-1 text-xs text-orange-600">
-                            <Gift className="w-3 h-3" />
-                            <span>Ref: {enrollment.referralCode}</span>
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="space-y-1">
-                        <div className="text-sm font-medium text-gray-900">{enrollment.course}</div>
-                        <div className="flex items-center space-x-1 text-xs text-gray-600">
-                          <GraduationCap className="w-3 h-3" />
-                          <span>{enrollment.collegeInstitution}</span>
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {new Date(enrollment.enrollmentDate).toLocaleDateString()}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="space-y-2">
-                        <div className="text-lg font-bold text-gray-900">₹{enrollment.amount.toLocaleString()}</div>
-                        <div className="flex items-center space-x-1">
-                          <Smartphone className="w-4 h-4 text-purple-600" />
-                          <span className="text-sm text-gray-600">{enrollment.paymentMethod}</span>
-                        </div>
-                        {enrollment.phonepeTransactionId && (
-                          <div className="text-xs text-gray-500 font-mono">
-                            ID: {enrollment.phonepeTransactionId}
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center space-x-2">
-                          <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
-                            enrollment.paymentStatus === 'verified' 
-                              ? 'bg-green-100 text-green-800'
-                              : enrollment.paymentStatus === 'pending'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-red-100 text-red-800'
-                          }`}>
-                            {enrollment.paymentStatus}
-                          </span>
-                          <button
-                            onClick={() => updateVerificationStatus(enrollment.id, 'paymentStatus', 
-                              enrollment.paymentStatus === 'verified' ? 'pending' : 'verified')}
-                            className={`p-1 rounded-full hover:bg-gray-100 transition-colors ${
-                              enrollment.paymentStatus === 'verified'
-                                ? 'text-green-600'
-                                : 'text-gray-400'
-                            }`}
-                          >
-                            <CheckCircle className="w-4 h-4" />
-                          </button>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <span className="text-xs text-gray-600">PhonePe:</span>
-                          <button
-                            onClick={() => updateVerificationStatus(enrollment.id, 'phonepeVerified', !enrollment.phonepeVerified)}
-                            className={`p-1 rounded-full hover:bg-gray-100 transition-colors ${
-                              enrollment.phonepeVerified
-                                ? 'text-green-600'
-                                : 'text-red-500'
-                            }`}
-                          >
-                            {enrollment.phonepeVerified ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                          </button>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                          <span className="text-xs text-gray-600">Certificate:</span>
-                          <button
-                            onClick={() => updateVerificationStatus(enrollment.id, 'certificateVerified', !enrollment.certificateVerified)}
-                            className={`p-1 rounded-full hover:bg-gray-100 transition-colors ${
-                              enrollment.certificateVerified
-                                ? 'text-green-600'
-                                : 'text-red-500'
-                            }`}
-                          >
-                            {enrollment.certificateVerified ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <div className="flex justify-center space-x-2">
-                        <button className="p-2 text-orange-600 hover:bg-orange-50 rounded-full transition-colors">
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button className="p-2 text-green-600 hover:bg-green-50 rounded-full transition-colors">
-                          <Download className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </motion.div>
-
-        {/* Mobile Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="lg:hidden space-y-4"
-        >
-          {filteredEnrollments.map((enrollment) => (
-            <div key={enrollment.id} className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-orange-500">
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex-1">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{enrollment.fullName}</h3>
-                  <div className="space-y-1 text-sm text-gray-600">
-                    <div className="flex items-center space-x-2">
-                      <Mail className="w-4 h-4 text-gray-400" />
-                      <span>{enrollment.emailAddress}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Phone className="w-4 h-4 text-gray-400" />
-                      <span>{enrollment.whatsappNumber}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <GraduationCap className="w-4 h-4 text-gray-400" />
-                      <span>{enrollment.collegeInstitution}</span>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  onClick={() => openMobileDetails(enrollment)}
-                  className="p-2 bg-orange-100 text-orange-600 rounded-full hover:bg-orange-200 transition-colors"
-                >
-                  <Eye className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center space-x-4">
-                  <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                    enrollment.paymentStatus === 'verified' 
-                      ? 'bg-green-100 text-green-800'
-                      : enrollment.paymentStatus === 'pending'
-                      ? 'bg-yellow-100 text-yellow-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {enrollment.paymentStatus}
-                  </span>
-                  <span className="text-lg font-bold text-gray-900">₹{enrollment.amount.toLocaleString()}</span>
-                </div>
-
-                <div className="flex space-x-2">
+      <div className="flex">
+        {/* Sidebar */}
+        <AnimatePresence>
+          {(sidebarOpen || window.innerWidth >= 1024) && (
+            <motion.aside
+              initial={{ x: -300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              className="fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto w-80 bg-white shadow-2xl lg:shadow-xl border-r border-gray-200 overflow-y-auto"
+              style={{ top: window.innerWidth >= 1024 ? '120px' : '0', height: window.innerWidth >= 1024 ? 'calc(100vh - 120px)' : '100vh' }}
+            >
+              {/* Sidebar Header */}
+              <div className="p-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold">Quick Access</h2>
                   <button
-                    onClick={() => updateVerificationStatus(enrollment.id, 'phonepeVerified', !enrollment.phonepeVerified)}
-                    className={`p-2 rounded-full transition-colors ${
-                      enrollment.phonepeVerified
-                        ? 'bg-green-100 text-green-600'
-                        : 'bg-red-100 text-red-500'
-                    }`}
-                  >
-                    {enrollment.phonepeVerified ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                  </button>
-                  <button
-                    onClick={() => updateVerificationStatus(enrollment.id, 'certificateVerified', !enrollment.certificateVerified)}
-                    className={`p-2 rounded-full transition-colors ${
-                      enrollment.certificateVerified
-                        ? 'bg-green-100 text-green-600'
-                        : 'bg-red-100 text-red-500'
-                    }`}
-                  >
-                    {enrollment.certificateVerified ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Mobile Details Modal */}
-        {selectedEnrollment && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={`fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden ${isMobileDetailsOpen ? 'block' : 'hidden'}`}
-          >
-            <div className="flex items-end justify-center min-h-screen">
-              <motion.div
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '100%' }}
-                className="bg-white rounded-t-2xl p-6 w-full max-h-[80vh] overflow-y-auto"
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Student Details</h2>
-                  <button
-                    onClick={() => setIsMobileDetailsOpen(false)}
-                    className="p-2 bg-gray-100 rounded-full"
+                    onClick={() => setSidebarOpen(false)}
+                    className="lg:hidden p-1 hover:bg-orange-400 rounded-full transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
+              </div>
 
-                <div className="space-y-6">
-                  <div className="bg-orange-50 rounded-xl p-4">
-                    <h3 className="font-semibold text-gray-900 mb-3">Personal Information</h3>
-                    <div className="space-y-2 text-sm">
-                      <div><strong>Full Name:</strong> {selectedEnrollment.fullName}</div>
-                      <div><strong>Email:</strong> {selectedEnrollment.emailAddress}</div>
-                      <div><strong>WhatsApp:</strong> {selectedEnrollment.whatsappNumber}</div>
-                      <div><strong>Institution:</strong> {selectedEnrollment.collegeInstitution}</div>
-                      {selectedEnrollment.referralCode && (
-                        <div><strong>Referral Code:</strong> {selectedEnrollment.referralCode}</div>
-                      )}
-                    </div>
+              {/* Tab Navigation */}
+              <div className="flex border-b border-gray-200">
+                <button
+                  onClick={() => setActiveTab('verified')}
+                  className={`flex-1 py-4 px-6 text-sm font-medium transition-all duration-200 ${
+                    activeTab === 'verified'
+                      ? 'bg-green-50 text-green-700 border-b-2 border-green-500'
+                      : 'text-gray-600 hover:text-green-600 hover:bg-green-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <CheckCircle className="w-4 h-4" />
+                    <span>Verified ({verifiedStudents.length})</span>
                   </div>
-
-                  <div className="bg-blue-50 rounded-xl p-4">
-                    <h3 className="font-semibold text-gray-900 mb-3">Course & Payment</h3>
-                    <div className="space-y-2 text-sm">
-                      <div><strong>Course:</strong> {selectedEnrollment.course}</div>
-                      <div><strong>Amount:</strong> ₹{selectedEnrollment.amount.toLocaleString()}</div>
-                      <div><strong>Payment Method:</strong> {selectedEnrollment.paymentMethod}</div>
-                      <div><strong>Transaction ID:</strong> {selectedEnrollment.phonepeTransactionId}</div>
-                      <div><strong>Enrollment Date:</strong> {new Date(selectedEnrollment.enrollmentDate).toLocaleDateString()}</div>
-                    </div>
+                </button>
+                <button
+                  onClick={() => setActiveTab('pending')}
+                  className={`flex-1 py-4 px-6 text-sm font-medium transition-all duration-200 ${
+                    activeTab === 'pending'
+                      ? 'bg-yellow-50 text-yellow-700 border-b-2 border-yellow-500'
+                      : 'text-gray-600 hover:text-yellow-600 hover:bg-yellow-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <Clock className="w-4 h-4" />
+                    <span>Pending ({pendingStudents.length})</span>
                   </div>
+                </button>
+              </div>
 
-                  <div className="bg-green-50 rounded-xl p-4">
-                    <h3 className="font-semibold text-gray-900 mb-3">Verification Status</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span>Payment Status</span>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          selectedEnrollment.paymentStatus === 'verified' 
-                            ? 'bg-green-200 text-green-800'
-                            : 'bg-yellow-200 text-yellow-800'
-                        }`}>
-                          {selectedEnrollment.paymentStatus}
-                        </span>
+              {/* Verified Students List */}
+              {activeTab === 'verified' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 space-y-3"
+                >
+                  {verifiedStudents.map((student) => (
+                    <motion.div
+                      key={student.id}
+                      whileHover={{ scale: 1.02 }}
+                      className="bg-green-50 border border-green-200 rounded-xl p-4 hover:shadow-md transition-all duration-200"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-gray-900 text-sm mb-1">{student.fullName}</h3>
+                          <div className="space-y-1">
+                            <div className="flex items-center space-x-1 text-xs text-gray-600">
+                              <CreditCard className="w-3 h-3" />
+                              <span>{student.phonepeTransactionId}</span>
+                            </div>
+                            <div className="text-xs text-green-700 font-medium">₹{student.amount.toLocaleString()}</div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col space-y-1">
+                          {/* PhonePe Verification Button */}
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => updateVerificationStatus(student.id, 'phonepeVerified', getNextPhonepeStatus(student.phonepeVerified))}
+                            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 shadow-md border-2 ${
+                              student.phonepeVerified
+                                ? 'bg-green-500 text-white border-green-600 hover:bg-green-600 hover:border-green-700'
+                                : 'bg-white text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'
+                            }`}
+                          >
+                            PhonePe: Verified
+                          </motion.button>
+                          
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => updateVerificationStatus(student.id, 'certificateVerified', getNextCertificateStatus(student.certificateVerified))}
+                            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 shadow-md border-2 ${
+                              student.certificateVerified
+                                ? 'bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:border-blue-700'
+                                : 'bg-white text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'
+                            }`}
+                          >
+                            Certificate: Verified
+                          </motion.button>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span>PhonePe Verified</span>
-                        {selectedEnrollment.phonepeVerified ? (
-                          <CheckCircle className="w-5 h-5 text-green-600" />
-                        ) : (
-                          <XCircle className="w-5 h-5 text-red-500" />
-                        )}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span>Certificate Verified</span>
-                        {selectedEnrollment.certificateVerified ? (
-                          <CheckCircle className="w-5 h-5 text-green-600" />
-                        ) : (
-                          <XCircle className="w-5 h-5 text-red-500" />
-                        )}
-                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {verifiedStudents.length === 0 && (
+                    <div className="text-center py-8 text-gray-500">
+                      <CheckCircle className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+                      <p className="text-sm">No verified students yet</p>
                     </div>
+                  )}
+                </motion.div>
+              )}
+
+              {/* Pending Students List */}
+              {activeTab === 'pending' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 space-y-3"
+                >
+                  {pendingStudents.map((student) => (
+                    <motion.div
+                      key={student.id}
+                      whileHover={{ scale: 1.02 }}
+                      className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 hover:shadow-md transition-all duration-200"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-gray-900 text-sm mb-1">{student.fullName}</h3>
+                          <div className="space-y-1">
+                            <div className="flex items-center space-x-1 text-xs text-gray-600">
+                              <CreditCard className="w-3 h-3" />
+                              <span>{student.phonepeTransactionId || 'No ID'}</span>
+                            </div>
+                            <div className="text-xs text-yellow-700 font-medium">₹{student.amount.toLocaleString()}</div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col space-y-1">
+                          {/* Payment Verification Button */}
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => updateVerificationStatus(student.id, 'paymentStatus', getNextStatus(student.paymentStatus))}
+                            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 shadow-md border-2 ${
+                              student.paymentStatus === 'verified'
+                                ? 'bg-green-500 text-white border-green-600 hover:bg-green-600 hover:border-green-700'
+                                : 'bg-white text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'
+                            }`}
+                          >
+                            Payment: Verified
+                          </motion.button>
+                          
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => updateVerificationStatus(student.id, 'phonepeVerified', getNextPhonepeStatus(student.phonepeVerified))}
+                            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 shadow-md border-2 ${
+                              student.phonepeVerified
+                                ? 'bg-green-500 text-white border-green-600 hover:bg-green-600 hover:border-green-700'
+                                : 'bg-white text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'
+                            }`}
+                          >
+                            PhonePe: Verified
+                          </motion.button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {pendingStudents.length === 0 && (
+                    <div className="text-center py-8 text-gray-500">
+                      <Clock className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+                      <p className="text-sm">No pending students</p>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </motion.aside>
+          )}
+        </AnimatePresence>
+
+        {/* Main Content */}
+        <div className={`flex-1 transition-all duration-300 ${sidebarOpen && window.innerWidth >= 1024 ? 'ml-0' : 'ml-0'}`}>
+          <div className="p-4 sm:p-6 lg:p-8">
+            {/* Stats Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8"
+            >
+              <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-orange-500 hover:shadow-2xl transition-shadow duration-300">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-orange-100 p-3 rounded-full">
+                    <Users className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-500 font-medium">Total Students</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.total}</p>
                   </div>
                 </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
+              </div>
+              
+              <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-green-500 hover:shadow-2xl transition-shadow duration-300">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-green-100 p-3 rounded-full">
+                    <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-500 font-medium">Verified</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.verified}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-yellow-500 hover:shadow-2xl transition-shadow duration-300">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-yellow-100 p-3 rounded-full">
+                    <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-500 font-medium">Pending</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.pending}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-l-4 border-orange-500 hover:shadow-2xl transition-shadow duration-300 col-span-2 lg:col-span-1">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-orange-100 p-3 rounded-full">
+                    <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-500 font-medium">Total Revenue</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">₹{stats.revenue.toLocaleString()}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
-        {/* No Results */}
-        {filteredEnrollments.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16 bg-white rounded-2xl shadow-xl"
-          >
-            <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Students Found</h3>
-            <p className="text-gray-500">No enrollments found matching your search criteria.</p>
-          </motion.div>
-        )}
+            {/* Search Controls */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 mb-8"
+            >
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      placeholder="Search students..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10 pr-4 py-3 w-full sm:w-64 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 hover:border-orange-300 hover:shadow-md"
+                    />
+                  </div>
+                  
+                  <div className="relative">
+                    <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <select
+                      value={filterStatus}
+                      onChange={(e) => setFilterStatus(e.target.value as any)}
+                      className="pl-10 pr-8 py-3 w-full sm:w-auto border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 appearance-none bg-white transition-all duration-200 hover:border-orange-300 hover:shadow-md"
+                    >
+                      <option value="all">All Status</option>
+                      <option value="verified">Verified</option>
+                      <option value="pending">Pending</option>
+                      <option value="failed">Failed</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <button className="flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  <Download className="w-5 h-5" />
+                  <span className="font-medium">Export Data</span>
+                </button>
+              </div>
+            </motion.div>
+
+            {/* Student Cards - Mobile and Desktop */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="grid gap-6"
+            >
+              {filteredEnrollments.map((enrollment) => (
+                <motion.div
+                  key={enrollment.id}
+                  whileHover={{ scale: 1.01 }}
+                  className="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-orange-500 hover:shadow-2xl transition-all duration-300"
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                    {/* Student Info */}
+                    <div className="flex-1 lg:flex lg:space-x-8">
+                      <div className="flex-1 space-y-2">
+                        <h3 className="text-xl font-bold text-gray-900">{enrollment.fullName}</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600">
+                          <div className="flex items-center space-x-2">
+                            <Mail className="w-4 h-4 text-gray-400" />
+                            <span>{enrollment.emailAddress}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Phone className="w-4 h-4 text-gray-400" />
+                            <span>{enrollment.whatsappNumber}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <GraduationCap className="w-4 h-4 text-gray-400" />
+                            <span>{enrollment.collegeInstitution}</span>
+                          </div>
+                          {enrollment.referralCode && (
+                            <div className="flex items-center space-x-2">
+                              <Gift className="w-4 h-4 text-orange-500" />
+                              <span className="text-orange-600 font-medium">{enrollment.referralCode}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="lg:w-64 space-y-2">
+                        <div className="text-lg font-bold text-gray-900">{enrollment.course}</div>
+                        <div className="flex items-center space-x-2">
+                          <Smartphone className="w-4 h-4 text-purple-600" />
+                          <span className="text-sm text-gray-600">{enrollment.paymentMethod}</span>
+                          <span className="text-lg font-bold text-green-600">₹{enrollment.amount.toLocaleString()}</span>
+                        </div>
+                        {enrollment.phonepeTransactionId && (
+                          <div className="text-xs text-gray-500 font-mono bg-gray-50 px-2 py-1 rounded">
+                            {enrollment.phonepeTransactionId}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Verification Controls */}
+                    <div className="flex items-center space-x-4 lg:space-x-6">
+                      <div className="flex flex-col space-y-3 lg:space-y-2">
+                        {/* Verification Status Buttons */}
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => updateVerificationStatus(enrollment.id, 'paymentStatus', getNextStatus(enrollment.paymentStatus))}
+                          className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 shadow-lg border-2 ${
+                            enrollment.paymentStatus === 'verified'
+                              ? 'bg-green-500 text-white border-green-600 hover:bg-green-600 hover:border-green-700'
+                              : 'bg-white text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'
+                          }`}
+                        >
+                          Verification Status: Verified
+                        </motion.button>
+
+                        {/* PhonePe Button */}
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => updateVerificationStatus(enrollment.id, 'phonepeVerified', getNextPhonepeStatus(enrollment.phonepeVerified))}
+                          className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 shadow-lg border-2 ${
+                            enrollment.phonepeVerified
+                              ? 'bg-green-500 text-white border-green-600 hover:bg-green-600 hover:border-green-700'
+                              : 'bg-white text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'
+                          }`}
+                        >
+                          PhonePe: Verified
+                        </motion.button>
+                        
+                        {/* Certificate Button */}
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => updateVerificationStatus(enrollment.id, 'certificateVerified', getNextCertificateStatus(enrollment.certificateVerified))}
+                          className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 shadow-lg border-2 ${
+                            enrollment.certificateVerified
+                              ? 'bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:border-blue-700'
+                              : 'bg-white text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'
+                          }`}
+                        >
+                          Certificate: Verified
+                        </motion.button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* No Results */}
+            {filteredEnrollments.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-16 bg-white rounded-2xl shadow-xl"
+              >
+                <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No Students Found</h3>
+                <p className="text-gray-500">No enrollments found matching your search criteria.</p>
+              </motion.div>
+            )}
+          </div>
+        </div>
       </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && window.innerWidth < 1024 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
     </div>
   );
 };
