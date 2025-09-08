@@ -5,7 +5,7 @@ import {
   MessageSquareText,
   Linkedin,
 } from 'lucide-react';
-import downloadLogo from './download.png'; 
+import downloadLogo from './download.png';
 import { Link } from 'react-router-dom';
 
 export default function RejouiceFooter() {
@@ -33,8 +33,7 @@ export default function RejouiceFooter() {
   }, []);
 
   const fadeInUpClass = (delay = 0) =>
-    `transform transition-all duration-1000 delay-${delay} ${
-      isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+    `transform transition-all duration-1000 delay-${delay} ${isIntersecting ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
     }`;
 
   return (
@@ -70,7 +69,7 @@ export default function RejouiceFooter() {
               </div>
             </div>
 
-            {/* ✅ Updated with your logo */}
+            {/*  Updated with your logo */}
             <div className={`flex items-center gap-3 mb-4 ${fadeInUpClass(200)}`}>
               <img src={downloadLogo} alt="Edutou Logo" className="w-10 h-10" />
               <span className="text-lg font-semibold">Edutou</span>
@@ -86,7 +85,7 @@ export default function RejouiceFooter() {
               <div>
                 <div className="text-right">
                   <Link to="/" className="block hover:text-gray-600 transition-colors text-sm mb-2">Home</Link>
-        
+
                   <Link to="/about" className="block hover:text-gray-600 transition-colors text-sm mb-2">About</Link>
                   <Link to="/PROJECTS" className="block hover:text-gray-600 transition-colors text-sm mb-2">Services</Link>
                   <Link to="/contact" className="block hover:text-gray-600 transition-colors text-sm">Contact</Link>
@@ -109,7 +108,7 @@ export default function RejouiceFooter() {
           <a href="https://wa.me/9080469741" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
             <MessageSquareText className="w-5 h-5" />
           </a>
-           <a href= "https://www.linkedin.com/company/edutou-skill-academy/ " target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
+          <a href="https://www.linkedin.com/company/edutou-skill-academy/ " target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
             <Linkedin className="w-5 h-5" />
           </a>
         </div>
