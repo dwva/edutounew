@@ -328,20 +328,10 @@ const VerificationPage: React.FC = () => {
             </div>
           </div>
 
-          <button
-            onClick={handleVerify}
-            disabled={isSearching || !certificateId}
-            className="w-full py-2.5 px-4 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)] disabled:opacity-50 transition-colors flex items-center justify-center border border-black"
-          >
-            {isSearching ? (
-              <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                Verifying...
-              </>
-            ) : (
-              <>Verify Certificate</>
-            )}
-          </button>
+               
+               
+               
+          
         </div>
 
         {isVerified !== null && (

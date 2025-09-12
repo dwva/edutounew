@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +11,9 @@ const Contact = () => {
     course: 'none'
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -21,7 +23,6 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, you would send this data to your backend
     console.log('Form submitted:', formData);
     alert('Thank you for your message! We will get back to you soon.');
     setFormData({
@@ -35,11 +36,13 @@ const Contact = () => {
   };
 
   return (
-    <div>
+    <div
+      className="min-h-screen w-full bg-cover bg-center"
+    >
       {/* Hero Section */}
-      <section className="bg-white text-black py-20 border-b border-gray-200">
+      <section className="bg-white/80 text-black py-20 border-gray-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-orange-500">Contact Us</h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Have questions about our courses or want to enroll? We're here to help!
           </p>
@@ -47,54 +50,39 @@ const Contact = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div className="border border-gray-300 p-8 rounded-xl">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Get in Touch</h2>
               <p className="text-gray-700 mb-8">
-                Fill out the form below and our team will get back to you as soon as possible. We're excited to hear from you and help you start your learning journey!
+                Fill out the form below and our team will get back to you as soon as possible. We're
+                excited to hear from you and help you start your learning journey!
               </p>
-              
+
               <div className="space-y-6 mb-8">
                 <div className="flex items-start">
-                  <Mail className="h-6 w-6 text-[var(--color-brand-dark)] mt-1 mr-4" />
+                  <Mail className="h-6 w-6 text-orange-500 mt-1 mr-4" />
                   <div>
                     <h3 className="font-bold text-gray-900">Email Us</h3>
                     <p className="text-gray-700">edutouskillacademy@gmail.com</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
-                  <Phone className="h-6 w-6 text-[var(--color-brand-dark)] mt-1 mr-4" />
+                  <Phone className="h-6 w-6 text-orange-500 mt-1 mr-4" />
                   <div>
                     <h3 className="font-bold text-gray-900">Call Us</h3>
                     <p className="text-gray-700">+91 90804 69741</p>
                   </div>
                 </div>
-                
-            
-          
-              </div>
-              
-              <div className="bg-white border border-gray-200 p-6 rounded-xl">
-                <div className="flex items-center mb-4">
-                  <MessageSquare className="h-6 w-6 text-[var(--color-brand-dark)] mr-3" />
-                  <h3 className="text-xl font-bold text-gray-900">Live Chat Support</h3>
-                </div>
-                <p className="text-gray-700 mb-4">
-                  Need immediate assistance? Our support team is available for live chat during business hours.
-                </p>
-                <button className="px-4 py-2 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg font-medium transition-colors border border-black">
-                  Start Chat
-                </button>
               </div>
             </div>
-            
+
             <div>
-              <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-8 rounded-xl">
+              <form onSubmit={handleSubmit} className="bg-white border border-gray-300 p-8 rounded-xl">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
-                
+
                 <div className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -107,10 +95,10 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                       Email Address *
@@ -122,10 +110,10 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                       Phone Number
@@ -136,10 +124,10 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
                       Interested Course
@@ -149,14 +137,13 @@ const Contact = () => {
                       name="course"
                       value={formData.course}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
                     >
                       <option value="none">Select a course (optional)</option>
                       <option value="full-stack-foundation">Full Stack Foundation</option>
-          
                     </select>
                   </div>
-                  
+
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
                       Subject *
@@ -168,10 +155,10 @@ const Contact = () => {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                       Your Message *
@@ -183,15 +170,15 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
                     ></textarea>
                   </div>
-                  
+
                   <button
                     type="submit"
-                    className="w-full px-6 py-3 bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white rounded-lg font-medium transition-colors flex items-center justify-center border border-black"
+                    className="w-full px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
                   >
-                    <Send className="h-5 w-5 mr-2" />
+                    <Send className="h-5 w-5 mr-2 text-white" />
                     Send Message
                   </button>
                 </div>
@@ -200,10 +187,6 @@ const Contact = () => {
           </div>
         </div>
       </section>
-
-
-
-     
     </div>
   );
 };

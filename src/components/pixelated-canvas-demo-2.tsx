@@ -8,10 +8,10 @@ export default function PixelatedCanvasDemo() {
       <div className="flex-shrink-0">
         <PixelatedCanvas
           src={logo} // ✅ use the imported logo
-          width={400}
-          height={400}
+          width={290}
+          height={290}
           cellSize={4}
-          dotScale={0.9}
+          dotScale={0.5}
           shape="circle"
           backgroundColor="#ffffffff"
           dropoutStrength={0.1}
