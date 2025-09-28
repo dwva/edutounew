@@ -312,129 +312,7 @@ function EdutouAboutUs() {
         }
     ];
 
-    return (
-        <div className="min-h-screen bg-white text-black relative overflow-hidden">
-            {/* Hero Section */}
-            <section className={`py-8 md:py-12 px-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                <div className="max-w-5xl mx-auto">
-                    <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8">
-                        {/* Left Content - Vertically centered */}
-                        <div className="lg:w-1/2 flex flex-col justify-center w-full">
-                            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 leading-snug relative inline-block">
-                                Education{' '}
-                                <span className="text-orange-500 relative z-10">
-                                    Reimagined
-                                    {/* Animated gradient underline */}
-                                    <span className="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded transition-all duration-500 animate-underline"></span>
-                                </span>
-                            </h1>
-                            
-                            <p className="text-sm md:text-base mb-4 md:mb-6 text-gray-700 leading-relaxed max-w-xl">
-                                EDUTOU stands at the intersection of cutting-edge artificial intelligence and modern education. 
-                                We've built a learning ecosystem that adapts to you—not the other way around.
-                            </p>
-                            
-                            <div className="bg-gray-50 p-3 md:p-4 rounded-lg shadow-sm border-l-4 border-orange-500 mb-4 md:mb-6 max-w-xl">
-                                <h3 className="font-semibold text-base md:text-lg mb-1">Our Mission</h3>
-                                <p className="text-gray-700 text-xs md:text-sm">
-                                    To create agile, skilled professionals who can thrive in an ever-changing technological landscape. 
-                                    Through our AI-driven platform, we deliver personalized learning experiences that focus on practical 
-                                    skills and real-world applications.
-                                </p>
-                            </div>
-                        </div>
-                        
-                        {/* Right Content */}
-                        <div className="lg:w-1/2 w-full relative">
-                            {/* BorderBeam Animation Added Here */}
-                            <BorderBeam
-                                className=""
-                                size={200}
-                                duration={12}
-                                delay={0}
-                                borderWidth={2}
-                                colorFrom="#ffaa40"
-                                colorTo="#9c40ff"
-                                reverse={true}
-                                transition={{}}
-                                style={{}}
-                            />
-                            {/* Background subtle particle animation */}
-                            <div className="absolute inset-0 -z-10 pointer-events-none">
-                                <svg
-                                    className="w-full h-full"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    preserveAspectRatio="none"
-                                >
-                                    <circle cx="20%" cy="30%" r="10" fill="rgba(255, 165, 0, 0.1)">
-                                        <animate attributeName="r" values="8;12;8" dur="4s" repeatCount="indefinite" />
-                                    </circle>
-                                    <circle cx="80%" cy="70%" r="15" fill="rgba(255, 165, 0, 0.1)">
-                                        <animate attributeName="r" values="12;18;12" dur="5s" repeatCount="indefinite" />
-                                    </circle>
-                                </svg>
-                            </div>
-
-                            <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 relative z-10 transition-all duration-500 transform hover:shadow-xl md:hover:shadow-2xl border border-gray-100">                       
-                                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 border-b pb-2 md:pb-3 border-gray-100">What sets us apart</h2>
-                                
-                                {features.map((feature) => (
-                                    <div 
-                                        key={feature.id} 
-                                        className={`mb-4 md:mb-6 p-3 md:p-4 rounded-lg md:rounded-xl cursor-pointer transition-all duration-300 transform ${
-                                            activeFeature === feature.id 
-                                                ? 'bg-gray-50 shadow-md md:shadow-lg scale-105 opacity-100' 
-                                                : 'bg-white opacity-70 hover:opacity-100 hover:shadow-sm md:hover:shadow-md hover:scale-105'
-                                        }`}
-                                        onMouseEnter={() => setActiveFeature(feature.id)}
-                                    >
-                                        <div className="flex items-start gap-3 md:gap-4">
-                                            <div className="transition-transform duration-500 transform">
-                                                {feature.icon}
-                                            </div>
-                                            <div>
-                                                <h3 className="font-bold text-base md:text-xl mb-1 group-hover:underline underline-animation">{feature.title}</h3>
-                                                <p className="text-gray-700 text-xs md:text-sm">{feature.description}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            
-                            {/* Decorative elements */}
-                            <div className="absolute -bottom-4 -right-4 w-20 h-20 md:w-32 md:h-32 bg-orange-100 rounded-full opacity-70"></div>
-                            <div className="absolute top-4 -right-4 w-12 h-12 md:w-20 md:h-20 bg-gray-100 rounded-full opacity-70"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <style>{`
-                /* Gradient underline animation */
-                .animate-underline {
-                    animation: underlineGrow 1.5s ease forwards;
-                }
-                @keyframes underlineGrow {
-                    0% {
-                        width: 0%;
-                        opacity: 0;
-                    }
-                    100% {
-                        width: 100%;
-                        opacity: 1;
-                    }
-                }
-
-                /* Underline on feature title hover */
-                h3:hover {
-                    text-decoration: underline;
-                    text-decoration-thickness: 2px;
-                    text-underline-offset: 4px;
-                    transition: all 0.3s ease;
-                }
-            `}</style>
-        </div>
-    );
+    
 }
 
 // -----------------------------
@@ -795,8 +673,7 @@ const Home = () => {
             {/* Explore header + Projects carousel */}
             <Projects />
 
-            {/* Edutou About Us Section */}
-            <EdutouAboutUs />
+           
 
             {/* Testimonials Section */}
             <TestnomialCard />
