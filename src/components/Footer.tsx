@@ -39,23 +39,23 @@ export default function RejouiceFooter() {
   return (
     <footer
       ref={footerRef}
-      className="relative w-full bg-white text-black py-10 overflow-hidden"
+      className="relative w-full bg-white text-black py-8 overflow-hidden"
     >
       <div className="mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid grid-cols-12 gap-4 mt-4">
-          <div className="col-span-12 md:col-span-6 mb-12 md:mb-0">
-            <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-6 ${fadeInUpClass(100)}`}>
-              Do it once. Do it right.
+          <div className="col-span-12 md:col-span-6 mb-8 md:mb-0">
+            <h2 className={`text-3xl md:text-5xl font-bold section-heading mb-4 ${fadeInUpClass(100)}`} style={{ lineHeight: '1.2' }}>
+              Do <span className="text-orange-500">it</span> once. Do <span className="text-orange-500">it</span> <span className="text-orange-500">right</span>.
             </h2>
 
             <div className={fadeInUpClass(150)}>
-              <p className="text-xs mb-2">Sign up for our newsletter (No spam)</p>
-              <div className="relative max-w-md mb-6">
+              <p className="text-sm caption-text mb-2">Sign up for our newsletter (No spam)</p>
+              <div className="relative max-w-md mb-4">
                 <input
                   ref={inputRef}
                   type="email"
                   placeholder="Email"
-                  className="w-full bg-transparent border-b border-gray-400 py-1 focus:outline-none focus:border-black transition-colors text-sm"
+                  className="w-full bg-transparent border-b border-gray-400 py-1 focus:outline-none focus:border-black transition-colors text-base"
                 />
                 <button
                   className="absolute right-0 top-1/2 transform -translate-y-1/2"
@@ -70,38 +70,38 @@ export default function RejouiceFooter() {
             </div>
 
             {/*  Updated with your logo */}
-            <div className={`flex items-center gap-3 mb-4 ${fadeInUpClass(200)}`}>
-              <img src={downloadLogo} alt="Edutou Logo" className="w-10 h-10" />
-              <span className="text-lg font-semibold">Edutou</span>
+            <div className={`flex items-center gap-2 mb-3 ${fadeInUpClass(200)}`}>
+              <img src={downloadLogo} alt="Edutou Logo" className="w-8 h-8" />
+              <span className="text-lg subheading">Edutou</span>
             </div>
 
-            <p className={`text-xs text-gray-600 mb-8 ${fadeInUpClass(250)}`}>
+            <p className={`text-sm text-gray-600 mb-6 caption-text ${fadeInUpClass(250)}`}>
               © 2025 EDUTOU Skill Academy. All rights reserved.
             </p>
           </div>
 
           <div className={`col-span-12 md:col-span-6 ${fadeInUpClass(200)}`}>
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-6">
               <div>
                 <div className="text-right">
-                  <Link to="/" className="block hover:text-gray-600 transition-colors text-sm mb-2">Home</Link>
+                  <Link to="/" className="block hover:text-gray-600 transition-colors text-sm mb-2 body-text">Home</Link>
 
-                  <Link to="/about" className="block hover:text-gray-600 transition-colors text-sm mb-2">About</Link>
-                  <Link to="/PROJECTS" className="block hover:text-gray-600 transition-colors text-sm mb-2">Services</Link>
-                  <Link to="/contact" className="block hover:text-gray-600 transition-colors text-sm">Contact</Link>
+                  <Link to="/about" className="block hover:text-gray-600 transition-colors text-sm mb-2 body-text">About</Link>
+                  <Link to="/PROJECTS" className="block hover:text-gray-600 transition-colors text-sm mb-2 body-text">Services</Link>
+                  <Link to="/contact" className="block hover:text-gray-600 transition-colors text-sm body-text">Contact</Link>
                 </div>
               </div>
 
               <div className="text-right">
-                <Link to="/terms" className="block hover:text-gray-600 transition-colors text-sm mb-2">Terms & Conditions</Link>
-                <Link to="/Privacy" className="block hover:text-gray-600 transition-colors text-sm mb-2">Privacy Policy</Link>
-                <Link to="/Refund" className="block hover:text-gray-600 transition-colors text-sm mb-2">Refund Policy</Link>
+                <Link to="/terms" className="block hover:text-gray-600 transition-colors text-sm mb-2 body-text">Terms & Conditions</Link>
+                <Link to="/Privacy" className="block hover:text-gray-600 transition-colors text-sm mb-2 body-text">Privacy Policy</Link>
+                <Link to="/Refund" className="block hover:text-gray-600 transition-colors text-sm mb-2 body-text">Refund Policy</Link>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex justify-end mt-12 gap-6 pr-2">
+        <div className="flex justify-end mt-8 gap-4 pr-1">
           <a href="https://www.instagram.com/edutou.in/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
             <Instagram className="w-5 h-5" />
           </a>

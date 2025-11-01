@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import { motion } from "framer-motion";
 
 export type Project = {
   id: number;
@@ -11,40 +13,148 @@ export type Project = {
   details?: string;
 };
 
+// Styled Components (copied from services.tsx)
+const StyledCardBase = styled.div`
+    .columns {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: 20px;
+        padding: 25px;
+        border: 2px solid black;
+        transition: all 0.4s;
+        background: white;
+        
+        @media (max-width: 768px) {
+            padding: 20px;
+            border-radius: 16px;
+        }
+        
+        @media (max-width: 480px) {
+            padding: 16px;
+            border-radius: 12px;
+        }
+    }
+
+    .columns:hover {
+        box-shadow: 4px 4px 0 1px rgba(0, 0, 0);
+        transform: translateY(-5px);
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 16px;
+        
+        @media (max-width: 768px) {
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+    }
+
+    .offer {
+        font-size: 20px;
+        font-weight: 900;
+        border-bottom: 2px solid black;
+        cursor: pointer;
+        transition: all 0.4s;
+        margin: 0;
+        
+        @media (max-width: 768px) {
+            font-size: 18px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 16px;
+        }
+    }
+
+    .btn {
+        padding: 6px 12px;
+        border: 1px solid black;
+        background-color: orange;
+        border-radius: 8px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s;
+        font-size: 12px;
+        
+        @media (max-width: 768px) {
+            padding: 5px 10px;
+            font-size: 11px;
+        }
+    }
+
+    .columns:hover .btn {
+        box-shadow: 2px 2px 0 1px rgba(0, 0, 0);
+    }
+
+    .columns:hover .offer {
+        color: green;
+        border-color: green;
+    }
+
+    .btn:focus {
+        background: transparent;
+    }
+
+    .secondary-heading {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        font-family: 'Poppins', sans-serif;
+        
+        @media (max-width: 768px) {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 14px;
+        }
+    }
+
+    .card-description {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        font-family: 'Poppins', sans-serif;
+        
+        @media (max-width: 768px) {
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 13px;
+        }
+    }
+`;
+
+const StyledCard = motion(StyledCardBase);
+
 function ProjectCard({ project, hideTech = false }: { project: Project; hideTech?: boolean }) {
   return (
-    <div className="bg-white border-2 border-black rounded-xl shadow-sm overflow-hidden flex flex-col h-full hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.2)] transition-transform hover:-translate-y-0.5">
-      <div className="aspect-video bg-gray-100 border-b-2 border-black">
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+    <StyledCard
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+    >
+      <div className="columns">
+        <div className="aspect-video bg-gray-100 border-b-2 border-black mb-4 rounded-lg overflow-hidden">
+          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+        </div>
+        <div className="button-container">
+          <button className="btn orange-flag">{project.status === 'current' ? 'CURRENT' : 'SOON'}</button>
+          <p className="offer">📚</p>
+        </div>
+        <h3 className="secondary-heading">{project.title}</h3>
+        <p className="card-description">{project.description}</p>
       </div>
-      <div className="p-5 flex flex-col gap-3 flex-1">
-        <h3 className="text-lg font-bold text-gray-900">{project.title}</h3>
-        <p className="text-sm text-gray-700 leading-relaxed flex-1">{project.description}</p>
-        {!hideTech && (
-          <div className="flex flex-wrap gap-2 mt-2">
-            {project.tech.map((t) => (
-              <span
-                key={t}
-                className="px-2 py-1 text-xs rounded-full bg-orange-50 text-orange-800 border border-orange-100"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="px-5 pb-5 pt-1 flex items-center gap-3">
-        {project.status === 'current' ? (
-          <button className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white border-2 border-black transition-colors text-sm font-semibold">
-            Enroll
-          </button>
-        ) : (
-          <button className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-400 text-white border-2 border-black cursor-not-allowed text-sm font-semibold">
-            Soon
-          </button>
-        )}
-      </div>
-    </div>
+    </StyledCard>
   );
 }
 
@@ -115,10 +225,20 @@ const CoursesGrid = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen p-8 pt-24">
+      <style>
+        {`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        .orange-flag {
+          background-color: #fca311 !important;
+          color: white;
+        }
+        `}
+      </style>
       <div className="max-w-7xl mx-auto">
         {/* Section Heading */}
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-12">
-          All Courses
+        <h1 className="text-5xl md:text-7xl font-bold section-heading text-center text-gray-900 mb-12" style={{ lineHeight: '1.2' }}>
+          <span className="text-orange-500">All</span> Courses
         </h1>
 
         {/* Courses Grid */}

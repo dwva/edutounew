@@ -158,10 +158,9 @@ const TechStackAnimation = () => {
 
   const row1Icons = allTechIcons.slice(0, iconsPerRow);
   const row2Icons = allTechIcons.slice(iconsPerRow, iconsPerRow * 2);
-  const row3Icons = allTechIcons.slice(iconsPerRow * 2, iconsPerRow * 3);
-  const row4Icons = allTechIcons.slice(iconsPerRow * 3);
+ 
 
-  const IconCard = ({ icon, color }) => (
+  const IconCard = ({ icon, color }: { icon: React.ReactNode; color: string }) => (
     <div
       className="flex-shrink-0 mx-2 my-2 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center rounded-xl transition-all duration-300"
       style={{ color }}
@@ -172,7 +171,7 @@ const TechStackAnimation = () => {
     </div>
   );
 
-  const IconRow = ({ icons, direction, speed }) => {
+  const IconRow = ({ icons, direction, speed }: { icons: typeof allTechIcons; direction: 'left' | 'right'; speed: string }) => {
     const multipliedIcons = [...icons, ...icons]; // duplicate for seamless scroll
 
     return (
@@ -202,7 +201,7 @@ const TechStackAnimation = () => {
   return (
     <div className="flex flex-col p-2 sm:p-4 bg-transparent">
       <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-2 sm:mt-4 md:mt-6">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl section-heading text-black">
           Technologies to <span className="text-orange-500">build</span> powerful
         </h1>
       </div>
@@ -212,8 +211,7 @@ const TechStackAnimation = () => {
           <div className="space-y-1 sm:space-y-2 md:space-y-3 lg:space-y-4">
             <IconRow icons={row1Icons} direction="right" speed="30s" />
             <IconRow icons={row2Icons} direction="left" speed="40s" />
-            <IconRow icons={row3Icons} direction="right" speed="30s" />
-            <IconRow icons={row4Icons} direction="left" speed="40s" />
+         
           </div>
         </div>
       </div>

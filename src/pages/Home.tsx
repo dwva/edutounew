@@ -16,67 +16,13 @@ import TestnomialCard from './testnomialcard';
 import TechStack from './techstack';
 import Waves from '../components/waves';
 
-// -----------------------------
-// BorderBeam Component
-// -----------------------------
-const BorderBeam = ({
-    className,
-    size = 50,
-    delay = 0,
-    duration = 6,
-    colorFrom = "#ffaa40",
-    colorTo = "#9c40ff",
-    transition,
-    style,
-    reverse = false,
-    initialOffset = 0,
-    borderWidth = 1,
-}) => {
-    return (
-        <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] border-transparent [mask-clip:padding-box,border-box] [mask-composite:intersect] [mask-image:linear-gradient(transparent,transparent),linear-gradient(#000,#000)]"
-            style={{
-                "--border-beam-width": `${borderWidth}px`,
-                borderWidth: `var(--border-beam-width)`,
-                ...style,
-            }}
-        >
-            <motion.div
-                className={cn(
-                    "absolute aspect-square",
-                    "bg-gradient-to-l from-[var(--color-from)] via-[var(--color-to)] to-transparent",
-                    className,
-                )}
-                style={{
-                    width: size,
-                    offsetPath: `rect(0 auto auto 0 round ${borderWidth + 2}px)`,
-                    "--color-from": colorFrom,
-                    "--color-to": colorTo,
-                } as React.CSSProperties}
-                initial={{ offsetDistance: `${initialOffset}%` }}
-                animate={{
-                    offsetDistance: reverse
-                        ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
-                        : [`${initialOffset}%`, `${100 + initialOffset}%`],
-                }}
-                transition={{
-                    repeat: Infinity,
-                    ease: "linear",
-                    duration,
-                    delay: -delay,
-                    ...transition,
-                }}
-            />
-        </div>
-    );
-};
 
 // -----------------------------
 // Marquee Component for Moving Text
 // -----------------------------
 const MovingTextMarquee = () => {
     return (
-        <div className="w-full overflow-hidden bg-orange-100 py-2 relative" style={{ margin: 0 }}>
+        <div className="w-full overflow-hidden bg-orange-100 py-2 relative" style={{ margin: '-15px 0 0 0' }}>
             <div
                 className="whitespace-nowrap w-max"
                 style={{
@@ -84,8 +30,8 @@ const MovingTextMarquee = () => {
                 }}
             >
                 {[...Array(8)].map((_, i) => (
-                    <span key={i} className="text-orange-600 font-medium mx-4 inline-block">
-                        Featured <span className="text-orange-700 font-bold">Courses</span> and <span className="text-orange-700 font-bold">Workshops</span> - Limited Time Offer!
+                    <span key={i} className="text-orange-600 subheading mx-4 inline-block">
+                        Featured <span className="text-orange-700 section-heading">Courses</span> and <span className="text-orange-700 section-heading">Workshops</span> - Limited Time Offer!
                     </span>
                 ))}
             </div>
@@ -168,6 +114,11 @@ const StyledCard = styled(motion.div)`
             padding: 5px 10px;
             font-size: 11px;
         }
+    }
+
+    .orange-flag {
+        background-color:rgb(252, 123, 17); /* Brand orange color */
+        color: white;
     }
 
     .columns:hover .btn {
@@ -257,7 +208,7 @@ const StyledEnrollButton = styled(motion.button)`
 // -----------------------------
 // Utility function for classNames
 // -----------------------------
-function cn(...classes) {
+function cn(...classes: (string | undefined | null | false)[]) {
     return classes
         .flatMap(cls => {
             if (!cls) return [];
@@ -318,13 +269,21 @@ function EdutouAboutUs() {
 // -----------------------------
 // StatsCount Component
 // -----------------------------
+interface AnimatedCounterProps {
+    value: number;
+    suffix?: string;
+    duration?: number;
+    delay?: number;
+    label: string;
+}
+
 function AnimatedCounter({
     value,
     suffix = "",
     duration = 1,
     delay = 0,
     label,
-}) {
+}: AnimatedCounterProps) {
     const ref = useRef(null);
     const isInView = useInView(ref, { margin: "-50px" });
 
@@ -343,13 +302,13 @@ function AnimatedCounter({
 
     useEffect(() => {
         const unsubscribe = rounded.on("change", (latest) => {
-            setDisplayValue(latest);
+            setDisplayValue(latest as number);
         });
         return () => unsubscribe();
     }, [rounded]);
 
     useEffect(() => {
-        let timeout;
+        let timeout: NodeJS.Timeout;
         if (isInView) {
             motionValue.set(0);
             timeout = setTimeout(() => {
@@ -378,7 +337,7 @@ function AnimatedCounter({
         >
             <motion.div
                 className={cn(
-                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 whitespace-nowrap text-orange-500"
+                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl section-heading mb-2 sm:mb-4 whitespace-nowrap text-orange-500"
                 )}
                 initial={{ scale: 0.8 }}
                 animate={isInView ? { scale: 1 } : { scale: 0.8 }}
@@ -394,7 +353,7 @@ function AnimatedCounter({
             </motion.div>
             <motion.p
                 className={cn(
-                    "text-gray-600 text-xs sm:text-sm leading-relaxed px-1 sm:px-2 hyphens-auto break-words"
+                    "text-gray-600 text-xs sm:text-sm leading-relaxed px-1 sm:px-2 hyphens-auto break-words body-text"
                 )}
                 style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
                 initial={{ opacity: 0 }}
@@ -407,12 +366,24 @@ function AnimatedCounter({
     );
 }
 
+interface StatsCountProps {
+    stats: {
+        value: number;
+        suffix: string;
+        label: string;
+        duration?: number;
+    }[];
+    title: string;
+    showDividers?: boolean;
+    className?: string;
+}
+
 function StatsCount({
     stats,
     title,
     showDividers = true,
     className = "",
-}) {
+}: StatsCountProps) {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { margin: "-100px" });
 
@@ -433,7 +404,7 @@ function StatsCount({
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
             >
-                <h2 className={cn("text-base sm:text-lg md:text-xl lg:text-2xl font-bold tracking-wide px-4 font-['Poppins']")}>
+                <h2 className={cn("text-base sm:text-lg md:text-xl lg:text-2xl section-heading tracking-wide px-4")}>
                     {title}
                 </h2>
             </motion.div>
@@ -577,7 +548,7 @@ const Home = () => {
 
                 {/* Hero Content - TEXT LAYOUT FIXED */}
                 <div className="hero-content relative z-10 text-center max-w-5xl">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-10 leading-tight text-black font-['Poppins']">
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl hero-heading mb-4 md:mb-10 leading-tight text-black font-bold">
                         The Future of Learning{" "}
                         <span className="education-text">Powered</span> by AI.
                     </h1>
@@ -596,11 +567,11 @@ const Home = () => {
                                 <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                             </Link>
                         </StyledEnrollButton>
-                        <p className="text-black text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-4 md:mb-10 leading-relaxed font-['Poppins'] px-2">
+                        <p className="text-black text-sm md:text-base lg:text-lg max-w-3xl mx-auto mb-4 md:mb-10 body-text px-2">
                             At EDUTOU, we've reimagined education for the digital age. Our AI-powered platform adapts to your learning style, focusing on the skills that matter in today's rapidly evolving job market.
                         </p>
                     </div>
-                    <blockquote className="text-black font-semibold text-base md:text-lg italic mt-4 md:mt-12 font-['Poppins']">
+                    <blockquote className="text-black font-semibold text-base md:text-lg italic mt-4 md:mt-12 caption-text">
                         "The ones who learn, adapt, and innovate... change the world." 🚀
                     </blockquote>
                 </div>
@@ -611,10 +582,10 @@ const Home = () => {
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                     <div className="flex flex-col lg:flex-row gap-6 md:gap-12 mb-8 md:mb-16 items-start">
                         <div className="lg:w-1/2">
-                            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight font-['Poppins']">
+                            <h2 className="text-3xl md:text-4xl lg:text-5xl section-heading mb-4 leading-tight">
                                 Why <span className="text-orange-500">EDUTOU</span> is Different
                             </h2>
-                            <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6 font-['Poppins']">
+                            <p className="text-lg md:text-xl text-gray-700 body-text">
                                 Discover the core features that make our learning platform stand out.
                             </p>
                         </div>
@@ -650,7 +621,7 @@ const Home = () => {
                             >
                                 <div className="columns">
                                     <div className="button-container">
-                                        <button className="btn red-flag">{item.flag}</button>
+                                        <button className="btn orange-flag">{item.flag}</button>
                                         <p className="offer">{item.icon}</p>
                                     </div>
                                     <p className="secondary-heading">{item.title}</p>
@@ -707,7 +678,7 @@ const Home = () => {
 
                     <div className="text-3xl md:text-4xl mb-3 md:mb-4">↓</div>
 
-                    <div className="text-center text-gray-700 max-w-md mb-4 md:mb-6 text-sm md:text-base font-['Poppins']">
+                    <div className="text-center text-gray-700 max-w-md mb-4 md:mb-6 text-sm md:text-base body-text">
                         Join thousands of learners who have accelerated their 
                         careers with EDUTOU's revolutionary approach to education
                     </div>

@@ -8,6 +8,39 @@ import {
   Trophy,
   Star,
 } from "lucide-react";
+import styled from 'styled-components';
+import { motion } from "framer-motion";
+
+// Styled Card Component with hover effects
+const StyledCardBase = styled.div`
+    .columns {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: 20px;
+        padding: 25px;
+        border: 2px solid black;
+        transition: all 0.4s;
+        background: white;
+        
+        @media (max-width: 768px) {
+            padding: 20px;
+            border-radius: 16px;
+        }
+        
+        @media (max-width: 480px) {
+            padding: 16px;
+            border-radius: 12px;
+        }
+    }
+
+    .columns:hover {
+        box-shadow: 4px 4px 0 1px rgba(0, 0, 0);
+        transform: translateY(-5px);
+    }
+`;
+
+const StyledCard = motion(StyledCardBase);
 
 const Enrollment = () => {
   const [formData, setFormData] = useState({
@@ -82,10 +115,20 @@ const Enrollment = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <style>
+        {`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        `}
+      </style>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Left Column */}
-        <div>
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 mb-8 text-black">
+        <StyledCard
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <div className="columns">
             <div className="inline-block bg-orange-100 text-[var(--color-brand-dark)] font-bold px-4 py-1 rounded-full mb-4 border border-black/0">
               🎯 Limited Seats Available
             </div>
@@ -121,66 +164,73 @@ const Enrollment = () => {
               ))}
             </div>
           </div>
-        </div>
+        </StyledCard>
 
         {/* Right Column */}
-        <div className="bg-white rounded-lg shadow-xl p-8">
-          <h2 className="text-2xl font-bold mb-6">Secure Your Seat Now</h2>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
-            <input
-              type="text"
-              required
-              placeholder="Full Name"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            />
-            <input
-              type="email"
-              required
-              placeholder="Email Address"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
-            <input
-              type="tel"
-              required
-              placeholder="WhatsApp Number"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            />
-            <input
-              type="text"
-              required
-              placeholder="College / Institution"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
-              value={formData.college}
-              onChange={(e) => setFormData({ ...formData, college: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Referral Code (Optional)"
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
-              value={formData.referralCode}
-              onChange={(e) => setFormData({ ...formData, referralCode: e.target.value })}
-            />
+        <StyledCard
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          viewport={{ once: true }}
+        >
+          <div className="columns">
+            <h2 className="text-2xl font-bold mb-6">Secure Your Seat Now</h2>
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+              <input
+                type="text"
+                required
+                placeholder="Full Name"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+              <input
+                type="email"
+                required
+                placeholder="Email Address"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+              <input
+                type="tel"
+                required
+                placeholder="WhatsApp Number"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+              <input
+                type="text"
+                required
+                placeholder="College / Institution"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
+                value={formData.college}
+                onChange={(e) => setFormData({ ...formData, college: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Referral Code (Optional)"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--color-brand)]"
+                value={formData.referralCode}
+                onChange={(e) => setFormData({ ...formData, referralCode: e.target.value })}
+              />
 
-            <button
-              type="button"
-              onClick={handlePhonePePayment}
-              className="w-full bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white font-bold py-3 rounded-lg disabled:opacity-50 border border-black"
-              disabled={loading}
-            >
-              {loading ? "Processing..." : "Pay with PhonePe"}
-            </button>
-          </form>
+              <button
+                type="button"
+                onClick={handlePhonePePayment}
+                className="w-full bg-[var(--color-brand)] hover:bg-[var(--color-brand-dark)] text-white font-bold py-3 rounded-lg disabled:opacity-50 border border-black"
+                disabled={loading}
+              >
+                {loading ? "Processing..." : "Pay with PhonePe"}
+              </button>
+            </form>
 
-          {message && (
-            <p className="mt-4 text-red-600 font-semibold">{message}</p>
-          )}
-        </div>
+            {message && (
+              <p className="mt-4 text-red-600 font-semibold">{message}</p>
+            )}
+          </div>
+        </StyledCard>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
@@ -36,6 +36,13 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    
+    /* Font weights for consistency */
+    --font-thin: 300;
+    --font-light: 400;
+    --font-regular: 500;
+    --font-medium: 600;
+    --font-bold: 700;
   }
   .dark {
     --background: 224 71.4% 4.1%;
@@ -87,9 +94,29 @@
   color: white;
   -webkit-text-stroke: 2px var(--color-brand);
   text-shadow: none;
+  font-weight: bold;
 }
 
+/* Font style classes for consistency across the website */
+.hero-heading {
+  @apply font-light tracking-tight;
+}
 
+.section-heading {
+  @apply font-bold;
+}
+
+.subheading {
+  @apply font-medium;
+}
+
+.body-text {
+  @apply font-normal leading-relaxed;
+}
+
+.caption-text {
+  @apply font-light text-sm;
+}
 
 @layer base {
   * {

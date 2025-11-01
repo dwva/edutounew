@@ -60,8 +60,7 @@ const Navbar = () => {
     { name: 'All Courses', path: '/PROJECTS' }, 
     { name: 'Verify Certification', path: '/certifications' }, 
     { name: 'Contact', path: '/Contact' }, 
-    { name: 'Login', path: '/admin' }, 
-     { name: 'Admin', path: '' }, 
+    { name: 'Login', path: '/admin' }
   ]; 
 
   const toggleMobileMenu = () => { 

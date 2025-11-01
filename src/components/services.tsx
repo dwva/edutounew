@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import styled from 'styled-components';
+import { motion } from "framer-motion";
 
 // -----------------------------
 // Type Definitions
@@ -28,6 +30,129 @@ export type Workshop = {
     details?: string;
 };
 
+// -----------------------------
+// Styled Components (copied from Home.tsx)
+// -----------------------------
+const StyledCardBase = styled.div`
+    .columns {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: 20px;
+        padding: 25px;
+        border: 2px solid black;
+        transition: all 0.4s;
+        background: white;
+        
+        @media (max-width: 768px) {
+            padding: 20px;
+            border-radius: 16px;
+        }
+        
+        @media (max-width: 480px) {
+            padding: 16px;
+            border-radius: 12px;
+        }
+    }
+
+    .columns:hover {
+        box-shadow: 4px 4px 0 1px rgba(0, 0, 0);
+        transform: translateY(-5px);
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 16px;
+        
+        @media (max-width: 768px) {
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+    }
+
+    .offer {
+        font-size: 20px;
+        font-weight: 900;
+        border-bottom: 2px solid black;
+        cursor: pointer;
+        transition: all 0.4s;
+        margin: 0;
+        
+        @media (max-width: 768px) {
+            font-size: 18px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 16px;
+        }
+    }
+
+    .btn {
+        padding: 6px 12px;
+        border: 1px solid black;
+        background-color: orange;
+        border-radius: 8px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s;
+        font-size: 12px;
+        
+        @media (max-width: 768px) {
+            padding: 5px 10px;
+            font-size: 11px;
+        }
+    }
+
+    .columns:hover .btn {
+        box-shadow: 2px 2px 0 1px rgba(0, 0, 0);
+    }
+
+    .columns:hover .offer {
+        color: green;
+        border-color: green;
+    }
+
+    .btn:focus {
+        background: transparent;
+    }
+
+    .secondary-heading {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        font-family: 'Poppins', sans-serif;
+        
+        @media (max-width: 768px) {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 14px;
+        }
+    }
+
+    .card-description {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        font-family: 'Poppins', sans-serif;
+        
+        @media (max-width: 768px) {
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 13px;
+        }
+    }
+`;
+
+const StyledCard = motion(StyledCardBase);
 
 // -----------------------------
 // Background Component
@@ -101,78 +226,53 @@ const AnimatedDotsBackground = () => {
     );
 };
 
-
 // -----------------------------
 // Card Components
 // -----------------------------
 
 function ProjectCard({ project }: { project: Project }) {
     return (
-        <div className="bg-white border-2 border-black rounded-xl shadow-sm overflow-hidden flex flex-col h-full hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.2)] transition-all duration-200 hover:-translate-y-1 min-h-[400px]">
-            <div className="aspect-video bg-gray-100 border-b-2 border-black">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-            </div>
-            <div className="p-4 flex flex-col gap-3 flex-1">
-                <h3 className="text-base md:text-lg font-bold text-gray-900 line-clamp-2">{project.title}</h3>
-                <p className="text-xs md:text-sm text-gray-700 leading-relaxed flex-1 line-clamp-3">{project.description}</p>
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                    {project.tech.map((t) => (
-                        <span key={t} className="px-2 py-1 text-xs rounded-full bg-orange-50 text-orange-800 border border-orange-100">
-                            {t}
-                        </span>
-                    ))}
+        <StyledCard
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+        >
+            <div className="columns">
+                <div className="aspect-video bg-gray-100 border-b-2 border-black mb-4 rounded-lg overflow-hidden">
+                    <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                 </div>
+                <div className="button-container">
+                    <button className="btn orange-flag">{project.status === 'current' ? 'CURRENT' : 'SOON'}</button>
+                    <p className="offer">📚</p>
+                </div>
+                <h3 className="secondary-heading">{project.title}</h3>
+                <p className="card-description">{project.description}</p>
             </div>
-            <div className="px-4 pb-4 pt-1 flex items-center gap-3">
-                {project.status === 'current' ? (
-                    <button
-                        className="inline-flex items-center justify-center px-3 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white border-2 border-black transition-colors text-xs md:text-sm font-semibold w-full"
-                        onClick={() => (window.location.href = "/enroll")}
-                    >
-                        Enroll
-                    </button>
-                ) : (
-                    <button className="inline-flex items-center justify-center px-3 py-2 rounded-lg bg-gray-400 text-white border-2 border-black cursor-not-allowed text-xs md:text-sm font-semibold w-full">
-                        Soon
-                    </button>
-                )}
-            </div>
-        </div>
+        </StyledCard>
     );
 }
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
     return (
-         <div className="bg-white border-2 border-black rounded-xl shadow-sm overflow-hidden flex flex-col h-full hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.2)] transition-all duration-200 hover:-translate-y-1 min-h-[400px]">
-            <div className="aspect-video bg-gray-100 border-b-2 border-black">
-                <img src={workshop.image} alt={workshop.title} className="w-full h-full object-cover" />
-            </div>
-            <div className="p-4 flex flex-col gap-3 flex-1">
-                <h3 className="text-base md:text-lg font-bold text-gray-900 line-clamp-2">{workshop.title}</h3>
-                <p className="text-xs md:text-sm text-gray-700 leading-relaxed flex-1 line-clamp-3">{workshop.description}</p>
-                 <div className="flex flex-wrap gap-1.5 mt-2">
-                    {workshop.tech.map((t) => (
-                        <span key={t} className="px-2 py-1 text-xs rounded-full bg-blue-50 text-blue-800 border border-blue-100">
-                            {t}
-                        </span>
-                    ))}
+        <StyledCard
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+        >
+            <div className="columns">
+                <div className="aspect-video bg-gray-100 border-b-2 border-black mb-4 rounded-lg overflow-hidden">
+                    <img src={workshop.image} alt={workshop.title} className="w-full h-full object-cover" />
                 </div>
+                <div className="button-container">
+                    <button className="btn orange-flag">{workshop.status === 'current' ? 'CURRENT' : 'SOON'}</button>
+                    <p className="offer">🛠️</p>
+                </div>
+                <h3 className="secondary-heading">{workshop.title}</h3>
+                <p className="card-description">{workshop.description}</p>
             </div>
-            <div className="px-4 pb-4 pt-1 flex items-center gap-3">
-                 {workshop.status === 'current' ? (
-                    <button
-                        className="inline-flex items-center justify-center px-3 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white border-2 border-black transition-colors text-xs md:text-sm font-semibold w-full"
-                        onClick={() => (window.location.href = "/enroll")}
-                    >
-                        Enroll
-                    </button>
-                ) : (
-                    <button className="inline-flex items-center justify-center px-3 py-2 rounded-lg bg-gray-400 text-white border-2 border-black cursor-not-allowed text-xs md:text-sm font-semibold w-full">
-                        Soon
-                    </button>
-                )}
-            </div>
-        </div>
+        </StyledCard>
     );
 }
 
@@ -200,7 +300,7 @@ const CourseCarousel = () => {
         <div>
             <div className="max-w-7xl mx-auto">
                 {/* CORRECTED: Typo in title */}
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12 text-center">Featured <span className="text-orange-500">Courses</span></h1>
+                <h1 className="text-3xl md:text-4xl section-heading text-gray-900 mb-8 md:mb-12 text-center">Featured <span className="text-orange-500">Courses</span></h1>
                 
                 <div className="relative">
                     {/* Mobile Layout */}
@@ -215,7 +315,24 @@ const CourseCarousel = () => {
                             </button>
                         </div>
                         <div className="w-full max-w-sm mx-auto">
-                            <ProjectCard project={courses[currentSlide]} />
+                            <StyledCard
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                viewport={{ once: true }}
+                            >
+                                <div className="columns">
+                                    <div className="aspect-video bg-gray-100 border-b-2 border-black mb-4 rounded-lg overflow-hidden">
+                                        <img src={courses[currentSlide].image} alt={courses[currentSlide].title} className="w-full h-full object-cover" />
+                                    </div>
+                                    <div className="button-container">
+                                        <button className="btn orange-flag">{courses[currentSlide].status === 'current' ? 'CURRENT' : 'SOON'}</button>
+                                        <p className="offer">📚</p>
+                                    </div>
+                                    <h3 className="secondary-heading">{courses[currentSlide].title}</h3>
+                                    <p className="card-description">{courses[currentSlide].description}</p>
+                                </div>
+                            </StyledCard>
                         </div>
                         <div className="flex justify-center mt-6 gap-2">
                             {courses.map((_, index) => (
@@ -262,7 +379,7 @@ const WorkshopCards = () => {
     return (
         <div>
             <div className="max-w-7xl mx-auto">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12 text-center">Featured <span className="text-orange-500">Workshops</span></h1>
+                <h1 className="text-3xl md:text-4xl section-heading text-gray-900 mb-8 md:mb-12 text-center">Featured <span className="text-orange-500">Workshops</span></h1>
                 <div className="relative">
                     {/* Mobile Layout */}
                     <div className="md:hidden">
@@ -276,7 +393,24 @@ const WorkshopCards = () => {
                             </button>
                         </div>
                         <div className="w-full max-w-sm mx-auto">
-                            <WorkshopCard workshop={workshops[currentWorkshopSlide]} />
+                            <StyledCard
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                viewport={{ once: true }}
+                            >
+                                <div className="columns">
+                                    <div className="aspect-video bg-gray-100 border-b-2 border-black mb-4 rounded-lg overflow-hidden">
+                                        <img src={workshops[currentWorkshopSlide].image} alt={workshops[currentWorkshopSlide].title} className="w-full h-full object-cover" />
+                                    </div>
+                                    <div className="button-container">
+                                        <button className="btn orange-flag">{workshops[currentWorkshopSlide].status === 'current' ? 'CURRENT' : 'SOON'}</button>
+                                        <p className="offer">🛠️</p>
+                                    </div>
+                                    <h3 className="secondary-heading">{workshops[currentWorkshopSlide].title}</h3>
+                                    <p className="card-description">{workshops[currentWorkshopSlide].description}</p>
+                                </div>
+                            </StyledCard>
                         </div>
                         <div className="flex justify-center mt-6 gap-2">
                             {workshops.map((_, index) => (
@@ -308,6 +442,17 @@ export default function CombinedComponent() {
 
     return (
         <div className="min-h-screen w-full bg-white relative overflow-hidden">
+            <style>
+                {`
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+                
+                .orange-flag {
+                    background-color: #fca311 !important;
+                    color: white;
+                }
+                `}
+            </style>
+            
             {/* INTEGRATED: Animated background is now part of the component */}
             <AnimatedDotsBackground />
 

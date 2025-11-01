@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Award, CheckCircle, XCircle } from 'lucide-react';
+import styled from 'styled-components';
+import { motion } from "framer-motion";
 
 // Student data structure
 interface Student {
@@ -244,6 +246,131 @@ const courseOptions = [
   { id: 'EDUCYB', name: 'Cyber Security', fullName: 'Cyber Security Basics', duration: 'June 1st - 8th' },
 ];
 
+// Styled Components for Cards
+const StyledCard = styled(motion.div)`
+    .columns {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: 20px;
+        padding: 25px;
+        border: 2px solid black;
+        transition: all 0.4s;
+        background: white;
+        
+        @media (max-width: 768px) {
+            padding: 20px;
+            border-radius: 16px;
+        }
+        
+        @media (max-width: 480px) {
+            padding: 16px;
+            border-radius: 12px;
+        }
+    }
+
+    .columns:hover {
+        box-shadow: 4px 4px 0 1px rgba(0, 0, 0);
+        transform: translateY(-5px);
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 16px;
+        
+        @media (max-width: 768px) {
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+    }
+
+    .offer {
+        font-size: 20px;
+        font-weight: 900;
+        border-bottom: 2px solid black;
+        cursor: pointer;
+        transition: all 0.4s;
+        margin: 0;
+        
+        @media (max-width: 768px) {
+            font-size: 18px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 16px;
+        }
+    }
+
+    .btn {
+        padding: 6px 12px;
+        border: 1px solid black;
+        background-color: orange;
+        border-radius: 8px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s;
+        font-size: 12px;
+        
+        @media (max-width: 768px) {
+            padding: 5px 10px;
+            font-size: 11px;
+        }
+    }
+
+    .orange-flag {
+        background-color: #fca311; /* Brand orange color */
+        color: white;
+    }
+
+    .columns:hover .btn {
+        box-shadow: 2px 2px 0 1px rgba(0, 0, 0);
+    }
+
+    .columns:hover .offer {
+        color: green;
+        border-color: green;
+    }
+
+    .btn:focus {
+        background: transparent;
+    }
+
+    .secondary-heading {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        font-family: 'Poppins', sans-serif;
+        
+        @media (max-width: 768px) {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 14px;
+        }
+    }
+
+    .card-description {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        font-family: 'Poppins', sans-serif;
+        
+        @media (max-width: 768px) {
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 13px;
+        }
+    }
+`;
+
 const VerificationPage: React.FC = () => {
   const [certificateId, setCertificateId] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
@@ -272,151 +399,194 @@ const VerificationPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-black pt-24 pb-16 px-4">
+      <style>
+        {`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        
+        .hero-heading {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+        }
+        
+        .section-heading {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+        }
+        
+        .subheading {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+        }
+        
+        .body-text {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+        }
+        `}
+      </style>
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Certificate Verification</h1>
+          <h1 className="text-5xl md:text-7xl font-bold section-heading mb-4" style={{ lineHeight: '1.2' }}>Certificate Verification</h1>
           <p className="text-gray-700 max-w-2xl mx-auto">
             Verify the authenticity of certificates issued by EDUTOU. Enter the certificate ID to check if it's valid and view student details.
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-10">
-          <div className="grid md:grid-cols-3 gap-4 mb-6">
-            <div className="md:col-span-1">
-              <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
-                Select Course
-              </label>
-              <select
-                id="course"
-                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-brand)] focus:border-[var(--color-brand)]"
-                value={selectedCourse}
-                onChange={(e) => setSelectedCourse(e.target.value)}
-              >
-                <option value="">All Courses</option>
-                {courseOptions.map((course) => (
-                  <option key={course.id} value={course.id}>
-                    {course.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div className="md:col-span-2">
-              <label htmlFor="certificateId" className="block text-sm font-medium text-gray-700 mb-1">
-                Certificate ID
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="certificateId"
-                  placeholder="Enter certificate ID (e.g., EDUFSF0101001)"
-                  className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-brand)] focus:border-[var(--color-brand)] pr-12"
-                  value={certificateId}
-                  onChange={(e) => setCertificateId(e.target.value.toUpperCase())}
-                  onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
-                />
-                <button
-                  onClick={handleVerify}
-                  disabled={isSearching || !certificateId}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full bg-orange-100 text-[var(--color-brand-dark)] hover:bg-orange-200 disabled:opacity-50"
-                  title="Verify Certificate"
-                  aria-label="Verify Certificate"
+        <StyledCard
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <div className="columns">
+            <div className="grid md:grid-cols-3 gap-4 mb-6">
+              <div className="md:col-span-1">
+                <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
+                  Select Course
+                </label>
+                <select
+                  id="course"
+                  className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-brand)] focus:border-[var(--color-brand)]"
+                  value={selectedCourse}
+                  onChange={(e) => setSelectedCourse(e.target.value)}
                 >
-                  <Search className="h-5 w-5" />
-                </button>
+                  <option value="">All Courses</option>
+                  {courseOptions.map((course) => (
+                    <option key={course.id} value={course.id}>
+                      {course.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="md:col-span-2">
+                <label htmlFor="certificateId" className="block text-sm font-medium text-gray-700 mb-1">
+                  Certificate ID
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="certificateId"
+                    placeholder="Enter certificate ID (e.g., EDUFSF0101001)"
+                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-brand)] focus:border-[var(--color-brand)] pr-12"
+                    value={certificateId}
+                    onChange={(e) => setCertificateId(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
+                  />
+                  <button
+                    onClick={handleVerify}
+                    disabled={isSearching || !certificateId}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full bg-orange-100 text-[var(--color-brand-dark)] hover:bg-orange-200 disabled:opacity-50"
+                    title="Verify Certificate"
+                    aria-label="Verify Certificate"
+                  >
+                    <Search className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-
-               
-               
-               
-          
-        </div>
+        </StyledCard>
 
         {isVerified !== null && (
-          <div className={`bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 transition-all duration-300 ${isVerified ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'}`}>
-            {isVerified ? (
-              <div className="flex flex-col items-center text-center md:flex-row md:text-left md:items-start">
-                <div className="bg-green-100 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
-                  <CheckCircle className="h-12 w-12 text-green-600" />
-                </div>
-                <div className="w-full">
-                  <h2 className="text-2xl font-bold text-green-700 mb-2">Certificate Verified!</h2>
-                  <p className="text-gray-700 mb-4">This certificate is authentic and was issued by EDUTOU.</p>
-                  
-                  <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
-                    <h3 className="font-semibold text-gray-900 mb-4 text-lg">Certificate Details</h3>
+          <StyledCard
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="mt-8"
+          >
+            <div className="columns">
+              {isVerified ? (
+                <div className="flex flex-col items-center text-center md:flex-row md:text-left md:items-start">
+                  <div className="bg-green-100 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
+                    <CheckCircle className="h-12 w-12 text-green-600" />
+                  </div>
+                  <div className="w-full">
+                    <h2 className="text-2xl font-bold text-green-700 mb-2">Certificate Verified!</h2>
+                    <p className="text-gray-700 mb-4">This certificate is authentic and was issued by EDUTOU.</p>
                     
-                    {/* Student Information */}
-                    <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                      <h4 className="text-sm uppercase tracking-wider text-gray-500 mb-3">Student Information</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-sm text-gray-500">Student Name</p>
-                          <p className="font-medium text-lg text-gray-900">{searchResult?.name}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Registration Number</p>
-                          <p className="font-medium text-lg text-gray-900">{searchResult?.id}</p>
+                    <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-4 text-lg">Certificate Details</h3>
+                      
+                      {/* Student Information */}
+                      <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 className="text-sm uppercase tracking-wider text-gray-500 mb-3">Student Information</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-sm text-gray-500">Student Name</p>
+                            <p className="font-medium text-lg text-gray-900">{searchResult?.name}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-500">Registration Number</p>
+                            <p className="font-medium text-lg text-gray-900">{searchResult?.id}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    
-                    {/* Course Information */}
-                    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                      <h4 className="text-sm uppercase tracking-wider text-gray-500 mb-3">Course Information</h4>
-                      <div className="space-y-3">
-                        <div>
-                          <p className="text-sm text-gray-500">Course</p>
-                          <p className="font-medium text-lg text-gray-900">{getCourseDetails(searchResult?.id || '').fullName}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Duration</p>
-                          <p className="font-medium text-gray-900">{getCourseDetails(searchResult?.id || '').duration}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Certificate Issue Date</p>
-                          <p className="font-medium text-gray-900">March 23, 2023</p>
+                      
+                      {/* Course Information */}
+                      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 className="text-sm uppercase tracking-wider text-gray-500 mb-3">Course Information</h4>
+                        <div className="space-y-3">
+                          <div>
+                            <p className="text-sm text-gray-500">Course</p>
+                            <p className="font-medium text-lg text-gray-900">{getCourseDetails(searchResult?.id || '').fullName}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-500">Duration</p>
+                            <p className="font-medium text-gray-900">{getCourseDetails(searchResult?.id || '').duration}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-500">Certificate Issue Date</p>
+                            <p className="font-medium text-gray-900">March 23, 2023</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center text-center md:flex-row md:text-left md:items-start">
-                <div className="bg-red-100 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
-                  <XCircle className="h-12 w-12 text-red-600" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-red-700 mb-2">Invalid Certificate</h2>
-                  <p className="text-gray-700 mb-4">We couldn't verify this certificate. Please check the ID and try again.</p>
-                  <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
-                    <p className="text-gray-700">
-                      If you believe this is an error, please contact our support team at <a href="mailto:support@edutou.in" className="text-[var(--color-brand-dark)] hover:underline">support@edutou.in</a>
-                    </p>
+              ) : (
+                <div className="flex flex-col items-center text-center md:flex-row md:text-left md:items-start">
+                  <div className="bg-red-100 p-4 rounded-full mb-4 md:mb-0 md:mr-6">
+                    <XCircle className="h-12 w-12 text-red-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-red-700 mb-2">Invalid Certificate</h2>
+                    <p className="text-gray-700 mb-4">We couldn't verify <span className="text-orange-500">this certificate</span>. Please check the ID and try again.</p>
+                    <div className="bg-white rounded-xl p-4 md:p-6 border border-gray-200">
+                      <p className="text-gray-700">
+                        If you believe this is an error, please contact our support team at <a href="mailto:support@edutou.in" className="text-[var(--color-brand-dark)] hover:underline">support@edutou.in</a>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          </StyledCard>
         )}
 
-        <div className="mt-12 bg-white rounded-2xl p-6 md:p-8 border border-gray-200">
-          <div className="flex items-center mb-4">
-            <Award className="h-6 w-6 text-[var(--color-brand-dark)] mr-2" />
-            <h2 className="text-xl font-semibold text-black">About Our Certificates</h2>
+        <StyledCard
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mt-12"
+        >
+          <div className="columns">
+            <div className="flex items-center mb-4">
+              <Award className="h-6 w-6 text-[var(--color-brand-dark)] mr-2" />
+              <h2 className="text-xl font-semibold text-black">About Our Certificates</h2>
+            </div>
+            <p className="text-gray-700 mb-4">
+              EDUTOU certificates are issued to students who have successfully completed our courses and met all the requirements. 
+              Each certificate has a unique ID that can be verified through this page.
+            </p>
+            <p className="text-gray-700">
+              Our certificates are recognized by industry partners and can help boost your career prospects. 
+              For any questions regarding certification, please contact our team.
+            </p>
           </div>
-          <p className="text-gray-700 mb-4">
-            EDUTOU certificates are issued to students who have successfully completed our courses and met all the requirements. 
-            Each certificate has a unique ID that can be verified through this page.
-          </p>
-          <p className="text-gray-700">
-            Our certificates are recognized by industry partners and can help boost your career prospects. 
-            For any questions regarding certification, please contact our team.
-          </p>
-        </div>
+        </StyledCard>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -36,150 +35,171 @@ const Contact = () => {
   };
 
   return (
-    <div
-      className="min-h-screen w-full bg-cover bg-center"
-    >
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-green-50">
+      <style>
+        {`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        
+        .hero-heading {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+        }
+        
+        .section-heading {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+        }
+        
+        .subheading {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+        }
+        
+        .body-text {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+        }
+        `}
+      </style>
       {/* Hero Section */}
-      <section className="bg-white/80 text-black py-20 border-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-orange-500">Contact Us</h1>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Have questions about our courses or want to enroll? We're here to help!
-          </p>
+      <section className="py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-5xl md:text-7xl font-normal section-heading mb-2 text-gray-900 tracking-tight" style={{ lineHeight: '1.2' }}>CONTACT</h1>
         </div>
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-16 bg-white/90">
+      <section className="pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div className="border border-gray-300 p-8 rounded-xl">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-              <p className="text-gray-700 mb-8">
-                Fill out the form below and our team will get back to you as soon as possible. We're
-                excited to hear from you and help you start your learning journey!
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            {/* Left side - Description and Email */}
+            <div className="space-y-12">
+              <div>
+                <p className="text-3xl md:text-4xl hero-heading leading-relaxed text-gray-900 font-normal">
+                  Whether it's to discuss your next project, learn more about our services, or join our team, drop us a line and get the conversati<span className="text-orange-500">on</span> started.
+                </p>
+              </div>
 
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start">
-                  <Mail className="h-6 w-6 text-orange-500 mt-1 mr-4" />
-                  <div>
-                    <h3 className="font-bold text-gray-900">Email Us</h3>
-                    <p className="text-gray-700">edutouskillacademy@gmail.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <Phone className="h-6 w-6 text-orange-500 mt-1 mr-4" />
-                  <div>
-                    <h3 className="font-bold text-gray-900">Call Us</h3>
-                    <p className="text-gray-700">+91 90804 69741</p>
-                  </div>
+              <div>
+                <div className="inline-block border-2 border-gray-900 rounded-full px-6 py-3 bg-white hover:bg-[#fca311] transition-colors duration-300">
+                  <p className="text-lg body-text text-gray-900 hover:text-white transition-colors duration-300 font-normal">edutouskillacademy@gmail.com</p>
                 </div>
               </div>
             </div>
 
+            {/* Right side - Form */}
             <div>
-              <form onSubmit={handleSubmit} className="bg-white border border-gray-300 p-8 rounded-xl">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
-
-                <div className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Your Name *
-                    </label>
                     <input
                       type="text"
                       id="name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
+                      placeholder="Name*"
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
-                      Interested Course
-                    </label>
-                    <select
-                      id="course"
-                      name="course"
-                      value={formData.course}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
-                    >
-                      <option value="none">Select a course (optional)</option>
-                      <option value="full-stack-foundation">Full Stack Foundation</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                      Subject *
-                    </label>
                     <input
                       type="text"
                       id="subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
+                      placeholder="Organisation*"
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Email*"
+                      required
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                      Your Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
+                    <select
+                      id="course"
+                      name="course"
+                      value={formData.course}
                       onChange={handleChange}
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 text-lg appearance-none cursor-pointer"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 0.5rem center',
+                        backgroundSize: '1.5em 1.5em',
+                      }}
+                    >
+                      <option value="none">Role*</option>
+                      <option value="student">Student</option>
+                      <option value="professional">Professional</option>
+                      <option value="business">Business</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="Attach any relevant Deck or Doc"
+                    className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
+                  />
+                </div>
+
+                <div>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Message*"
+                    required
+                    rows={4}
+                    className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg resize-none"
+                  ></textarea>
+                </div>
+
+                <div className="flex items-start justify-between pt-4">
+                  <div className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      id="terms"
                       required
-                      rows={5}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
-                    ></textarea>
+                      className="mt-1 h-5 w-5 rounded border-2 border-gray-900 text-gray-900 focus:ring-0"
+                    />
+                    <label htmlFor="terms" className="text-sm body-text text-gray-900">
+                      By submitting this form you accept our policy as laid out on our{' '}
+                      <span className="underline cursor-pointer">T&C's</span>
+                    </label>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
+                    className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-[#fca311] text-gray-900 hover:text-white border-2 border-gray-900 rounded-full font-medium transition-colors duration-300 text-lg"
                   >
-                    <Send className="h-5 w-5 mr-2 text-white" />
-                    Send Message
+                    <span className="h-3 w-3 bg-gray-900 hover:bg-white rounded-full transition-colors duration-300"></span>
+                    <span className="body-text">Send</span>
                   </button>
                 </div>
               </form>
