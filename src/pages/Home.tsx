@@ -547,10 +547,9 @@ const Home = () => {
                 />
 
                 {/* Hero Content - TEXT LAYOUT FIXED */}
-                <div className="hero-content relative z-10 text-center max-w-5xl">
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl hero-heading mb-4 md:mb-10 leading-tight text-black font-bold">
-                        The Future of Learning{" "}
-                        <span className="education-text">Powered</span> by AI.
+                <div className="hero-content relative z-10 text-center max-w-7xl">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl hero-heading mb-4 md:mb-10 leading-tight text-black font-bold">
+                        India's First Student-Led Platform<br /><span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl">Empowering Skill-Based Learning.</span>
                     </h1>
                     <div className="my-6 md:my-12 flex flex-col items-center">
                         <StyledEnrollButton
@@ -562,7 +561,7 @@ const Home = () => {
                             transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                             className="mb-4 md:mb-8"
                         >
-                            <Link to="/currentcourse" className="flex items-center">
+                            <Link to="/enroll" className="flex items-center">
                                 Enroll Today
                                 <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                             </Link>

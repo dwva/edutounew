@@ -45,7 +45,7 @@ export default function RejouiceFooter() {
         <div className="grid grid-cols-12 gap-4 mt-4">
           <div className="col-span-12 md:col-span-6 mb-8 md:mb-0">
             <h2 className={`text-3xl md:text-5xl font-bold section-heading mb-4 ${fadeInUpClass(100)}`} style={{ lineHeight: '1.2' }}>
-              Do <span className="text-orange-500">it</span> once. Do <span className="text-orange-500">it</span> <span className="text-orange-500">right</span>.
+              Do <span className="text-black">it</span> <span className="text-orange-500">once</span>. Do <span className="text-black">it</span> <span className="text-orange-500">right</span>.
             </h2>
 
             <div className={fadeInUpClass(150)}>

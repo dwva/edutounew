@@ -35,54 +35,29 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-green-50">
-      <style>
-        {`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-        
-        .hero-heading {
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-        }
-        
-        .section-heading {
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-        }
-        
-        .subheading {
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-        }
-        
-        .body-text {
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-        }
-        `}
-      </style>
+    <div className="min-h-screen w-full bg-white pt-16 md:pt-24">
       {/* Hero Section */}
-      <section className="py-12 md:py-16">
+      <section className="py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-5xl md:text-7xl font-normal section-heading mb-2 text-gray-900 tracking-tight" style={{ lineHeight: '1.2' }}>CONTACT</h1>
+          <h1 className="text-5xl md:text-7xl section-heading mb-2 text-gray-900 tracking-tight" style={{ lineHeight: '1.2' }}>CONTACT</h1>
         </div>
       </section>
 
       {/* Contact Form Section */}
-      <section className="pb-16">
+      <section className="pb-12 md:pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-start">
             {/* Left side - Description and Email */}
-            <div className="space-y-12">
+            <div className="space-y-8 md:space-y-12">
               <div>
-                <p className="text-3xl md:text-4xl hero-heading leading-relaxed text-gray-900 font-normal">
+                <p className="text-3xl md:text-4xl hero-heading leading-relaxed text-gray-900">
                   Whether it's to discuss your next project, learn more about our services, or join our team, drop us a line and get the conversati<span className="text-orange-500">on</span> started.
                 </p>
               </div>
 
               <div>
                 <div className="inline-block border-2 border-gray-900 rounded-full px-6 py-3 bg-white hover:bg-[#fca311] transition-colors duration-300">
-                  <p className="text-lg body-text text-gray-900 hover:text-white transition-colors duration-300 font-normal">edutouskillacademy@gmail.com</p>
+                  <p className="text-base body-text text-gray-900 hover:text-white transition-colors duration-300">edutouskillacademy@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -100,7 +75,7 @@ const Contact = () => {
                       onChange={handleChange}
                       placeholder="Name*"
                       required
-                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-base body-text"
                     />
                   </div>
 
@@ -113,7 +88,7 @@ const Contact = () => {
                       onChange={handleChange}
                       placeholder="Organisation*"
                       required
-                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-base body-text"
                     />
                   </div>
                 </div>
@@ -128,7 +103,7 @@ const Contact = () => {
                       onChange={handleChange}
                       placeholder="Email*"
                       required
-                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-base body-text"
                     />
                   </div>
 
@@ -138,7 +113,7 @@ const Contact = () => {
                       name="course"
                       value={formData.course}
                       onChange={handleChange}
-                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 text-lg appearance-none cursor-pointer"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 text-base body-text appearance-none cursor-pointer"
                       style={{
                         backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E")`,
                         backgroundRepeat: 'no-repeat',
@@ -163,7 +138,7 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Attach any relevant Deck or Doc"
-                    className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg"
+                    className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-base body-text"
                   />
                 </div>
 
@@ -176,11 +151,11 @@ const Contact = () => {
                     placeholder="Message*"
                     required
                     rows={4}
-                    className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-lg resize-none"
+                    className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-900 focus:outline-none focus:border-gray-900 text-gray-900 placeholder-gray-600 text-base body-text resize-none"
                   ></textarea>
                 </div>
 
-                <div className="flex items-start justify-between pt-4">
+                <div className="flex flex-col sm:flex-row items-start justify-between pt-4 gap-4">
                   <div className="flex items-start space-x-3">
                     <input
                       type="checkbox"
@@ -196,9 +171,9 @@ const Contact = () => {
 
                   <button
                     type="submit"
-                    className="flex items-center space-x-3 px-8 py-3 bg-white hover:bg-[#fca311] text-gray-900 hover:text-white border-2 border-gray-900 rounded-full font-medium transition-colors duration-300 text-lg"
+                    className="flex items-center space-x-3 px-6 py-2 bg-white hover:bg-[#fca311] text-gray-900 hover:text-white border-2 border-gray-900 rounded-full font-medium transition-colors duration-300 text-base body-text whitespace-nowrap"
                   >
-                    <span className="h-3 w-3 bg-gray-900 hover:bg-white rounded-full transition-colors duration-300"></span>
+                    <span className="h-2 w-2 bg-gray-900 hover:bg-white rounded-full transition-colors duration-300"></span>
                     <span className="body-text">Send</span>
                   </button>
                 </div>

@@ -162,11 +162,7 @@ const Navbar = () => {
               )} 
             </AnimatePresence> 
           </LogoContainer> 
-        ) : ( 
-          <MobileLogoContainer> 
-            <LogoImage src={logo} alt="Edutou Logo" /> 
-          </MobileLogoContainer> 
-        )} 
+        ) : null} 
 
         {/* Mobile Menu Content */} 
         <AnimatePresence> 

@@ -238,23 +238,23 @@ const About = () => {
                 </div> 
                 
                 {/* Logo Animation with Nearby Text */}
-                <div className="mt-16 flex justify-center items-center w-full relative">
-                  {/* Left-bottom text */}
-                  <div className="absolute bottom-0 left-12 text-left max-w-xs">
-                    <h4 className="text-lg section-heading text-orange-500">Empower Tomorrow</h4>
-                    <p className="text-gray-700 text-sm body-text">
-                      We equip learners with skills that make an impact in their careers.
-                    </p>
-                  </div>
-                  {/* Logo circle */}
-                  <div className="w-80 h-80 rounded-full bg-orange-100 flex items-center justify-center overflow-hidden relative z-10">
-                    <PixelatedCanvasDemo />
-                  </div>
-                  {/* Right-top text */}
-                  <div className="absolute top-0 right-12 text-right max-w-xs">
+                <div className="mt-16 flex flex-col items-center w-full relative">
+                  {/* Top text for mobile, right-top for desktop */}
+                  <div className="text-center md:text-right md:absolute md:top-0 md:right-12 md:text-right max-w-xs mb-4 md:mb-0">
                     <h4 className="text-lg section-heading text-orange-500">Innovate Today</h4>
                     <p className="text-gray-700 text-sm body-text">
                       Discover cutting-edge solutions and embrace the future with us.
+                    </p>
+                  </div>
+                  {/* Logo circle */}
+                  <div className="w-48 h-48 md:w-72 md:h-72 rounded-full bg-orange-100 flex items-center justify-center overflow-hidden relative z-10 my-4">
+                    <PixelatedCanvasDemo />
+                  </div>
+                  {/* Bottom text for mobile, left-bottom for desktop */}
+                  <div className="text-center md:text-left md:absolute md:bottom-0 md:left-12 max-w-xs mt-4 md:mt-0">
+                    <h4 className="text-lg section-heading text-orange-500">Empower Tomorrow</h4>
+                    <p className="text-gray-700 text-sm body-text">
+                      We equip learners with skills that make an impact in their careers.
                     </p>
                   </div>
                 </div>
